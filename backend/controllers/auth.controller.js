@@ -37,19 +37,30 @@ export const register = async(req,res) => {
 export const login = async(req,res) => {
 
     try{
-
+        const {username,password} = req.body;
         // check user exists
+        const user = await prisma.user.findFirst({
+            where: {username}
+        });
 
+        if(!user) res.status(404).json({message: 'User not found'});
 
         // check password
+        const isPasswordCorrect = await bcrypt.compare(password,user.password);
+        if(!isPasswordCorrect) res.status(401).json({message: 'Password is incorrect'});
 
+        // login successful
+        res.status(200).json({message: 'Login successful'});
 
         // create a new token
     }catch(err){
-
+        console.log(err);
+        res.status(500).json({message: 'Failed to login user'});
     }
 }
 
 
 // HANDLE LOGOUT USER
-export const logout = async(req,res) => {}
+export const logout = async(req,res) => {
+    
+}
