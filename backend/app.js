@@ -1,4 +1,3 @@
-// server.js (hoặc app.js)
 
 // Import dotenv trước tiên
 import dotenv from 'dotenv';
