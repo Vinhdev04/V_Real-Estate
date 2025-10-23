@@ -1,56 +1,8 @@
+@import "./responsive.css";
 .layout {
   max-width: 1400px;
   height: 100vh;
   margin: 0 auto;
   padding: 0 20px;
-  background-color: aquamarine;
   transition: all 0.3s ease;
-}
-
-/* Extra small devices (phones, <576px) */
-@media (max-width: 575.98px) {
-  .layout {
-    background-color: lightcoral;
-    padding: 0 10px;
-  }
-}
-
-/* Small devices (≥576px) */
-@media (min-width: 576px) and (max-width: 767.98px) {
-  .layout {
-    background-color: lightpink;
-    padding: 0 15px;
-  }
-}
-
-/* Medium devices (≥768px) */
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .layout {
-    background-color: lightgoldenrodyellow;
-    padding: 0 20px;
-  }
-}
-
-/* Large devices (≥992px) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
-  .layout {
-    background-color: lightgreen;
-    padding: 0 30px;
-  }
-}
-
-/* Extra large devices (≥1200px) */
-@media (min-width: 1200px) and (max-width: 1399.98px) {
-  .layout {
-    background-color: lightblue;
-    padding: 0 40px;
-  }
-}
-
-/* Extra extra large devices (≥1400px) */
-@media (min-width: 1400px) {
-  .layout {
-    background-color: aquamarine;
-    padding: 0 60px;
-  }
 }
