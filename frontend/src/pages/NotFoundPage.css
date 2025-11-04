@@ -1,0 +1,493 @@
+/* pages/NotFoundPage.css */
+
+/* ===== KEYFRAME ANIMATIONS ===== */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes bounce-custom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes float-circle {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(20px, -20px);
+  }
+  50% {
+    transform: translate(0, -40px);
+  }
+  75% {
+    transform: translate(-20px, -20px);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes button-hover {
+  0% {
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+  }
+  100% {
+    box-shadow: 0 16px 32px rgba(59, 130, 246, 0.6);
+  }
+}
+
+/* ===== CONTAINER ===== */
+.notfound-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #f3e8ff 50%, #fce7f3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* ===== BACKGROUND ANIMATION ===== */
+.background-animation {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floating-circle {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  filter: blur(60px);
+  opacity: 0.2;
+  animation: float-circle 15s ease-in-out infinite;
+}
+
+.circle-1 {
+  width: 288px;
+  height: 288px;
+  background: #3b82f6;
+  top: 80px;
+  left: 40px;
+  animation-delay: 0s;
+}
+
+.circle-2 {
+  width: 288px;
+  height: 288px;
+  background: #8b5cf6;
+  top: 160px;
+  right: 40px;
+  animation-delay: 2s;
+}
+
+.circle-3 {
+  width: 288px;
+  height: 288px;
+  background: #ec4899;
+  bottom: -32px;
+  left: 80px;
+  animation-delay: 4s;
+}
+
+/* ===== DECORATIVE CIRCLES ===== */
+.decorative-circle {
+  position: fixed;
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: pulse-glow 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.circle-bottom-left {
+  width: 80px;
+  height: 80px;
+  background: #3b82f6;
+  bottom: 40px;
+  left: 40px;
+  animation-delay: 0s;
+}
+
+.circle-bottom-right {
+  width: 128px;
+  height: 128px;
+  background: #8b5cf6;
+  top: 50%;
+  right: 40px;
+  animation-delay: 1s;
+}
+
+/* ===== MAIN CONTENT ===== */
+.notfound-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 600px;
+  animation: fade-in 0.8s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== ERROR CODE ===== */
+.error-code-wrapper {
+  margin-bottom: 32px;
+  perspective: 1000px;
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite, float 3s ease-in-out infinite;
+  text-shadow: 0 0 30px rgba(59, 130, 246, 0.3),
+    0 0 60px rgba(139, 92, 246, 0.2);
+}
+
+/* ===== CHARACTER SVG ===== */
+.character-wrapper {
+  margin: 32px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.character-svg {
+  width: 256px;
+  height: 256px;
+  animation: swing 2s ease-in-out infinite;
+  filter: drop-shadow(0 10px 30px rgba(59, 130, 246, 0.3));
+}
+
+.character-svg .head {
+  animation: bounce-custom 2s ease-in-out infinite;
+}
+
+.character-svg .body {
+  animation: bounce-custom 2s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.character-svg .left-arm {
+  animation: bounce-custom 2s ease-in-out infinite;
+  animation-delay: 0.1s;
+}
+
+.character-svg .right-arm {
+  animation: bounce-custom 2s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+.character-svg .left-leg {
+  animation: bounce-custom 2s ease-in-out infinite;
+  animation-delay: 0.15s;
+}
+
+.character-svg .right-leg {
+  animation: bounce-custom 2s ease-in-out infinite;
+  animation-delay: 0.25s;
+}
+
+/* ===== TEXT CONTENT ===== */
+.notfound-text {
+  margin-bottom: 32px;
+}
+
+.notfound-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 16px 0;
+  animation: fade-in 0.8s ease-out 0.2s both;
+}
+
+.notfound-subtitle {
+  font-size: 1.25rem;
+  color: #4b5563;
+  margin: 0 0 12px 0;
+  animation: fade-in 0.8s ease-out 0.4s both;
+}
+
+.notfound-description {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0;
+  animation: fade-in 0.8s ease-out 0.6s both;
+}
+
+/* ===== ERROR DETAILS ===== */
+.error-details {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: fade-in 0.8s ease-out 0.8s both;
+}
+
+.error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #ec4899, #f43f5e);
+  border-radius: 12px;
+  color: white;
+}
+
+.error-info {
+  text-align: left;
+}
+
+.error-label {
+  font-weight: 600;
+  color: #1f2937;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.error-path {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.path-code {
+  font-family: "Monaco", "Courier New", monospace;
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* ===== BUTTON GROUP ===== */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 48px;
+  animation: fade-in 0.8s ease-out 1s both;
+}
+
+@media (min-width: 640px) {
+  .button-group {
+    flex-direction: row;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+  text-decoration: none;
+  font-size: 1rem;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 16px 32px rgba(59, 130, 246, 0.6);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn svg {
+  transition: transform 0.3s ease;
+}
+
+.btn-back {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  color: white;
+}
+
+.btn-back:hover svg {
+  transform: translateX(-4px);
+}
+
+.btn-home {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: white;
+}
+
+.btn-home:hover svg {
+  transform: rotate(12deg);
+}
+
+/* ===== HELP LINKS ===== */
+.help-links {
+  animation: fade-in 0.8s ease-out 1.2s both;
+}
+
+.help-links p {
+  color: #6b7280;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.links-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.links-nav a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.links-nav a:hover {
+  color: #1e40af;
+}
+
+.links-nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #3b82f6;
+  transition: width 0.3s ease;
+}
+
+.links-nav a:hover::after {
+  width: 100%;
+}
+
+.links-nav span {
+  color: #d1d5db;
+  font-weight: 300;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .error-code {
+    font-size: 5rem;
+  }
+
+  .notfound-title {
+    font-size: 1.875rem;
+  }
+
+  .notfound-subtitle {
+    font-size: 1rem;
+  }
+
+  .character-svg {
+    width: 200px;
+    height: 200px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px 24px;
+  }
+
+  .error-details {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .error-info {
+    text-align: center;
+  }
+}
