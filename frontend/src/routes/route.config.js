@@ -1,12 +1,9 @@
 // config route
 // 1. route.config.js - File cấu hình routes
 import HomePage from '../pages/HomePage';
-import PropertiesPage from '../pages/PropertiesPage';
-import PropertyDetailPage from '../pages/PropertyDetailPage';
-import AboutPage from '../pages/AboutPage';
-import ContactPage from '../pages/ContactPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
+// create route and export 
 export const routes = [
   {
     path: '/',
@@ -15,22 +12,22 @@ export const routes = [
   },
   {
     path: '/properties',
-    element: <PropertiesPage />,
+    element: "",
     name: 'Bất Động Sản'
   },
   {
     path: '/properties/:id',
-    element: <PropertyDetailPage />,
+    element:"",
     name: 'Chi Tiết Bất Động Sản'
   },
   {
     path: '/about',
-    element: <AboutPage />,
+    element: "",
     name: 'Về Chúng Tôi'
   },
   {
     path: '/contact',
-    element: <ContactPage />,
+    element: "",
     name: 'Liên Hệ'
   },
   {
