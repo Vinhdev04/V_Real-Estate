@@ -4,7 +4,7 @@ import PropertyFilter from './components/PropertyFilter';
 import PropertyGrid from './components/PropertyGrid';
 import styles from './PropertiesPage.module.css';
 import { INITIAL_PROPERTIES } from './constants';
-
+import BackToTop from "../../shared/components/BackToTop/BackToTop";
 /**
  * PropertiesPage Component
  * Hiển thị danh sách bất động sản với filter và tìm kiếm
@@ -81,6 +81,7 @@ function PropertiesPage() {
             </div>
           )}
         </main>
+        <BackToTop/>
       </div>
     </div>
   );

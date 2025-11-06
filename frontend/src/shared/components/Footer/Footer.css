@@ -12,6 +12,11 @@
   margin-bottom: 16px;
 }
 
+.logo-logo > img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
 .footer-desc {
   line-height: 1.7;
   display: block;

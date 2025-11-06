@@ -35,7 +35,7 @@ function TestimonialsSection() {
   return (
     <div className="testimonials-section container py-5">
       <div className="text-center mb-5">
-        <Title level={2} className="section-title">
+        <Title level={2} className="section-title text-dark">
           Khách hàng nói gì về chúng tôi
         </Title>
         <Text type="secondary" className="section-subtitle">

@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Typography, Space } from "antd";
 import { FacebookFilled, TwitterOutlined, GoogleCircleFilled, LinkedinFilled } from "@ant-design/icons";
 import "./Footer.css";
-
+import logoW from "../../../assets/images/logoW.png"
 const { Title, Text } = Typography;
 
 function Footer() {
@@ -10,9 +10,13 @@ function Footer() {
     <footer className="main-footer">
       <div className="container py-5">
         <Row gutter={[32, 32]}>
-          {/* Logo & Description */}
+   
           <Col xs={24} md={6}>
-            <div className="footer-logo">logo</div>
+            <div className="footer-logo d-flex justify-content-start align-items-center">
+             <img className="navbar__logo" src={logoW} alt="logo" />
+             <span className="logo__name d-none d-lg-inline">VaniizIT</span>
+              
+            </div>
             <Text className="footer-desc">
               Chúng tôi là đơn vị hàng đầu trong lĩnh vực bất động sản, mang đến những giải pháp tối ưu cho khách hàng với dịch vụ chuyên nghiệp và uy tín.
             </Text>
@@ -71,7 +75,6 @@ function Footer() {
 
         <div className="footer-bottom">
           <Text type="secondary" className="text">©Copyright 2025 by VaniizIT</Text>
-          
         </div>
       </div>
     </footer>

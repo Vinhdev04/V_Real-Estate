@@ -1,11 +1,10 @@
-'use client';
 
 import React, { useEffect, useRef, useState } from "react";
 import { Form, Select, Button, Row, Col } from "antd";
 
 // Import styles
 import "../styles/HeroSection.css";
-import "../styles/DriverCustom.css"; // ✅ Import CSS tùy chỉnh cho driver.js
+import "../styles/DriverCustom.css"; 
 
 // Import driver config
 import { 

@@ -5,6 +5,7 @@ import ServicesSection from './components/ServicesSection';
 import AchievementsSection from './components/AchievementsSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import CTASection from "./components/CTASection";
+import BackToTop from "../../shared/components/BackToTop/BackToTop";
 
 /**
  * HomePage Component
@@ -20,6 +21,7 @@ function HomePage() {
           <AchievementsSection/>
           <TestimonialsSection/>
           <CTASection/>
+          <BackToTop/>
         </div>
     </div>
   );
