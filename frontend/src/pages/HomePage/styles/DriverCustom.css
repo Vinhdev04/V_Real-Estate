@@ -1,0 +1,383 @@
+/* ===== DRIVER.JS CUSTOM STYLES ===== */
+
+/* Overlay tùy chỉnh */
+.driver-overlay {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Stage - Vùng highlight */
+.driver-highlighted-element {
+  animation: pulseHighlight 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseHighlight {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(78, 142, 247, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(78, 142, 247, 0);
+  }
+}
+
+/* Popover chính */
+.driver-popover {
+  background: white !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+  padding: 0 !important;
+  max-width: 400px !important;
+  animation: slideUp 0.3s ease-out;
+  border: 2px solid rgba(78, 142, 247, 0.2) !important;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header của Popover */
+.driver-popover-title {
+  background: linear-gradient(135deg, #4e8ef7 0%, #6da8ff 100%) !important;
+  color: white !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  padding: 20px 24px !important;
+  margin: 0 !important;
+  border-radius: 14px 14px 0 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Nội dung Popover */
+.driver-popover-description {
+  color: #444 !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  padding: 20px 24px !important;
+  margin: 0 !important;
+  background: white !important;
+}
+
+/* Footer với các nút */
+.driver-popover-footer {
+  padding: 16px 24px !important;
+  background: #f8f9fa !important;
+  border-radius: 0 0 14px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-top: 1px solid #e9ecef !important;
+  gap: 12px !important;
+}
+
+/* Progress Text */
+.driver-popover-progress-text {
+  font-size: 0.9rem !important;
+  color: #666 !important;
+  font-weight: 600 !important;
+  background: white !important;
+  padding: 4px 12px !important;
+  border-radius: 20px !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+/* Nút điều hướng */
+.driver-popover-navigation-btns {
+  display: flex !important;
+  gap: 10px !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+}
+
+.driver-popover-prev-btn,
+.driver-popover-next-btn,
+.driver-popover-close-btn {
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  outline: none !important;
+  white-space: nowrap !important;
+  min-width: 100px !important;
+}
+
+/* Nút Previous */
+.driver-popover-prev-btn {
+  background: #e9ecef !important;
+  color: #495057 !important;
+}
+
+.driver-popover-prev-btn:hover {
+  background: #dee2e6 !important;
+  transform: translateX(-2px);
+}
+
+/* Nút Next */
+.driver-popover-next-btn {
+  background: linear-gradient(135deg, #4e8ef7 0%, #6da8ff 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(78, 142, 247, 0.3) !important;
+}
+
+.driver-popover-next-btn:hover {
+  background: linear-gradient(135deg, #3a78e0 0%, #5a98ff 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(78, 142, 247, 0.4) !important;
+}
+
+/* Nút Close (X) ở góc phải */
+.driver-popover-close-btn {
+  position: absolute !important;
+  top: 16px !important;
+  right: 16px !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  min-width: 32px !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  font-size: 1.2rem !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0.8 !important;
+  z-index: 10 !important;
+}
+
+.driver-popover-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  opacity: 1 !important;
+  transform: rotate(90deg);
+}
+
+/* Nút Done ở bước cuối */
+.driver-popover-footer .driver-popover-close-btn.driver-popover-btn {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 120px !important;
+  padding: 10px 20px !important;
+  background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%) !important;
+  color: white !important;
+  font-size: 0.95rem !important;
+  border-radius: 8px !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(82, 196, 26, 0.3) !important;
+}
+
+.driver-popover-footer .driver-popover-close-btn.driver-popover-btn:hover {
+  background: linear-gradient(135deg, #389e0d 0%, #52c41a 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(82, 196, 26, 0.4) !important;
+}
+
+/* Mũi tên popover */
+.driver-popover-arrow {
+  border-color: white !important;
+}
+
+.driver-popover-arrow-side-top .driver-popover-arrow {
+  border-top-color: #4e8ef7 !important;
+}
+
+.driver-popover-arrow-side-bottom .driver-popover-arrow {
+  border-bottom-color: #f8f9fa !important;
+}
+
+.driver-popover-arrow-side-left .driver-popover-arrow {
+  border-left-color: white !important;
+}
+
+.driver-popover-arrow-side-right .driver-popover-arrow {
+  border-right-color: white !important;
+}
+
+/* Nút Hướng dẫn floating */
+.tour-guide-btn {
+  position: fixed !important;
+  bottom: 24px !important;
+  left: 24px !important;
+  z-index: 9999 !important;
+  padding: 14px 24px !important;
+  background: linear-gradient(135deg, #4e8ef7 0%, #6da8ff 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 50px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow: 0 8px 24px rgba(78, 142, 247, 0.4) !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.tour-guide-btn:hover {
+  background: linear-gradient(135deg, #3a78e0 0%, #5a98ff 100%) !important;
+  box-shadow: 0 12px 32px rgba(78, 142, 247, 0.5) !important;
+  transform: translateY(-4px) scale(1.05);
+}
+
+.tour-guide-btn::before {
+  content: "🎯";
+  font-size: 1.2rem;
+}
+
+.tour-guide-btn:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Hiệu ứng cho nút khi tour đang chạy */
+.tour-active .tour-guide-btn {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .driver-popover {
+    max-width: 90% !important;
+    margin: 0 auto !important;
+  }
+
+  .driver-popover-title {
+    font-size: 1.1rem !important;
+    padding: 16px 20px !important;
+  }
+
+  .driver-popover-description {
+    font-size: 0.95rem !important;
+    padding: 16px 20px !important;
+  }
+
+  .driver-popover-footer {
+    padding: 12px 16px !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+  }
+
+  .driver-popover-navigation-btns {
+    width: 100% !important;
+    flex: 1 !important;
+  }
+
+  .driver-popover-prev-btn,
+  .driver-popover-next-btn {
+    flex: 1 !important;
+    justify-content: center !important;
+    min-width: 80px !important;
+    padding: 10px 12px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .driver-popover-footer .driver-popover-close-btn.driver-popover-btn {
+    min-width: 100px !important;
+    padding: 10px 16px !important;
+  }
+
+  .driver-popover-progress-text {
+    font-size: 0.85rem !important;
+    padding: 4px 10px !important;
+  }
+
+  .tour-guide-btn {
+    bottom: 16px !important;
+    right: 16px !important;
+    padding: 12px 20px !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  .driver-popover {
+    background: #2d3748 !important;
+    border-color: rgba(78, 142, 247, 0.3) !important;
+  }
+
+  .driver-popover-description {
+    color: #e2e8f0 !important;
+    background: #2d3748 !important;
+  }
+
+  .driver-popover-footer {
+    background: #1a202c !important;
+    border-top-color: #4a5568 !important;
+  }
+
+  .driver-popover-progress-text {
+    background: #1a202c !important;
+    color: #a0aec0 !important;
+    border-color: #4a5568 !important;
+  }
+}
+
+/* Animation khi highlight element */
+@keyframes highlight-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(78, 142, 247, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(78, 142, 247, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(78, 142, 247, 0);
+  }
+}
+
+.driver-active-element {
+  animation: highlight-pulse 2s infinite !important;
+}
+
+/* Thêm icon cho các nút - Loại bỏ để tránh chồng text */
+.driver-popover-next-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
+
+.driver-popover-prev-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
