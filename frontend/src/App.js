@@ -1,18 +1,12 @@
-// src/App.js
+// Đường dẫn: src/App.js
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { routes } from './routes/route.config'; // Import cấu hình
 
 // Components
 import Navbar from './shared/components/Navbar/Navbar';
 // import Footer from './shared/components/Footer/Footer';
-
-// Pages
-import HomePage from './pages/HomePage';
-import PropertiesPage from './pages/PropertiesPage';
-// import PropertyDetailPage from './pages/PropertyDetailPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import NotFoundPage from './pages/NotFoundPage';
 
 // Styles
 import './assets/css/layout.css';
@@ -30,24 +24,16 @@ function App() {
         {/* Main Content */}
         <main className="flex-grow-1">
           <Routes>
-          
-            <Route path="/" element={<HomePage />} />
-
-           
-            {/* <Route path="/properties" element={<PropertiesPage />} /> */}
-            {/* <Route path="/properties/:id" element={<PropertyDetailPage />} /> */}
-
-            
-            <Route path="/about" element={<AboutPage />} />
-
-         
-            <Route path="/contact" element={<ContactPage />} />
-
-            
-            <Route path="*" element={<NotFoundPage />} />
+            {/* TỰ ĐỘNG TẠO ROUTE TỪ FILE CONFIG */}
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                element={route.element}
+              />
+            ))}
           </Routes>
         </main>
-
         
         {/* <Footer /> */}
       </div>

@@ -1,66 +1,60 @@
+// Đường dẫn: src/shared/components/Navbar/Navbar.jsx
+
 import "./Navbar.css";
-import React, { useState } from "react";
+import React from "react";
+import { NavLink, Link } from "react-router-dom"; // <-- Dùng cả NavLink và Link
+import { routes } from "../../../routes/route.config"; // <-- Import cấu hình
 import "../../../assets/css/layout.css";
 import "../../../assets/css/responsive.css";
 import logoHomePage from "../../../assets/images/logoW.png";
+
 function Navbar(props) {
-    const [isMenuExpanded, setIsMenuExpanded] = useState(false);
+  // Lọc ra các link cần hiển thị từ file config
+  const navLinks = routes.filter(route => route.showInNav);
 
-    const toggleMenu = () => {
-        setIsMenuExpanded(!isMenuExpanded);
-    };
+  return (
+    <nav className="navbar d-flex align-items-center justify-content-between ">
+      <div className="navbar__left">
+        {/* Dùng Link cho logo vì không cần "active" state */}
+        <Link to="/" className="navbar__link decoration">
+          <img className="navbar__logo" src={logoHomePage} alt="logo" />
+          <span className="logo__name d-none d-lg-inline">VaniizIT</span>
+        </Link>
 
-    const closeMenu = () => {
-        setIsMenuExpanded(false);
-    };
+        {/* TỰ ĐỘNG TẠO LINK MENU TỪ FILE CONFIG */}
+        {navLinks.map((link, index) => (
+          <NavLink
+            key={index}
+            to={link.path}
+            className="text-decoration-none d-none d-sm-block"
+            // NavLink sẽ tự động thêm class "active" khi khớp URL
+          >
+            {link.name}
+          </NavLink>
+        ))}
+      </div>
 
-    return (
-        <nav className={`navbar d-flex align-items-center justify-content-between ${isMenuExpanded ? 'navbar--expanded' : ''}`}>
-            <div className="navbar__left">
-                <a href="/" className="navbar__link decoration" onClick={closeMenu}>
-                    <img className="navbar__logo" src={logoHomePage} alt="logo" />
-                    <span className="logo__name d-none d-lg-inline">VaniizIT</span>
-                </a>
-                <a href="#home" onClick={closeMenu} className="text-decoration-none d-none d-sm-block">Home</a>
-                <a href="#about" onClick={closeMenu} className="text-decoration-none d-none d-sm-block">About</a>
-                <a href="#contact" onClick={closeMenu} className="text-decoration-none d-none d-sm-block">Contact</a>
-                <a href="#agent" onClick={closeMenu} className="text-decoration-none d-none d-sm-block">Agent</a>
-            </div>
+      <div className="navbar__right d-none d-md-flex">
+        {/* Giữ lại link Đăng nhập / Đăng ký */}
+        <NavLink to="/login" className="border-0 sign-in text-decoration-none d-none d-sm-block ">
+          Đăng nhập
+        </NavLink>
+        <NavLink to="/register" className="border-0 sign-up text-decoration-none d-none d-sm-block ">
+          Đăng ký
+        </NavLink>
+      </div>
 
-            <div className="navbar__right d-none d-md-flex">
-                <a href="#" onClick={closeMenu} className="border-0 sign-in text-decoration-none d-none d-sm-block ">Sign In</a>
-                <a href="#" onClick={closeMenu} className="border-0 sign-up text-decoration-none d-none d-sm-block ">Sign Up</a>
-            </div>
+      {/* Menu links (Phần này có vẻ trùng lặp, tôi đã ẩn đi) */}
+      {/* <div className="navbar__menu"> ... </div>
+      */}
 
-             {/* Menu links */}
-            <div className={`navbar__menu ${isMenuExpanded ? "active" : ""}`}>
-                <a href="#home" onClick={closeMenu}>
-                Home
-                </a>
-                <a href="#about" onClick={closeMenu}>
-                About
-                </a>
-                <a href="#contact" onClick={closeMenu}>
-                Contact
-                </a>
-                <a href="#agent" onClick={closeMenu}>
-                Agent
-                </a>
-                <a href="#" onClick={closeMenu} className="sign-in">
-                Sign In
-                </a>
-                <a href="#" onClick={closeMenu} className="sign-up">
-                Sign Up
-                </a>
-            </div>
-          <div className="navbar__toggle d-md-none" onClick={toggleMenu}>
-            <span className="bar"></span>
-            <span className="bar"></span>
-            <span className="bar"></span>
-        </div>
-           
-        </nav>
-    );
+      <div className="navbar__toggle d-md-none">
+        <span className="bar"></span>
+        <span className="bar"></span>
+        <span className="bar"></span>
+      </div>
+    </nav>
+  );
 }
 
 export default Navbar;
