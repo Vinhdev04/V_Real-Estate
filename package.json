@@ -6,5 +6,8 @@
     "emailjs": "^4.0.3",
     "lucide-react": "^0.552.0",
     "sweetalert2": "^11.26.3"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
