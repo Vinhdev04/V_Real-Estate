@@ -1,9 +1,10 @@
 import React from 'react';
-import HeroSection from './sections/HeroSection';
-import FeaturesSection from './sections/FeaturesSection';
-import PropertiesSection from './sections/PropertiesSection';
-import CTASection from './sections/CTASection';
-import styles from './HomePage.module.css';
+import HeroSection from './components/HeroSection';
+import  FeaturedProperties from "./components/FeaturedProperties"
+import ServicesSection from './components/ServicesSection';
+import AchievementsSection from './components/AchievementsSection';
+import TestimonialsSection from './components/TestimonialsSection';
+import CTASection from "./components/CTASection";
 
 /**
  * HomePage Component
@@ -11,11 +12,15 @@ import styles from './HomePage.module.css';
  */
 function HomePage() {
   return (
-    <div className={styles.container}>
-      <HeroSection />
-      <PropertiesSection />
-      <FeaturesSection />
-      <CTASection />
+    <div className="container-fluid">
+        <div className="">
+          <HeroSection />
+          <FeaturedProperties/>
+          <ServicesSection/>
+          <AchievementsSection/>
+          <TestimonialsSection/>
+          <CTASection/>
+        </div>
     </div>
   );
 }

@@ -1,5 +1,4 @@
-// Đường dẫn: src/routes/route.config.js
-// (Giả sử file này nằm trong thư mục src/routes)
+
 
 import React from 'react';
 import HomePage from '../pages/HomePage';
@@ -8,7 +7,6 @@ import PropertiesPage from '../pages/PropertiesPage';
 import AboutPage from '../pages/AboutPage';
 import ContactPage from '../pages/ContactPage';
 import NotFoundPage from '../pages/NotFoundPage';
-// import NewsPage from '../pages/NewsPage'; // Bạn chưa có trang này
 
 export const routes = [
   {

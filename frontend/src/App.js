@@ -6,7 +6,8 @@ import { routes } from './routes/route.config'; // Import cấu hình
 
 // Components
 import Navbar from './shared/components/Navbar/Navbar';
-// import Footer from './shared/components/Footer/Footer';
+import Footer from './shared/components/Footer/Footer';
+
 
 // Styles
 import './assets/css/layout.css';
@@ -17,14 +18,11 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <div className="layout d-flex flex-column min-vh-100">
-        {/* Navbar - Hiển thị trên tất cả các trang */}
+      <div className=" d-flex flex-column min-vh-100">
         <Navbar />
-
-        {/* Main Content */}
         <main className="flex-grow-1">
           <Routes>
-            {/* TỰ ĐỘNG TẠO ROUTE TỪ FILE CONFIG */}
+         
             {routes.map((route, index) => (
               <Route
                 key={index}
@@ -35,7 +33,7 @@ function App() {
           </Routes>
         </main>
         
-        {/* <Footer /> */}
+       <Footer/>
       </div>
     </Router>
   );

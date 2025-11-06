@@ -15,19 +15,19 @@ function Navbar(props) {
   return (
     <nav className="navbar d-flex align-items-center justify-content-between ">
       <div className="navbar__left">
-        {/* Dùng Link cho logo vì không cần "active" state */}
-        <Link to="/" className="navbar__link decoration">
+      
+        <Link to="/" className="navbar__link navbar__link--logo text-decoration-none">
           <img className="navbar__logo" src={logoHomePage} alt="logo" />
           <span className="logo__name d-none d-lg-inline">VaniizIT</span>
         </Link>
 
-        {/* TỰ ĐỘNG TẠO LINK MENU TỪ FILE CONFIG */}
+      
         {navLinks.map((link, index) => (
           <NavLink
             key={index}
             to={link.path}
             className="text-decoration-none d-none d-sm-block"
-            // NavLink sẽ tự động thêm class "active" khi khớp URL
+          
           >
             {link.name}
           </NavLink>
