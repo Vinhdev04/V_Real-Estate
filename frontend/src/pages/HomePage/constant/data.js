@@ -4,9 +4,7 @@ import images_03 from "../../../assets/images/home-page-room-03";
 import images_04 from "../../../assets/images/home-page-room-04";
 import images_05 from "../../../assets/images/home-page-room-05";
 import images_06 from "../../../assets/images/home-page-room-06";
-import images_07 from "../../../assets/images/home-page-room-07";
-import images_08 from "../../../assets/images/home-page-room-08";
-import images_09 from "../../../assets/images/home-page-room-09";
+
 
 export const data = [
   {
