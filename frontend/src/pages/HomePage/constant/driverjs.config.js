@@ -1,6 +1,6 @@
-import { driver } from "driver.js";
-import "driver.js/dist/driver.css";
 
+import "driver.js/dist/driver.css";
+import { driver } from 'driver.js';
 // Định nghĩa các bước tour cho HeroSection
 export const heroTourSteps = [
     {
