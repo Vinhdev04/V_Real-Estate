@@ -1,0 +1,41 @@
+/* src/styles/ContactInfoSection.css */
+.contact-info-section {
+  padding: 80px 20px;
+  background: linear-gradient(to bottom, #ffffff, #f0fdfa);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0c4a6e;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-bottom: 48px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}

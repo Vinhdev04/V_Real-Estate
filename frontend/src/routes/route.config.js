@@ -4,9 +4,9 @@ import React from 'react';
 import HomePage from '../pages/HomePage';
 import PropertiesPage from '../pages/PropertiesPage';
 // import PropertyDetailPage from '../pages/PropertyDetailPage';
-import AboutPage from '../pages/AboutPage';
-import ContactPage from '../pages/ContactPage';
-import NotFoundPage from '../pages/NotFoundPage';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
+import NotFound from '../pages/NotFound';
 
 export const routes = [
   {
@@ -23,31 +23,31 @@ export const routes = [
   },
   {
     path: '/properties/:id',
-    element: <NotFoundPage />,
+    element: <NotFound />,
     name: 'Chi Tiết Bất Động Sản',
     showInNav: false, 
   },
   {
     path: '/about',
-    element: <AboutPage />,
+    element: <About />,
     name: 'Về chúng tôi', 
     showInNav: true, 
   },
   {
     path: '/contact',
-    element: <ContactPage />,
+    element: <Contact />,
     name: 'Liên Hệ',
     showInNav: true, 
   },
   {
     path: '/news',
-    element: <NotFoundPage />, 
+    element: <NotFound />, 
     name: 'Tin tức',
     showInNav: true, 
   },
   {
     path: '*',
-    element: <NotFoundPage />,
+    element: <NotFound />,
     name: 'Không Tìm Thấy',
     showInNav: false, 
   },

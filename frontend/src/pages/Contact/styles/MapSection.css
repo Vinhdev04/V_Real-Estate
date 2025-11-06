@@ -1,0 +1,96 @@
+/* src/styles/MapSection.css */
+.map-container {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  height: 500px;
+}
+
+.map-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  pointer-events: none;
+}
+
+.popup {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  max-width: 280px;
+  pointer-events: auto;
+  font-family: inherit;
+  animation: popIn 0.5s ease-out;
+}
+
+.popup strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.popup p {
+  font-size: 0.875rem;
+  color: #475569;
+  margin: 0 0 8px;
+}
+
+.rating {
+  margin-bottom: 12px;
+}
+
+.rating span {
+  font-size: 0.875rem;
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.directions-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.directions-btn:hover {
+  background: #2563eb;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .map-container {
+    height: 400px;
+  }
+  .map-overlay {
+    top: 10px;
+    left: 10px;
+  }
+  .popup {
+    max-width: 220px;
+    padding: 12px;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import SearchSection from './sections/SearchSection';
-import PropertyFilter from './components/PropertyFilter';
-import PropertyGrid from './components/PropertyGrid';
+import PropertyFilter from './features/PropertyFilter';
+import PropertyGrid from './features/PropertyGrid';
 import styles from './PropertiesPage.module.css';
 import { INITIAL_PROPERTIES } from './constants';
 import BackToTop from "../../shared/components/BackToTop/BackToTop";
