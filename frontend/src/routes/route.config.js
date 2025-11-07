@@ -4,7 +4,7 @@ import React from 'react';
 import HomePage from '../pages/HomePage';
 import PropertiesPage from '../pages/PropertiesPage';
 // import PropertyDetailPage from '../pages/PropertyDetailPage';
-import About from '../pages/About';
+// import About from '../pages/About';
 import Contact from '../pages/Contact';
 import NotFound from '../pages/NotFound';
 
@@ -29,7 +29,7 @@ export const routes = [
   },
   {
     path: '/about',
-    element: <About />,
+    // element: <About />,
     name: 'Về chúng tôi', 
     showInNav: true, 
   },
