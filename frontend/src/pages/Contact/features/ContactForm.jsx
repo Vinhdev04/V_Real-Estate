@@ -1,7 +1,9 @@
 // src/components/ContactForm.jsx
-import MapSection from './MapSection';
-import '../styles/ContactForm.css';
 
+import '../styles/ContactForm.css';
+import MapSection from './MapSection';
+import { Form,Input,Select,Button } from 'antd';
+const { TextArea } = Input;
 function ContactForm() {
   return (
     <section className="contact-section">
@@ -9,36 +11,43 @@ function ContactForm() {
         <div className="contact-content">
           <div className="form-wrapper">
             <h3>Gửi Tin Nhắn</h3>
-            <form className="contact-form">
-              <div className="form-row">
-                <input type="text" placeholder="Họ và tên *" required />
-                <input type="email" placeholder="Email *" required />
-              </div>
-              <div className="form-row">
-                <input type="tel" placeholder="Số điện thoại *" required />
-                <select defaultValue="">
-                  <option value="" disabled>Dịch vụ quan tâm</option>
-                  <option>Mua bán</option>
-                  <option>Cho thuê</option>
-                  <option>Tư vấn</option>
-                </select>
-              </div>
-              <input type="text" placeholder="Chủ đề" className="full-width" />
-              <textarea
-                placeholder="Tin nhắn * (tối đa 500 ký tự)"
-                maxLength="500"
-                rows="5"
-                required
-                className="full-width"
-                defaultValue=""
-              ></textarea>
-              <div className="char-count">0/500 ký tự</div>
-              <button type="submit" className="submit-btn">
-                ✉️ Gửi tin nhắn
-              </button>
-            </form>
+              <Form layout="vertical">
+                  <Form.Item label = "Họ và tên *" name="vertical" required tooltip="This is a required field">
+                      <Input placeholder="Nhập họ và tên"/>
+                  </Form.Item>
+
+                  <Form.Item label = "Email *" required tooltip="This is a required field">
+                      <Input placeholder="Nhập email"/>
+                  </Form.Item>
+                  
+                  <Form.Item label = "Số điện thoại *" required tooltip="This is a required field">
+                      <Input placeholder="Nhập số điện thoại"/>
+                  </Form.Item>
+
+                  <Form.Item label="Dịch vụ quan tâm" required tooltip="This is a required field">
+                    <Select  defaultValue="lucy"
+                      options = {[{label: "Value1", value: "value1"}]} >
+                    </Select>
+                  </Form.Item>
+
+                   <Form.Item label = "Chủ đề" required tooltip="This is a required field">
+                      <Input placeholder="Nhập chủ đề"/>
+                  </Form.Item>
+
+                  <Form.Item label="Tin nhắn *" required tooltip="This is a required field">
+                      <TextArea rows= {4} placeholder="Nhập tin nhắn của bạn..."></TextArea>
+                  </Form.Item>
+
+
+                   <Form.Item label = {null}>
+                      <Button type="primary" htmlType="submit">
+                        ✉️ Gửi tin nhắn
+                    </Button>
+                  </Form.Item>
+              </Form>
           </div>
-          <MapSection />
+
+          <MapSection/>
         </div>
       </div>
     </section>

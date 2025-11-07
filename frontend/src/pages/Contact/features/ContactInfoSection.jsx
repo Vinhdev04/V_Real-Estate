@@ -2,28 +2,7 @@
 import ContactInfoCard from './ContactInfoCard';
 import '../styles/ContactInfoSection.css';
 
-const contactInfo = [
-  {
-    icon: 'location',
-    title: 'Địa chỉ',
-    content: '123 Nguyễn Huệ, Quận 1, TP.HCM',
-  },
-  {
-    icon: 'phone',
-    title: 'Điện thoại',
-    content: '0123 456 789',
-  },
-  {
-    icon: 'mail',
-    title: 'Email',
-    content: 'info@realestate.com',
-  },
-  {
-    icon: 'clock',
-    title: 'Giờ làm việc',
-    content: 'T2-T6: 8:00 - 18:00\nT7: 8:00 - 12:00',
-  },
-];
+import { contactInfo } from '../constants';
 
 function ContactInfoSection() {
   return (

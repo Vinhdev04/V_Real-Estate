@@ -1,13 +1,17 @@
 /* src/styles/BranchCard.css */
+
 .branch-card {
-  background: white;
-  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(14, 165, 233, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   animation: fadeInUp 0.6s ease-out forwards;
   opacity: 0;
   transform: translateY(20px);
+  position: relative;
+  border: 1px solid rgba(14, 165, 233, 0.1);
 }
 
 .branch-card:nth-child(1) {
@@ -20,46 +24,66 @@
   animation-delay: 0.3s;
 }
 
-.branch-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-}
-
-.branch-image {
-  height: 160px;
-  overflow: hidden;
-}
-
-.image-placeholder {
+.branch-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
-  position: relative;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+  pointer-events: none;
 }
-/* src/styles/BranchCard.css */
+
+.branch-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 48px rgba(14, 165, 233, 0.15),
+    0 12px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.branch-card:hover::before {
+  left: 100%;
+}
+
 .branch-image {
-  height: 160px;
+  height: 200px;
   overflow: hidden;
   position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.branch-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
 }
 
 .branch-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .branch-card:hover .branch-img {
-  transform: scale(1.08);
+  transform: scale(1.12) rotate(2deg);
 }
 
-/* Giữ placeholder làm fallback */
 .image-placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
   position: relative;
+  animation: shimmer 2s infinite;
+  background-size: 200% 100%;
 }
 
 .image-placeholder::after {
@@ -67,86 +91,204 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.3);
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  animation: pulse 2s infinite;
-}
-.image-placeholder::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: pulse 2s infinite;
+  animation: pulse 2s ease-in-out infinite;
 }
 
 .branch-content {
-  padding: 20px;
+  padding: 28px 24px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
 }
 
 .branch-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0 0 12px;
-  color: #1a1a1a;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 16px;
+  background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.branch-info {
+  margin-bottom: 20px;
 }
 
 .branch-info p {
-  margin: 8px 0;
+  margin: 10px 0;
   font-size: 0.95rem;
-  color: #555;
+  color: #475569;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.branch-card:hover .branch-info p {
+  color: #1e293b;
 }
 
 .icon {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  display: inline-block;
+  min-width: 24px;
 }
 
 .direction-btn {
-  margin-top: 16px;
-  padding: 10px 20px;
-  background: #2563eb;
+  position: relative;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: white;
   border: none;
-  border-radius: 8px;
-  font-weight: 500;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  transition: all 0.3s ease;
-  width: fit-content;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
 
-.direction-btn:hover {
-  background: #1d4ed8;
-  transform: scale(1.05);
+.direction-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease-out, height 0.5s ease-out;
+  z-index: 0;
 }
 
 .direction-btn::before {
   content: "🧭";
+  display: inline-block;
+  font-size: 1rem;
+  animation: rotateIn 0.6s ease-out;
+}
+
+.direction-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.direction-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+}
+
+.direction-btn:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+.direction-btn:active {
+  transform: translateY(0);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .branch-card {
-    max-width: 100%;
+    border-radius: 16px;
   }
+
+  .branch-image {
+    height: 160px;
+  }
+
   .branch-content {
-    padding: 16px;
+    padding: 20px 18px;
+  }
+
+  .branch-title {
+    font-size: 1.2rem;
+  }
+
+  .branch-info p {
+    font-size: 0.9rem;
+  }
+
+  .direction-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 11px 20px;
   }
 }
 
-/* Animation */
+@media (max-width: 640px) {
+  .branch-card {
+    border-radius: 14px;
+  }
+
+  .branch-image {
+    height: 140px;
+  }
+
+  .branch-content {
+    padding: 16px 14px;
+  }
+
+  .branch-title {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
+  .branch-info p {
+    margin: 8px 0;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .branch-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  .branch-image {
+    height: 120px;
+  }
+
+  .branch-content {
+    padding: 12px 12px;
+  }
+
+  .branch-title {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .branch-info p {
+    margin: 6px 0;
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+
+  .direction-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}
+
 @keyframes fadeInUp {
   to {
     opacity: 1;
@@ -157,9 +299,29 @@
 @keyframes pulse {
   0%,
   100% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(1);
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.3);
+    transform: scale(1.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    transform: rotate(-20deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg);
   }
 }

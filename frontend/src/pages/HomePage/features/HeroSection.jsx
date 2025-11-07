@@ -54,7 +54,7 @@ export default function HeroSection() {
 
     return (
         <div className={`hero-container ${isTourActive ? 'tour-active' : ''}`}>
-            {/* Nút Hướng dẫn với animation */}
+           
             <button
                 onClick={startTour}
                 className="tour-guide-btn"
@@ -76,7 +76,7 @@ export default function HeroSection() {
 
                 <div className="search-box">
                     <Form layout="inline" className="search-form"> 
-                        <Form.Item className="form-item">
+                        <Form.Item className="form-item ">
                             <Select defaultValue="Mua" className="custom-select">
                                 <Option value="Mua">Mua</Option>
                                 <Option value="Thuê">Thuê</Option>
@@ -84,7 +84,7 @@ export default function HeroSection() {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item className="form-item">
+                        <Form.Item className="form-item ">
                             <Select defaultValue="" placeholder="Khu vực" className="custom-select">
                                 <Option value="" disabled>Khu vực</Option>
                                 <Option value="hcm">TP.HCM</Option>
@@ -92,7 +92,7 @@ export default function HeroSection() {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item className="form-item">
+                        <Form.Item className="form-item ">
                             <Select defaultValue="" placeholder="Loại BĐS" className="custom-select">
                                 <Option value="" disabled>Loại BĐS</Option>
                                 <Option value="apartment">Căn hộ</Option>
@@ -100,7 +100,7 @@ export default function HeroSection() {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item className="form-item">
+                        <Form.Item className="form-item ">
                             <Select defaultValue="" placeholder="Mức giá" className="custom-select">
                                 <Option value="" disabled>Mức giá</Option>
                                 <Option value="low">Dưới 1 tỷ</Option>
