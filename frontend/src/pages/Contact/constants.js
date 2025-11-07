@@ -61,3 +61,10 @@ export const branches = [
     image: img_01
   },
 ];
+
+export const opt = [
+  { label: "Mua Bán Nhà Đất", value: "mua-ban-nha-dat" },
+  { label: "Cho Thuê Nhà Đất", value: "cho-thue-nha-dat" },
+  { label: "Dự Án Bất Động Sản", value: "du-an-bat-dong-san" },
+  { label: "Tư Vấn Pháp Lý", value: "tu-van-phap-ly" },
+]
