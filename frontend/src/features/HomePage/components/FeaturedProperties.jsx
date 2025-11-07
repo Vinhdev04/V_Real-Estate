@@ -3,7 +3,7 @@ import { Card, Row, Col,Flex, Tag, Button, Space, Typography } from "antd";
 import { PhoneOutlined ,HeartOutlined , EyeOutlined } from "@ant-design/icons";
 
 import "../styles/FeaturedProperties.css";
-import {data} from "../constant/data.js";
+import {data} from "../services/data";
 const { Title, Text } = Typography;
 
 

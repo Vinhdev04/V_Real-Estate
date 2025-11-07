@@ -1,6 +1,6 @@
 // src/components/ContactForm.jsx
 
-import { opt } from '../constants';
+import { opt } from '../services/constants';
 import '../styles/ContactForm.css';
 import MapSection from './MapSection';
 import { Form,Input,Select,Button } from 'antd';
@@ -8,13 +8,16 @@ const { TextArea } = Input;
 
 
 function ContactForm() {
+  const handleSubmit = (e) => {
+    console.log('Form data submitted: ', e);
+  }
   return (
     <section className="contact-section">
       <div className="container">
         <div className="contact-content">
           <div className="form-wrapper">
             <h3>Gửi Tin Nhắn</h3>
-              <Form layout="vertical">
+              <Form layout="vertical" onFinish={handleSubmit}>
                   <Form.Item label = "Họ và tên *" name="username" required tooltip="This is a required field"  rules={[{ required: true, message: 'Vui lòng nhập họ và tên!' }]}>
                       <Input placeholder="Nhập họ và tên"/>
                   </Form.Item>

@@ -1,5 +1,5 @@
-import img_01 from "../../assets/images/head-offiece-01.jpg"
-import img_02 from "../../assets/images/head-offiece-02.jpg"
+import img_01 from "../../../assets/images/head-offiece-01.jpg"
+import img_02 from "../../../assets/images/head-offiece-02.jpg"
 export const contactInfo = [
   {
     icon: 'location',

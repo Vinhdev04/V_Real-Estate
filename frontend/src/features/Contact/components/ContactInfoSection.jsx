@@ -2,7 +2,7 @@
 import ContactInfoCard from './ContactInfoCard';
 import '../styles/ContactInfoSection.css';
 
-import { contactInfo } from '../constants';
+import { contactInfo } from '../services/constants';
 
 function ContactInfoSection() {
   return (

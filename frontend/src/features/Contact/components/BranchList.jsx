@@ -1,7 +1,7 @@
 // src/components/BranchList.jsx
 import BranchCard from './BranchCard';
 import '../styles/BranchList.css';
-import {branches} from "../constants";
+import {branches} from "../services/constants";
 
 function BranchList() {
   return (

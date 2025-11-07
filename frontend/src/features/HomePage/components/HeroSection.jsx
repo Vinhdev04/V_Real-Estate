@@ -11,7 +11,7 @@ import {
     heroTourSteps, 
     createDriverInstance, 
     restartTour 
-} from "../constant/driverjs.config.js";
+} from "../services/driverjs.config.js";
 
 const { Option } = Select;
 

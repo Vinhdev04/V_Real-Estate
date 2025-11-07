@@ -1,10 +1,10 @@
 import React from 'react';
-import HeroSection from './features/HeroSection';
-import  FeaturedProperties from "./features/FeaturedProperties"
-import ServicesSection from './features/ServicesSection';
-import AchievementsSection from './features/AchievementsSection';
-import TestimonialsSection from './features/TestimonialsSection';
-import CTASection from "./features/CTASection";
+import HeroSection from '../../features/HomePage/components/HeroSection';
+import  FeaturedProperties from "../../features/HomePage/components/FeaturedProperties"
+import ServicesSection from '../../features/HomePage/components/ServicesSection';
+import AchievementsSection from '../../features/HomePage/components/AchievementsSection';
+import TestimonialsSection from '../../features/HomePage/components/TestimonialsSection';
+import CTASection from "../../features/HomePage/components/CTASection";
 import BackToTop from "../../shared/components/BackToTop/BackToTop";
 
 /**

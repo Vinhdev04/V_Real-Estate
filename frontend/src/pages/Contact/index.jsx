@@ -1,9 +1,9 @@
 import React from 'react';
-import ContactForm from './features/ContactForm';
-import BranchList from './features/BranchList';
+import ContactForm from '../../features/Contact/components/ContactForm';
+import BranchList from '../../features/Contact/components/BranchList';
 import BackToTop from '../../shared/components/BackToTop/BackToTop';
-import ContactHero from './features/ContactHero';
-import ContactInfoSection from './features/ContactInfoSection';
+import ContactHero from '../../features/Contact/components/ContactHero';
+import ContactInfoSection from '../../features/Contact/components/ContactInfoSection';
 
 function index(props) {
     return (
