@@ -36,10 +36,10 @@ function Navbar(props) {
 
       <div className="navbar__right d-none d-md-flex">
         {/* Giữ lại link Đăng nhập / Đăng ký */}
-        <NavLink to="/login" className="border-0 sign-in text-decoration-none d-none d-sm-block ">
+        <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none d-none d-sm-block ">
           Đăng nhập
         </NavLink>
-        <NavLink to="/register" className="border-0 sign-up text-decoration-none d-none d-sm-block ">
+        <NavLink to="/auth/register" className="border-0 sign-up text-decoration-none d-none d-sm-block ">
           Đăng ký
         </NavLink>
       </div>

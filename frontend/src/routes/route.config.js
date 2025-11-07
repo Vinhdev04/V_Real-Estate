@@ -7,6 +7,9 @@ import PropertiesPage from '../pages/PropertiesPage';
 // import About from '../pages/About';
 import Contact from '../pages/Contact';
 import NotFound from '../pages/NotFound';
+// import LoginForm from '../pages//Login';
+import LoginForm from '../features/Auth/components/Login/LoginForm';
+import RegisterForm from '../features/Auth/components/Register/RegisterForm';
 
 export const routes = [
   {
@@ -42,6 +45,18 @@ export const routes = [
   {
     path: '/news',
     element: <NotFound />, 
+    name: 'Tin tức',
+    showInNav: true, 
+  },
+  {
+    path: '/auth/login',
+    element: <LoginForm />, 
+    name: 'Tin tức',
+    showInNav: true, 
+  },
+  {
+    path: '/auth/register',
+    element: <RegisterForm /> ,  
     name: 'Tin tức',
     showInNav: true, 
   },
