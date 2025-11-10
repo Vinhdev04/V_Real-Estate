@@ -4,7 +4,7 @@ import React from 'react';
 import HomePage from '../pages/HomePage';
 import PropertiesPage from '../pages/PropertiesPage';
 // import PropertyDetailPage from '../pages/PropertyDetailPage';
-// import About from '../pages/About';
+import About from '../pages/About';
 import Contact from '../pages/Contact';
 import NotFound from '../pages/NotFound';
 // import LoginForm from '../pages//Login';
@@ -32,7 +32,7 @@ export const routes = [
   },
   {
     path: '/about',
-    // element: <About />,
+    element: <About />,
     name: 'Về chúng tôi', 
     showInNav: true, 
   },
@@ -51,13 +51,13 @@ export const routes = [
   {
     path: '/auth/login',
     element: <LoginForm />, 
-    name: 'Tin tức',
+    name: 'Đăng nhập',
     showInNav: true, 
   },
   {
     path: '/auth/register',
     element: <RegisterForm /> ,  
-    name: 'Tin tức',
+    name: 'Đăng ký',
     showInNav: true, 
   },
   {

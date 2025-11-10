@@ -35,7 +35,7 @@ function Navbar(props) {
       </div>
 
       <div className="navbar__right d-none d-md-flex">
-        {/* Giữ lại link Đăng nhập / Đăng ký */}
+    
         <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none d-none d-sm-block ">
           Đăng nhập
         </NavLink>
@@ -44,7 +44,7 @@ function Navbar(props) {
         </NavLink>
       </div>
 
-      {/* Menu links (Phần này có vẻ trùng lặp, tôi đã ẩn đi) */}
+   
       {/* <div className="navbar__menu"> ... </div>
       */}
 
