@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import HomePage from '../pages/HomePage';
+import Home from '../pages/Home';
 import PropertiesPage from '../pages/PropertiesPage';
 // import PropertyDetailPage from '../pages/PropertyDetailPage';
 import About from '../pages/About';
@@ -14,7 +14,7 @@ import RegisterForm from '../features/Auth/components/Register/RegisterForm';
 export const routes = [
   {
     path: '/',
-    element: <HomePage />,
+    element: <Home />,
     name: 'Trang Chủ',
     showInNav: true, // <-- Hiển thị trên Navbar
   },
