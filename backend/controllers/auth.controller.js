@@ -4,11 +4,12 @@ import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
-// HANDLE REGISTER USER
-export const register = async(req,res) => {
+// ------ HANDLE REGISTER USER ------
+export const register = async(req,res) => {   
     // get data from response
     const {username,password,email} = req.body;
-    // console.log(req.body);
+
+
 
     try{
         
@@ -16,7 +17,7 @@ export const register = async(req,res) => {
         const hashedPassword = await bcrypt.hash(password,10);
         console.log(hashedPassword);
 
-        // create a new user
+        // create a new user - schema from prisma
          const newUser = await prisma.user.create({
             data: {
                 username,
@@ -37,29 +38,35 @@ export const register = async(req,res) => {
 
 
 
-// HANDLE LOGIN USER
+//  ------ HANDLE LOGIN USER ------
 export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // check user exists
+    // Check input
+    if(!username || !password)
+      return res.status(400).json({message: "Missing username or password!"})
+    
+    // check user exists - seatch user by username
     const user = await prisma.user.findFirst({
       where: { username },
     });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+
+    if (!user) 
+      return res.status(404).json({ message: 'Invalid Credentials!' });
+    
 
     // check password
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-      return res.status(401).json({ message: 'Password is incorrect' });
+       console.log("LOGIN FAILED User not found:", username);
+       return res.status(401).json({ message: 'Invalid Credentials' });
     }
 
     // create a new token
-    const timeExpire = 24 * 60 * 60; // 24 hours
+    const timeExpire = 24 * 60 * 60 * 1000;
 
-    // create a new token
+    // create a JWT token
     const token = jwt.sign(
       { userId: user.id },
       process.env.JWT_SECRET_KEY,
@@ -69,32 +76,34 @@ export const login = async (req, res) => {
     // set cookie
     res.cookie('token', token, {
       httpOnly: true,
-      maxAge: timeExpire * 1000,
+      maxAge: timeExpire,
       sameSite: 'strict',
-      
+      // secure: true; // using HTTPS - Production
     });
-    // console.log(token);
+    
+    console.log("LOGIN SUCCESS User logged in:", username);
+    console.log("Token:", token);
 
 
-    // send final response
+    
     res.status(200).json({
       message: 'Login successful',
-    //   token,
-    //   user: {
-    //     id: user.id,
-    //     username: user.username,
-    //   },
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+      },
     });
 
   } catch (err) {
-    console.error(err);
+    console.error("LOGIN Error",err);
     res.status(500).json({ message: 'Failed to login user' });
   }
 };
 
 
 
-// HANDLE LOGOUT USER
+// ------ HANDLE LOGOUT USER ------
 export const logout = async(req,res) => {
     res.clearCookie('token');
     res.status(200).json({message: 'Logout successful'});

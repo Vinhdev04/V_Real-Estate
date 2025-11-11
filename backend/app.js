@@ -15,7 +15,7 @@ import authRoute from './routes/auth.route.js';
 const app = express();
 
 // Config host & port
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3080;
 const host = process.env.HOST || 'localhost';
 
 // Middleware
