@@ -2,8 +2,8 @@
 
 import "./Navbar.css";
 import React from "react";
-import { NavLink, Link } from "react-router-dom"; // <-- Dùng cả NavLink và Link
-import { routes } from "../../../routes/route.config"; // <-- Import cấu hình
+import { NavLink} from "react-router-dom";
+import { routes } from "../../../routes/route.config";
 import "../../../assets/css/layout.css";
 import "../../../assets/css/responsive.css";
 import logoHomePage from "../../../assets/images/logoW.png";
@@ -16,10 +16,10 @@ function Navbar(props) {
     <nav className="navbar d-flex align-items-center justify-content-between ">
       <div className="navbar__left">
       
-        <Link to="/" className="navbar__link navbar__link--logo text-decoration-none">
+        <NavLink to="/" className="navbar__link navbar__link--logo text-decoration-none">
           <img className="navbar__logo" src={logoHomePage} alt="logo" />
           <span className="logo__name d-none d-lg-inline">VaniizIT</span>
-        </Link>
+        </NavLink>
 
       
         {navLinks.map((link, index) => (
@@ -42,11 +42,11 @@ function Navbar(props) {
         <NavLink to="/auth/register" className="border-0 sign-up text-decoration-none d-none d-sm-block ">
           Đăng ký
         </NavLink>
+        <NavLink to="/profile" className="border-0 profile text-decoration-none d-none d-sm-block "></NavLink>
       </div>
 
    
-      {/* <div className="navbar__menu"> ... </div>
-      */}
+      
 
       <div className="navbar__toggle d-md-none">
         <span className="bar"></span>

@@ -3,14 +3,13 @@
 import React from 'react';
 import Home from '../pages/Home';
 import PropertiesPage from '../pages/PropertiesPage';
-// import PropertyDetailPage from '../pages/PropertyDetailPage';
+
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 import NotFound from '../pages/NotFound';
-// import LoginForm from '../pages//Login';
-import LoginForm from '../features/Auth/components/Login/LoginForm';
-import RegisterForm from '../features/Auth/components/Register/RegisterForm';
-
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import Profile from '../pages/Profile';
 export const routes = [
   {
     path: '/',
@@ -48,24 +47,33 @@ export const routes = [
     name: 'Tin tức',
     showInNav: true, 
   },
-  {
-    path: '/auth/login',
-    element: <LoginForm />, 
-    name: 'Đăng nhập',
-    showInNav: true, 
-  },
-  {
-    path: '/auth/register',
-    element: <RegisterForm /> ,  
-    name: 'Đăng ký',
-    showInNav: true, 
-  },
+ 
   {
     path: '*',
     element: <NotFound />,
     name: 'Không Tìm Thấy',
     showInNav: false, 
   },
+  {
+    path: '/auth/login',
+    element: <Login />, 
+    name: 'Đăng nhập',
+    // showInNav: true, 
+  },
+  {
+    path: '/auth/register',
+    element: <Register /> ,  
+    name: 'Đăng ký',
+    // showInNav: true, 
+  },
+  {
+    path: '/profile',
+    element: <Profile />, 
+    name: 'Trang cá nhân',
+    showInNav: true,
+  }
+ 
+  
 ];
 
 export default routes;
