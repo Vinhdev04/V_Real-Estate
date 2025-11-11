@@ -13,5 +13,6 @@ model User {
   username  String   @unique
   password  String
   avatar    String?
+  telephone String?
   createdAt DateTime @default(now())
 }

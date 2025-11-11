@@ -15,18 +15,18 @@ import authRoute from './routes/auth.route.js';
 const app = express();
 
 // Config host & port
-const port = process.env.PORT || 3080;
+const port = process.env.PORT || 8080;
 const host = process.env.HOST || 'localhost';
 
 // Middleware
 app.use(morgan('dev'));
-app.use(express.json());
-app.use(cookieParser());
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true
 }));
-
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 // Route test
 app.get('/', (req, res) => {
   res.send('Hello World!');

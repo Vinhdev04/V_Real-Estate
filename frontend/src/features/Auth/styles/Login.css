@@ -466,3 +466,13 @@
     margin-left: 0;
   }
 }
+
+.error-message {
+  /* background: #ffebeb;
+  border: 1px solid #ff4d4f; */
+  color: #a8071a;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+}

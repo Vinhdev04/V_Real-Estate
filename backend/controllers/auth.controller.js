@@ -7,12 +7,16 @@ import cors from 'cors';
 // ------ HANDLE REGISTER USER ------
 export const register = async(req,res) => {   
     // get data from response
-    const {username,password,email} = req.body;
+    const {username,password,passwordConfirm,email,telephone} = req.body; // 👈 thêm passwordConfirm và telephone
 
 
 
     try{
-        
+        // check password confirm
+        // if(password !== passwordConfirm){
+        //     return res.status(400).json({message: 'Mật khẩu xác nhận không khớp!'});
+        // }
+
         // hash password
         const hashedPassword = await bcrypt.hash(password,10);
         console.log(hashedPassword);
@@ -23,6 +27,7 @@ export const register = async(req,res) => {
                 username,
                 email,
                 password: hashedPassword,
+                telephone,
             },
         });
         // console.log(newUser);

@@ -1,18 +1,37 @@
 import React, { useState } from 'react';
 import "../../styles/Login.css"
 import AuthLayout from '../AuthLayout/AuthLayout';
-
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 export default function RegisterForm() {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [terms, setTerms] = useState(false);
+  const [error,setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ name, phone, email, password, confirmPassword, terms });
+    setError("");
+
+    const formData = new FormData(e.target);
+    const data = {
+    username: formData.get('username'),
+    email: formData.get('email'),
+    password: formData.get('password'),
+    passwordConfirm: formData.get('passwordConfirm'),
+    telephone: formData.get('telephone'),
+    };
+
+    
+    try{
+        const res = await axios.post("http://localhost:8080/api/auth/register",data, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true, //  backend có dùng cookie
+      });
+        console.log(res.data);
+        navigate("/auth/login");
+    }catch(err){
+      // get error from be
+      setError(err.response.data.message);
+    }
   };
 
   return (
@@ -28,19 +47,18 @@ export default function RegisterForm() {
               <input
                 type="text"
                 placeholder="Nhập họ và tên"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
+             
+                name="username"
               />
             </div>
             <div className="form-group">
               <label>Số điện thoại *</label>
               <input
-                type="tel"
+                type="tel" 
+                name="telephone"
                 placeholder="Nhập số điện thoại"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
+              
+                required 
               />
             </div>
           </div>
@@ -50,9 +68,9 @@ export default function RegisterForm() {
             <input
               type="email"
               placeholder="Nhập email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+             
+              required 
+              name="email"
             />
           </div>
 
@@ -61,9 +79,9 @@ export default function RegisterForm() {
             <input
               type="password"
               placeholder="Nhập mật khẩu"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+             
+              required 
+              name="password"
             />
           </div>
 
@@ -72,9 +90,9 @@ export default function RegisterForm() {
             <input
               type="password"
               placeholder="Nhập lại mật khẩu"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
+              
+              required 
+              name="passwordConfirm"
             />
           </div>
 
@@ -82,14 +100,14 @@ export default function RegisterForm() {
             <label className="checkbox-wrapper">
               <input
                 type="checkbox"
-                checked={terms}
-                onChange={(e) => setTerms(e.target.checked)}
+              
               />
               <span>Tôi đồng ý với Điều khoản và Chính sách</span>
             </label>
           </div>
 
           <button type="submit" className="submit-btn">Đăng ký →</button>
+          {error && <div className="error-message text-danger">{error}</div>}
 
           <div className="toggle-form">
             <span>Đã có tài khoản? </span>
