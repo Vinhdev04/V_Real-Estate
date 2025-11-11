@@ -7,15 +7,29 @@ import cors from 'cors';
 // ------ HANDLE REGISTER USER ------
 export const register = async(req,res) => {   
     // get data from response
-    const {username,password,passwordConfirm,email,telephone} = req.body; // 👈 thêm passwordConfirm và telephone
+    const {username, password, passwordConfirm, email, telephone} = req.body;
 
+    // ===  VALIDATION BACKEND ===
+    if(!username || !email || !password || !telephone){
+      res.status(400).json({message: "Vui lòng điền đầy đủ thông tin."})
+    }
 
-
+    if(password !== passwordConfirm){
+        return res.status(400).json({message: 'Mật khẩu xác nhận không khớp!'});
+    }
+    
     try{
-        // check password confirm
-        // if(password !== passwordConfirm){
-        //     return res.status(400).json({message: 'Mật khẩu xác nhận không khớp!'});
-        // }
+         // check email or username exists
+         const existingEmail = await prisma.user.findUnique({ where: { email } });
+        if (existingEmail) {
+            return res.status(400).json({message: "Email này đã được sử dụng."});
+        }
+
+        //  Check username đã tồn tại?
+        const existingUser = await prisma.user.findUnique({ where: { username } });
+        if (existingUser) {
+            return res.status(400).json({message: "Username này đã tồn tại."});
+        }
 
         // hash password
         const hashedPassword = await bcrypt.hash(password,10);

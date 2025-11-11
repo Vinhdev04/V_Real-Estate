@@ -3,37 +3,16 @@ import "../../styles/Login.css"
 import AuthLayout from '../AuthLayout/AuthLayout';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../hooks/useAuth.js';
 export default function RegisterForm() {
-  const [error,setError] = useState("");
 
-  const navigate = useNavigate();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  // call hook and get data
+  const { handleSubmit, loading,clearError, errors} = useAuth();
 
-    const formData = new FormData(e.target);
-    const data = {
-    username: formData.get('username'),
-    email: formData.get('email'),
-    password: formData.get('password'),
-    passwordConfirm: formData.get('passwordConfirm'),
-    telephone: formData.get('telephone'),
-    };
-
-    
-    try{
-        const res = await axios.post("http://localhost:8080/api/auth/register",data, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true, //  backend có dùng cookie
-      });
-        console.log(res.data);
-        navigate("/auth/login");
-    }catch(err){
-      // get error from be
-      setError(err.response.data.message);
-    }
+  const handleChange = (e) => {
+    const { name } = e.target; 
+    clearError(name); 
   };
-
   return (
     <AuthLayout title="Tham gia cùng chúng tôi">
       <div className="auth-card">
@@ -47,9 +26,12 @@ export default function RegisterForm() {
               <input
                 type="text"
                 placeholder="Nhập họ và tên"
-             
                 name="username"
+                onChange={handleChange}
+                className={errors.username ? 'input-error' : ''}
               />
+         
+              {errors.username && <span className="error-text">{errors.username}</span>}
             </div>
             <div className="form-group">
               <label>Số điện thoại *</label>
@@ -57,9 +39,10 @@ export default function RegisterForm() {
                 type="tel" 
                 name="telephone"
                 placeholder="Nhập số điện thoại"
-              
-                required 
+                 onChange={handleChange}
+                className={errors.telephone ? 'input-error' : ''}
               />
+              {errors.telephone && <span className="error-text">{errors.telephone}</span>}
             </div>
           </div>
 
@@ -68,10 +51,11 @@ export default function RegisterForm() {
             <input
               type="email"
               placeholder="Nhập email"
-             
-              required 
+               onChange={handleChange}
               name="email"
+              className={errors.email ? 'input-error' : ''}
             />
+            {errors.email && <span className="error-text">{errors.email}</span>}
           </div>
 
           <div className="form-group">
@@ -79,10 +63,11 @@ export default function RegisterForm() {
             <input
               type="password"
               placeholder="Nhập mật khẩu"
-             
-              required 
+               onChange={handleChange}
               name="password"
+              className={errors.password ? 'input-error' : ''}
             />
+            {errors.password && <span className="error-text">{errors.password}</span>}
           </div>
 
           <div className="form-group">
@@ -90,24 +75,21 @@ export default function RegisterForm() {
             <input
               type="password"
               placeholder="Nhập lại mật khẩu"
-              
-              required 
+               onChange={handleChange}
               name="passwordConfirm"
+              className={errors.passwordConfirm ? 'input-error' : ''}
             />
+            {errors.passwordConfirm && <span className="error-text">{errors.passwordConfirm}</span>}
           </div>
 
           <div className="form-options">
-            <label className="checkbox-wrapper">
-              <input
-                type="checkbox"
-              
-              />
-              <span>Tôi đồng ý với Điều khoản và Chính sách</span>
-            </label>
+   
           </div>
 
-          <button type="submit" className="submit-btn">Đăng ký →</button>
-          {error && <div className="error-message text-danger">{error}</div>}
+          <button type="submit" className="submit-btn" disabled={loading}>{loading ? 'Đang xử lý...' : 'Đăng ký →'}</button>
+          
+          {/*Hiển thị lỗi chung (nếu có) */}
+          {errors.general && <div className="error-message text-danger">{errors.general}</div>}
 
           <div className="toggle-form">
             <span>Đã có tài khoản? </span>
