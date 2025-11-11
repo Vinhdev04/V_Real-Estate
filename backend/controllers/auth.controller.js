@@ -60,15 +60,15 @@ export const register = async(req,res) => {
 //  ------ HANDLE LOGIN USER ------
 export const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     // Check input
-    if(!username || !password)
-      return res.status(400).json({message: "Missing username or password!"})
+    if(!email || !password)
+      return res.status(400).json({message: "Missing email or password!"})
     
     // check user exists - seatch user by username
     const user = await prisma.user.findFirst({
-      where: { username },
+      where: { email },
     });
 
     if (!user) 
@@ -78,9 +78,11 @@ export const login = async (req, res) => {
     // check password
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-       console.log("LOGIN FAILED User not found:", username);
+       console.log("LOGIN FAILED User not found:", email);
        return res.status(401).json({ message: 'Invalid Credentials' });
     }
+
+    const {password: userPassword,...userInfo} = user;
 
     // create a new token
     const timeExpire = 24 * 60 * 60 * 1000;
@@ -100,18 +102,15 @@ export const login = async (req, res) => {
       // secure: true; // using HTTPS - Production
     });
     
-    console.log("LOGIN SUCCESS User logged in:", username);
+    console.log("LOGIN SUCCESS User logged in:", email);
     console.log("Token:", token);
 
 
     
     res.status(200).json({
-      message: 'Login successful',
-      token,
-      user: {
-        id: user.id,
-        username: user.username,
-      },
+      // message: 'Login successful',
+      // token,
+      userInfo
     });
 
   } catch (err) {

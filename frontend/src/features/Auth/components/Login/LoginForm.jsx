@@ -1,63 +1,63 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "../../styles/Login.css"
 import AuthLayout from '../AuthLayout/AuthLayout';
+import {NavLink, useNavigate} from 'react-router-dom';
+import { useAuth } from '../../../../hooks/useAuth.js';
+import axios from "axios";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ email, password, rememberMe });
+  // call hook and get data
+  const {login, loading,clearError, errors} = useAuth();
+  const handleChange = (e) => {
+    const { name } = e.target; 
+    clearError(name); 
   };
-
   return (
     <AuthLayout title="Chào mừng trở lại!">
       <div className="auth-card">
         <h2 className="form-title">Đăng Nhập</h2>
         <p className="form-subtitle">Nhập thông tin để đăng nhập vào tài khoản</p>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
+        <form className="auth-form" onSubmit={login}>
           <div className="form-group">
             <label>Email *</label>
             <input
               type="email"
+              name="email"
               placeholder="Nhập email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+             onChange={handleChange} className={errors.email ? 'input-error' : ''}
             />
+            {errors.email && <span className="error-text">{errors.email}</span>}
           </div>
 
           <div className="form-group">
             <label>Mật khẩu *</label>
             <input
               type="password"
+              name="password"
               placeholder="Nhập mật khẩu"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              onChange={handleChange}  className={errors.password ? 'input-error' : ''}
             />
+            {errors.password && <span className="error-text">{errors.password}</span>}
           </div>
 
           <div className="form-options">
             <label className="checkbox-wrapper">
               <input
                 type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
+               
               />
               <span>Ghi nhớ đăng nhập</span>
             </label>
             <span className="forgot-link">Quên mật khẩu?</span>
           </div>
 
-          <button type="submit" className="submit-btn">Đăng nhập →</button>
-
+          <button type="submit" className="submit-btn" disabled={loading}>{loading ? 'Đang xử lý...' : 'Đăng nhập →'}</button>
+           {errors.general && <div className="error-message text-danger">{errors.general}</div>}
+      
           <div className="toggle-form">
             <span>Chưa có tài khoản? </span>
-            <a href="/register">Đăng ký ngay</a>
+            <NavLink to ="auth/register">Đăng ký ngay</NavLink>
           </div>
 
           <div className="divider">Hoặc</div>

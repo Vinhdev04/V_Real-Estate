@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "../../styles/Login.css"
 import AuthLayout from '../AuthLayout/AuthLayout';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../hooks/useAuth.js';
 export default function RegisterForm() {
 
@@ -93,7 +93,7 @@ export default function RegisterForm() {
 
           <div className="toggle-form">
             <span>Đã có tài khoản? </span>
-            <a href="/login">Đăng nhập</a>
+            <NavLink to="auth/login">Đăng nhập</NavLink>
           </div>
 
           <div className="divider">Hoặc</div>

@@ -16,7 +16,7 @@ export const routes = [
     path: '/',
     element: <Home />,
     name: 'Trang Chủ',
-    showInNav: true, // <-- Hiển thị trên Navbar
+    showInNav: true,
   },
   {
     path: '/properties',

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { API_URL_REGISTER } from '../constant/api.js';
+import { API_URL_REGISTER,API_URL_LOGIN } from '../constant/api.js';
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
  
@@ -22,6 +22,7 @@ export const useAuth = () => {
       });
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     setErrors({});     
@@ -44,7 +45,9 @@ export const useAuth = () => {
     if (!data.telephone) newErrors.telephone = "Vui lòng nhập số điện thoại.";
    
 
-    if(!data.telephone.match(/^[0-9]{10,15}$/)){
+    if (!data.telephone) {
+      newErrors.telephone = "Vui lòng nhập số điện thoại.";
+    } else if (!data.telephone.match(/^[0-9]{10,15}$/)) { // Dùng else if
       newErrors.telephone = "Số điện thoại không hợp lệ.";
     }
 
@@ -111,6 +114,50 @@ export const useAuth = () => {
     }
   };
 
+  const login = async (e)=> {
+    e.preventDefault();
+    setLoading(true);
+    setErrors({});
+    const formData = new FormData(e.target);
+    const data = {
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
+    const newErrors = {};
+    if (!data.email) newErrors.email = "Vui lòng nhập email.";
+    if (!data.password) newErrors.password = "Vui lòng nhập mật khẩu.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setLoading(false);
+      return;
+    }
+     try {
+          const res = await axios.post(API_URL_LOGIN,{
+            email: data.email,
+            password: data.password,
+      },{
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          })
+          localStorage.setItem("user",JSON.stringify(res.data));
+          navigate("/");
+
+     }catch(err){
+       console.log(err);
+      const backendError = err.response?.data?.message || "Đã có lỗi xảy ra!";
+      
+      
+      if (backendError.includes("Credentials") || backendError.includes("Missing")) {
+        setErrors({ general: "Email hoặc mật khẩu không chính xác." });
+      } else {
+        setErrors({ general: backendError });
+      }
+     }finally{
+        setLoading(false);
+     }
+
+  }
   // return data and functions
-  return { handleSubmit,clearError, loading, errors, setErrors };
+  return { handleSubmit,login,clearError, loading, errors, setErrors };
 };
