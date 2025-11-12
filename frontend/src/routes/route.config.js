@@ -10,6 +10,7 @@ import NotFound from '../pages/NotFound';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Profile from '../pages/Profile';
+import LoginGG from '../pages/LoginGG';
 export const routes = [
   {
     path: '/',
@@ -60,8 +61,19 @@ export const routes = [
     name: 'Đăng nhập',
     // showInNav: true, 
   },
+   {
+    path: '/login',
+    element: <Login />, 
+    name: 'Đăng nhập',
+    // showInNav: true, 
+  },
   {
     path: '/auth/register',
+    element: <Register /> ,  
+    name: 'Đăng ký',
+    // showInNav: true, 
+  },{
+    path: '/register',
     element: <Register /> ,  
     name: 'Đăng ký',
     // showInNav: true, 
@@ -71,6 +83,12 @@ export const routes = [
     element: <Profile />, 
     name: 'Trang cá nhân',
     showInNav: true,
+  },
+  {
+    path: '/auth/login/google',
+    element: <LoginGG />, 
+    name: 'Trang cá nhân',
+    // showInNav: true,
   }
  
   

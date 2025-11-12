@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "../../styles/Login.css"
 import AuthLayout from '../AuthLayout/AuthLayout';
-import axios from "axios";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../../../hooks/useAuth.js';
-export default function RegisterForm() {
 
-  // call hook and get data
-  const { handleSubmit, loading,clearError, errors} = useAuth();
+
+import LoginGG from '../../../../pages/LoginGG';
+
+export default function RegisterForm() {
+  const { handleSubmit, loading, clearError, errors} = useAuth();
 
   const handleChange = (e) => {
     const { name } = e.target; 
     clearError(name); 
   };
+
   return (
     <AuthLayout title="Tham gia cùng chúng tôi">
       <div className="auth-card">
@@ -30,16 +32,16 @@ export default function RegisterForm() {
                 onChange={handleChange}
                 className={errors.username ? 'input-error' : ''}
               />
-         
               {errors.username && <span className="error-text">{errors.username}</span>}
             </div>
+            
             <div className="form-group">
               <label>Số điện thoại *</label>
               <input
                 type="tel" 
                 name="telephone"
                 placeholder="Nhập số điện thoại"
-                 onChange={handleChange}
+                onChange={handleChange}
                 className={errors.telephone ? 'input-error' : ''}
               />
               {errors.telephone && <span className="error-text">{errors.telephone}</span>}
@@ -51,7 +53,7 @@ export default function RegisterForm() {
             <input
               type="email"
               placeholder="Nhập email"
-               onChange={handleChange}
+              onChange={handleChange}
               name="email"
               className={errors.email ? 'input-error' : ''}
             />
@@ -63,7 +65,7 @@ export default function RegisterForm() {
             <input
               type="password"
               placeholder="Nhập mật khẩu"
-               onChange={handleChange}
+              onChange={handleChange}
               name="password"
               className={errors.password ? 'input-error' : ''}
             />
@@ -75,32 +77,31 @@ export default function RegisterForm() {
             <input
               type="password"
               placeholder="Nhập lại mật khẩu"
-               onChange={handleChange}
+              onChange={handleChange}
               name="passwordConfirm"
               className={errors.passwordConfirm ? 'input-error' : ''}
             />
             {errors.passwordConfirm && <span className="error-text">{errors.passwordConfirm}</span>}
           </div>
 
-          <div className="form-options">
-   
-          </div>
-
-          <button type="submit" className="submit-btn" disabled={loading}>{loading ? 'Đang xử lý...' : 'Đăng ký →'}</button>
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Đang xử lý...' : 'Đăng ký →'}
+          </button>
           
-          {/*Hiển thị lỗi chung (nếu có) */}
-          {errors.general && <div className="error-message text-danger">{errors.general}</div>}
+          {errors.general && (
+            <div className="error-message text-danger">{errors.general}</div>
+          )}
 
           <div className="toggle-form">
             <span>Đã có tài khoản? </span>
-            <NavLink to="auth/login">Đăng nhập</NavLink>
+            <NavLink to="/auth/login">Đăng nhập</NavLink>
           </div>
 
           <div className="divider">Hoặc</div>
 
+          {/* Thay thế social buttons bằng LoginGG component */}
           <div className="social-buttons">
-            <button type="button" className="social-btn google-btn">🔵 Google</button>
-            <button type="button" className="social-btn facebook-btn">👍 Facebook</button>
+            <LoginGG />
           </div>
         </form>
       </div>

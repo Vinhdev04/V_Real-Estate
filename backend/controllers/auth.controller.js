@@ -42,6 +42,7 @@ export const register = async(req,res) => {
                 email,
                 password: hashedPassword,
                 telephone,
+                loginType: 'email', // Thêm loginType cho user đăng ký thường
             },
         });
         // console.log(newUser);
@@ -74,6 +75,12 @@ export const login = async (req, res) => {
     if (!user) 
       return res.status(404).json({ message: 'Invalid Credentials!' });
     
+    // Kiểm tra nếu user đăng nhập bằng Google
+    if (user.loginType === 'google' && !user.password) {
+      return res.status(400).json({ 
+        message: 'Tài khoản này đã được đăng ký bằng Google. Vui lòng đăng nhập bằng Google.' 
+      });
+    }
 
     // check password
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
@@ -89,7 +96,7 @@ export const login = async (req, res) => {
 
     // create a JWT token
     const token = jwt.sign(
-      { userId: user.id },
+      { userId: user.id, email: user.email },
       process.env.JWT_SECRET_KEY,
       { expiresIn: timeExpire }
     );
@@ -105,7 +112,6 @@ export const login = async (req, res) => {
     console.log("LOGIN SUCCESS User logged in:", email);
     console.log("Token:", token);
 
-
     
     res.status(200).json({
       // message: 'Login successful',
@@ -116,6 +122,114 @@ export const login = async (req, res) => {
   } catch (err) {
     console.error("LOGIN Error",err);
     res.status(500).json({ message: 'Failed to login user' });
+  }
+};
+
+
+
+// ------ HANDLE GOOGLE LOGIN ------
+export const googleLogin = async (req, res) => {
+  try {
+    const { email, username, googleId, avatar, emailVerified } = req.body;
+
+    console.log('📥 Google Login Request:', { email, username, googleId });
+
+    // Validation
+    if (!email || !googleId) {
+      return res.status(400).json({ 
+        message: "Thiếu thông tin email hoặc Google ID" 
+      });
+    }
+
+    // Kiểm tra xem user đã tồn tại chưa (dựa vào email hoặc googleId)
+    let user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: email },
+          { googleId: googleId }
+        ]
+      }
+    });
+
+    // Nếu user chưa tồn tại, tạo mới
+    if (!user) {
+      // Tạo username unique nếu trùng
+      let uniqueUsername = username;
+      let counter = 1;
+      
+      while (await prisma.user.findUnique({ where: { username: uniqueUsername } })) {
+        uniqueUsername = `${username}_${counter}`;
+        counter++;
+      }
+
+      user = await prisma.user.create({
+        data: {
+          email,
+          username: uniqueUsername,
+          googleId,
+          avatar,
+          emailVerified: emailVerified || false,
+          loginType: 'google',
+          // Không cần password cho Google login
+          password: null,
+          telephone: null,
+        },
+      });
+      console.log('✅ New Google user created:', email);
+    } else {
+      // Nếu user đã tồn tại, cập nhật thông tin
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          googleId: googleId,
+          avatar: avatar,
+          emailVerified: emailVerified || user.emailVerified,
+          loginType: 'google',
+        },
+      });
+      console.log('✅ Existing Google user updated:', email);
+    }
+
+    // Loại bỏ password khỏi response
+    const { password: userPassword, ...userInfo } = user;
+
+    // Tạo JWT token
+    const timeExpire = 24 * 60 * 60 * 1000; // 24 giờ
+
+    const token = jwt.sign(
+      { 
+        userId: user.id,
+        email: user.email,
+        loginType: 'google' 
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: timeExpire }
+    );
+
+    // Set cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      maxAge: timeExpire,
+      sameSite: 'strict',
+      // secure: true, // Bật trong production với HTTPS
+    });
+
+    console.log('🔐 Google LOGIN SUCCESS:', email);
+    console.log('🎫 Token:', token);
+
+    // Trả về thông tin user và token
+    res.status(200).json({
+      message: 'Đăng nhập Google thành công',
+      token,
+      userInfo,
+    });
+
+  } catch (err) {
+    console.error('❌ Google Login Error:', err);
+    res.status(500).json({ 
+      message: 'Đăng nhập Google thất bại',
+      error: err.message 
+    });
   }
 };
 
