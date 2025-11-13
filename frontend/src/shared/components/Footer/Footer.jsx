@@ -11,8 +11,8 @@ function Footer() {
       <div className="container py-5">
         <Row gutter={[32, 32]}>
    
-          <Col xs={24} md={6}>
-            <div className="footer-logo d-flex justify-content-start align-items-center">
+          <Col xs={24} md={6} className="text-start">
+            <div className="footer-logo d-flex justify-content-start align-items-center text-start">
              <img className="navbar__logo" src={logoW} alt="logo" />
              <span className="logo__name d-none d-lg-inline">VaniizIT</span>
               
@@ -30,7 +30,7 @@ function Footer() {
 
           {/* About */}
           <Col xs={12} sm={6} md={4}>
-            <Title level={4} className="footer-title">Về chúng tôi</Title>
+            <Title level={4} className="footer-title text-align-left footer-head">Về chúng tôi</Title>
             <ul className="footer-links">
               <li><a href="#">Giới thiệu</a></li>
               <li><a href="#">Tầm nhìn sứ mệnh</a></li>
@@ -41,7 +41,7 @@ function Footer() {
 
           {/* Projects */}
           <Col xs={12} sm={6} md={4}>
-            <Title level={4} className="footer-title">Dự án</Title>
+            <Title level={4} className="footer-title text-align-left footer-head">Dự án</Title>
             <ul className="footer-links">
               <li><a href="#">Căn hộ cao cấp</a></li>
               <li><a href="#">Biệt thự</a></li>
@@ -52,7 +52,7 @@ function Footer() {
 
           {/* Services */}
           <Col xs={12} sm={6} md={4}>
-            <Title level={4} className="footer-title">Dịch vụ</Title>
+            <Title level={4} className="footer-title text-align-left footer-head">Dịch vụ</Title>
             <ul className="footer-links">
               <li><a href="#">Tư vấn đầu tư</a></li>
               <li><a href="#">Môi giới</a></li>
@@ -63,7 +63,7 @@ function Footer() {
 
           {/* Support */}
           <Col xs={12} sm={6} md={6}>
-            <Title level={4} className="footer-title">Hỗ trợ</Title>
+            <Title level={4} className="footer-title text-align-left footer-head">Hỗ trợ</Title>
             <ul className="footer-links">
               <li><a href="#">Liên hệ</a></li>
               <li><a href="#">FAQ</a></li>

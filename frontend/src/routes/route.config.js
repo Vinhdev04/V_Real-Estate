@@ -1,9 +1,8 @@
-
+// src/routes/route.config.js
 
 import React from 'react';
 import Home from '../pages/Home';
-import PropertiesPage from '../pages/PropertiesPage';
-
+import Properties from '../pages/Properties';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 import NotFound from '../pages/NotFound';
@@ -11,6 +10,8 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Profile from '../pages/Profile';
 import LoginGG from '../pages/LoginGG';
+import SettingsPage from '../features/Profile/components/SettingsPage';
+
 export const routes = [
   {
     path: '/',
@@ -20,7 +21,7 @@ export const routes = [
   },
   {
     path: '/properties',
-    element: <PropertiesPage />,
+    element: <Properties />,
     name: 'Dự án',
     showInNav: true, 
   },
@@ -48,7 +49,6 @@ export const routes = [
     name: 'Tin tức',
     showInNav: true, 
   },
- 
   {
     path: '*',
     element: <NotFound />,
@@ -59,39 +59,62 @@ export const routes = [
     path: '/auth/login',
     element: <Login />, 
     name: 'Đăng nhập',
-    // showInNav: true, 
+    showInNav: false, 
   },
-   {
+  {
     path: '/login',
     element: <Login />, 
     name: 'Đăng nhập',
-    // showInNav: true, 
+    showInNav: false, 
   },
   {
     path: '/auth/register',
-    element: <Register /> ,  
+    element: <Register />,  
     name: 'Đăng ký',
-    // showInNav: true, 
-  },{
+    showInNav: false, 
+  },
+  {
     path: '/register',
-    element: <Register /> ,  
+    element: <Register />,  
     name: 'Đăng ký',
-    // showInNav: true, 
+    showInNav: false, 
   },
   {
     path: '/profile',
     element: <Profile />, 
     name: 'Trang cá nhân',
-    showInNav: true,
+    showInNav: false,
+  },
+  {
+    path: '/profile/edit',
+    element: <Profile />, 
+    name: 'Chỉnh sửa hồ sơ',
+    showInNav: false,
+  },
+  {
+    path: '/profile/favorites',
+    element: <NotFound />, 
+    name: 'Bất động sản yêu thích',
+    showInNav: false,
+  },
+  {
+    path: '/profile/history',
+    element: <NotFound />, 
+    name: 'Lịch sử xem',
+    showInNav: false,
+  },
+  {
+    path: '/profile/settings',
+    element: <SettingsPage />, 
+    name: 'Cài đặt',
+    showInNav: false,
   },
   {
     path: '/auth/login/google',
     element: <LoginGG />, 
-    name: 'Trang cá nhân',
-    // showInNav: true,
+    name: 'Đăng nhập Google',
+    showInNav: false,
   }
- 
-  
 ];
 
 export default routes;

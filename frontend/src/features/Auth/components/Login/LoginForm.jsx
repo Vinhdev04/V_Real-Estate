@@ -3,7 +3,7 @@ import "../../styles/Login.css"
 import AuthLayout from '../AuthLayout/AuthLayout';
 import {NavLink} from 'react-router-dom';
 import { useAuth } from '../../../../hooks/useAuth.js';
-import LoginGG from '../../../../pages/LoginGG';
+import LoginGG from '../../../../pages/LoginGG.jsx';
 
 
 export default function LoginForm() {

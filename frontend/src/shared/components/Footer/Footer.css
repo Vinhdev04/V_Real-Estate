@@ -94,3 +94,10 @@
     font-size: 1.8rem;
   }
 }
+
+.footer-head {
+  text-align: start;
+}
+.footer-links {
+  text-align: start;
+}
