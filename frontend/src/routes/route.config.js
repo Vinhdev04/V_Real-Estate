@@ -10,7 +10,6 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Profile from '../pages/Profile';
 import LoginGG from '../pages/LoginGG';
-import SettingsPage from '../features/Profile/components/SettingsPage';
 
 export const routes = [
   {
@@ -50,12 +49,6 @@ export const routes = [
     showInNav: true, 
   },
   {
-    path: '*',
-    element: <NotFound />,
-    name: 'Không Tìm Thấy',
-    showInNav: false, 
-  },
-  {
     path: '/auth/login',
     element: <Login />, 
     name: 'Đăng nhập',
@@ -79,10 +72,29 @@ export const routes = [
     name: 'Đăng ký',
     showInNav: false, 
   },
+  // Profile Routes - Tất cả sử dụng component Profile chính
   {
     path: '/profile',
     element: <Profile />, 
     name: 'Trang cá nhân',
+    showInNav: false,
+  },
+  {
+    path: '/profile/overview',
+    element: <Profile />, 
+    name: 'Tổng quan',
+    showInNav: false,
+  },
+  {
+    path: '/profile/favorites',
+    element: <Profile />, 
+    name: 'Bất động sản yêu thích',
+    showInNav: false,
+  },
+  {
+    path: '/profile/history',
+    element: <Profile />, 
+    name: 'Lịch sử xem',
     showInNav: false,
   },
   {
@@ -92,28 +104,24 @@ export const routes = [
     showInNav: false,
   },
   {
-    path: '/profile/favorites',
-    element: <NotFound />, 
-    name: 'Bất động sản yêu thích',
-    showInNav: false,
-  },
-  {
-    path: '/profile/history',
-    element: <NotFound />, 
-    name: 'Lịch sử xem',
-    showInNav: false,
-  },
-  {
     path: '/profile/settings',
-    element: <SettingsPage />, 
+    element: <Profile />, 
     name: 'Cài đặt',
     showInNav: false,
   },
+  // Auth Routes
   {
     path: '/auth/login/google',
     element: <LoginGG />, 
     name: 'Đăng nhập Google',
     showInNav: false,
+  },
+  // 404 - Phải để cuối cùng
+  {
+    path: '*',
+    element: <NotFound />,
+    name: 'Không Tìm Thấy',
+    showInNav: false, 
   }
 ];
 
