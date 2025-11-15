@@ -10,6 +10,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Profile from '../pages/Profile';
 import LoginGG from '../pages/LoginGG';
+import Services from '../pages/Services';
 
 export const routes = [
   {
@@ -40,6 +41,12 @@ export const routes = [
     path: '/contact',
     element: <Contact />,
     name: 'Liên Hệ',
+    showInNav: true, 
+  },
+  {
+    path: '/services',
+    element: <Services />, 
+    name: 'Dịch vụ',
     showInNav: true, 
   },
   {
