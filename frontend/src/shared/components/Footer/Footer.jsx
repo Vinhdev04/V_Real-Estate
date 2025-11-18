@@ -1,80 +1,202 @@
 import React from "react";
 import { Row, Col, Typography, Space } from "antd";
-import { FacebookFilled, TwitterOutlined, GoogleCircleFilled, LinkedinFilled } from "@ant-design/icons";
+import { 
+  FacebookFilled, 
+  TwitterOutlined, 
+  LinkedinFilled,
+  GithubFilled,
+  HomeOutlined,
+  RocketOutlined,
+  TeamOutlined,
+  SafetyOutlined,
+  ApartmentOutlined,
+  ShopOutlined,
+  EnvironmentOutlined,
+  GoldOutlined,
+  BulbOutlined,
+  SolutionOutlined,
+  SafetyCertificateOutlined,
+  AuditOutlined,
+  PhoneOutlined,
+  QuestionCircleOutlined,
+  FileProtectOutlined,
+  LockOutlined
+} from "@ant-design/icons";
 import "./Footer.css";
-import logoW from "../../../assets/images/logoW.png"
+import logoW from "../../../assets/images/logoW.png";
+
 const { Title, Text } = Typography;
 
 function Footer() {
   return (
     <footer className="main-footer">
       <div className="container py-5">
-        <Row gutter={[32, 32]}>
-   
+        <Row gutter={[32, 40]}>
+          {/* Company Info */}
           <Col xs={24} md={6} className="text-start">
-            <div className="footer-logo d-flex justify-content-start align-items-center text-start">
-             <img className="navbar__logo" src={logoW} alt="logo" />
-             <span className="logo__name d-none d-lg-inline">VaniizIT</span>
-              
+            <div className="footer-logo-wrapper">
+              <img className="navbar__logo" src={logoW} alt="logo" />
+              <span className="footer-logo">VaniizIT</span>
             </div>
             <Text className="footer-desc">
               Chúng tôi là đơn vị hàng đầu trong lĩnh vực bất động sản, mang đến những giải pháp tối ưu cho khách hàng với dịch vụ chuyên nghiệp và uy tín.
             </Text>
-            <Space size={12} className="social-links mt-4">
-              <a href="#"><FacebookFilled /></a>
-              <a href="#"><TwitterOutlined /></a>
-              <a href="#"><GoogleCircleFilled /></a>
-              <a href="#"><LinkedinFilled /></a>
+            <Space size={16} className="social-links">
+              <a href="#" aria-label="Facebook">
+                <FacebookFilled />
+              </a>
+              <a href="#" aria-label="Twitter">
+                <TwitterOutlined />
+              </a>
+              <a href="#" aria-label="LinkedIn">
+                <LinkedinFilled />
+              </a>
+              <a href="#" aria-label="GitHub">
+                <GithubFilled />
+              </a>
             </Space>
           </Col>
 
           {/* About */}
-          <Col xs={12} sm={6} md={4}>
-            <Title level={4} className="footer-title text-align-left footer-head">Về chúng tôi</Title>
+          <Col xs={12} sm={6} md={4} className="d-flex flex-column align-items-start">
+            <Title level={4} className="footer-title footer-head">
+              Về chúng tôi
+            </Title>
             <ul className="footer-links">
-              <li><a href="#">Giới thiệu</a></li>
-              <li><a href="#">Tầm nhìn sứ mệnh</a></li>
-              <li><a href="#">Đội ngũ</a></li>
-              <li><a href="#">Tuyển dụng</a></li>
+              <li>
+                <a href="#">
+                  <HomeOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Giới thiệu
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <RocketOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Tầm nhìn sứ mệnh
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <TeamOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Đội ngũ
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <SafetyOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Tuyển dụng
+                </a>
+              </li>
             </ul>
           </Col>
 
           {/* Projects */}
-          <Col xs={12} sm={6} md={4}>
-            <Title level={4} className="footer-title text-align-left footer-head">Dự án</Title>
+          <Col xs={12} sm={6} md={4} className="d-flex flex-column align-items-start">
+            <Title level={4} className="footer-title footer-head">
+              Dự án
+            </Title>
             <ul className="footer-links">
-              <li><a href="#">Căn hộ cao cấp</a></li>
-              <li><a href="#">Biệt thự</a></li>
-              <li><a href="#">Nhà phố</a></li>
-              <li><a href="#">Đất nền</a></li>
+              <li>
+                <a href="#">
+                  <ApartmentOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Căn hộ cao cấp
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <ShopOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Biệt thự
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <HomeOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Nhà phố
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <EnvironmentOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Đất nền
+                </a>
+              </li>
             </ul>
           </Col>
 
           {/* Services */}
-          <Col xs={12} sm={6} md={4}>
-            <Title level={4} className="footer-title text-align-left footer-head">Dịch vụ</Title>
+          <Col xs={12} sm={6} md={4} className="d-flex flex-column align-items-start">
+            <Title level={4} className="footer-title footer-head">
+              Dịch vụ
+            </Title>
             <ul className="footer-links">
-              <li><a href="#">Tư vấn đầu tư</a></li>
-              <li><a href="#">Môi giới</a></li>
-              <li><a href="#">Quản lý tài sản</a></li>
-              <li><a href="#">Pháp lý</a></li>
+              <li>
+                <a href="#">
+                  <BulbOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Tư vấn đầu tư
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <SolutionOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Môi giới
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <SafetyCertificateOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Quản lý tài sản
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <AuditOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Pháp lý
+                </a>
+              </li>
             </ul>
           </Col>
 
           {/* Support */}
-          <Col xs={12} sm={6} md={6}>
-            <Title level={4} className="footer-title text-align-left footer-head">Hỗ trợ</Title>
+          <Col xs={12} sm={6} md={6} className="d-flex flex-column align-items-start">
+            <Title level={4} className="footer-title footer-head">
+              Hỗ trợ
+            </Title>
             <ul className="footer-links">
-              <li><a href="#">Liên hệ</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Chính sách</a></li>
-              <li><a href="#">Bảo mật</a></li>
+              <li>
+                <a href="#">
+                  <PhoneOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Liên hệ
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <QuestionCircleOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <FileProtectOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Chính sách
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <LockOutlined style={{ fontSize: '14px', marginRight: '6px' }} />
+                  Bảo mật
+                </a>
+              </li>
             </ul>
           </Col>
         </Row>
 
         <div className="footer-bottom">
-          <Text type="secondary" className="text">©Copyright 2025 by VaniizIT</Text>
+          <Text type="secondary" className="text">
+            Copyright 2025 by VaniizIT
+          </Text>
+          <div className="powered-by">
+             by VaniizIT Technology
+          </div>
         </div>
       </div>
     </footer>

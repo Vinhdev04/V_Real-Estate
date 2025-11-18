@@ -4,7 +4,7 @@ import "./Navbar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { routes } from "../../../routes/route.config";
-import AccountDropdown from "../Account/Account";
+import Account from "../Account/Account";
 import "../../../assets/css/layout.css";
 import "../../../assets/css/responsive.css";
 import logoHomePage from "../../../assets/images/logoW.png";
@@ -68,7 +68,7 @@ function Navbar(props) {
             </NavLink>
           </>
         ) : (
-          <AccountDropdown user={currentUser} />
+          <Account user={currentUser} />
         )}
       </div>
 
