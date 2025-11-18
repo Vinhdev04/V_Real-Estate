@@ -28,57 +28,41 @@ function Navbar(props) {
   }, []);
 
   return (
-    <nav className="navbar d-flex align-items-center justify-content-between">
-      <div className="navbar__left">
+    <nav className="navbar">
+      {/* PHẦN 1: Logo Section (Trái) */}
+      <div className="navbar__logo-section">
         <NavLink to="/" className="navbar__link navbar__link--logo text-decoration-none">
           <img className="navbar__logo" src={logoHomePage} alt="logo" />
           <span className="logo__name d-none d-lg-inline">VaniizIT</span>
         </NavLink>
+      </div>
 
+      {/* PHẦN 2: Navigation Links (Giữa) */}
+      <div className="navbar__center d-none d-md-flex">
         {navLinks.map((link, index) => (
           <NavLink
             key={index}
             to={link.path}
-            className="text-decoration-none d-none d-sm-block"
+            className="text-decoration-none"
           >
             {link.name}
           </NavLink>
         ))}
       </div>
 
+      {/* PHẦN 3: Auth & User Section (Phải) */}
       <div className="navbar__right d-none d-md-flex">
-      
-          <>
-            <NavLink 
-              to="/auth/login" 
-              className="border-0 sign-in text-decoration-none d-none d-sm-block"
-            >
-              Đăng nhập
-            </NavLink>
-            <NavLink 
-              to="/auth/register" 
-              className="border-0 sign-up text-decoration-none d-none d-sm-block"
-            >
-              Đăng ký
-            </NavLink>
-          </>
-       
-          <AccountDropdown user={currentUser} />
-       
-      </div>
-
-      {/* <div className="navbar__right d-none d-md-flex">
         {!isLoggedIn ? (
           <>
             <NavLink 
               to="/auth/login" 
-              className="border-0 sign-in text-decoration-none d-none d-sm-block"
+              className="border-0 sign-in text-decoration-none"
             >
               Đăng nhập
             </NavLink>
             <NavLink 
               to="/auth/register" 
-              className="border-0 sign-up text-decoration-none d-none d-sm-block"
+              className="border-0 sign-up text-decoration-none"
             >
               Đăng ký
             </NavLink>
@@ -86,8 +70,9 @@ function Navbar(props) {
         ) : (
           <AccountDropdown user={currentUser} />
         )}
-      </div> */}
+      </div>
 
+      {/* Mobile Menu Toggle */}
       <div className="navbar__toggle d-md-none">
         <span className="bar"></span>
         <span className="bar"></span>
