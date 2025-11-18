@@ -68,7 +68,7 @@ export default function LoginForm() {
 
           <div className="divider">Hoặc</div>
 
-          {/* Thay thế social buttons bằng LoginGG component */}
+       
           <div className="social-buttons">
             <LoginGG />
           </div>
