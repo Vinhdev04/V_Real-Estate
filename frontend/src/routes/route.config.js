@@ -11,7 +11,7 @@ import Register from '../pages/Register';
 import Profile from '../pages/Profile';
 import LoginGG from '../pages/LoginGG';
 import Services from '../pages/Services';
-
+import TeamGroup from '../pages/Teams';
 export const routes = [
   {
     path: '/',
@@ -35,6 +35,12 @@ export const routes = [
     path: '/about',
     element: <About />,
     name: 'Về chúng tôi', 
+    showInNav: true, 
+  },
+  {
+    path: '/team-group',
+    element: <TeamGroup />,
+    name: 'Đội ngũ sáng lập',
     showInNav: true, 
   },
   {
