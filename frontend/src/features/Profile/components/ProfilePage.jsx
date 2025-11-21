@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import EditProfileTab from './EditProfileTab'; // Đường dẫn tới file của bạn
+
 
 const ProfilePage = () => {
   // 1. Khởi tạo state với giá trị mặc định rỗng
