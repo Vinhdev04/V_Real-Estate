@@ -17,9 +17,11 @@ function Navbar(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
+  // ========== THÊM MỚI: Mobile menu ==========
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   // Kiểm tra trạng thái đăng nhập khi component mount
   useEffect(() => {
-    // TODO: Replace với logic kiểm tra thực tế từ localStorage hoặc context
     const user = localStorage.getItem('user');
     if (user) {
       setIsLoggedIn(true);
@@ -27,58 +29,97 @@ function Navbar(props) {
     }
   }, []);
 
-  return (
-    <nav className="navbar">
-      {/* PHẦN 1: Logo Section (Trái) */}
-      <div className="navbar__logo-section">
-        <NavLink to="/" className="navbar__link navbar__link--logo text-decoration-none">
-          <img className="navbar__logo" src={logoHomePage} alt="logo" />
-          <span className="logo__name d-none d-lg-inline">VaniizIT</span>
-        </NavLink>
-      </div>
+  // ========== THÊM MỚI: Xử lý mobile menu ==========
+  const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
-      {/* PHẦN 2: Navigation Links (Giữa) */}
-      <div className="navbar__center d-none d-md-flex">
+  useEffect(() => {
+    const navbar = document.querySelector('.navbar');
+    if (isMobileMenuOpen) {
+      navbar?.classList.add('navbar--expanded');
+      document.body.style.overflow = 'hidden';
+    } else {
+      navbar?.classList.remove('navbar--expanded');
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMobileMenuOpen]);
+
+  return (
+    <>
+      <nav className="navbar">
+        {/* PHẦN 1: Logo Section (Trái) */}
+        <div className="navbar__logo-section">
+          <NavLink to="/" className="navbar__link navbar__link--logo text-decoration-none">
+            <img className="navbar__logo" src={logoHomePage} alt="logo" />
+            <span className="logo__name d-none d-lg-inline">VaniizIT</span>
+          </NavLink>
+        </div>
+
+        {/* PHẦN 2: Navigation Links (Giữa) */}
+        <div className="navbar__center d-none d-md-flex">
+          {navLinks.map((link, index) => (
+            <NavLink
+              key={index}
+              to={link.path}
+              className="text-decoration-none"
+            >
+              {link.name}
+            </NavLink>
+          ))}
+        </div>
+
+       
+  <div className="navbar__right d-none d-md-flex">
+
+    <>
+      <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none">
+        Đăng nhập
+      </NavLink>
+  
+  
+      <Account user={currentUser} style={{ display: 'none' }} />
+
+   </>
+
+</div>
+
+        {/* Mobile Menu Toggle */}
+        <div className="navbar__toggle d-md-none" onClick={toggleMobileMenu}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </div>
+      </nav>
+
+      {/* ========== THÊM MỚI: Mobile Menu (đầy đủ menu + login) ========== */}
+      <div className={`navbar__menu ${isMobileMenuOpen ? 'active' : ''}`}>
         {navLinks.map((link, index) => (
           <NavLink
             key={index}
             to={link.path}
             className="text-decoration-none"
+            onClick={closeMobileMenu}
           >
             {link.name}
           </NavLink>
         ))}
-      </div>
 
-      {/* PHẦN 3: Auth & User Section (Phải) */}
-      <div className="navbar__right d-none d-md-flex">
         {!isLoggedIn ? (
           <>
-            <NavLink 
-              to="/auth/login" 
-              className="border-0 sign-in text-decoration-none"
-            >
+            <NavLink to="/auth/login" className="sign-in" onClick={closeMobileMenu}>
               Đăng nhập
             </NavLink>
-            <NavLink 
-              to="/auth/register" 
-              className="border-0 sign-up text-decoration-none"
-            >
+            <NavLink to="/auth/register" className="sign-up" onClick={closeMobileMenu}>
               Đăng ký
             </NavLink>
           </>
         ) : (
-          <Account user={currentUser} />
+          <div style={{ padding: "14px 30px", borderTop: "1px solid #eee" }}>
+            <Account user={currentUser} isMobile={true} />
+          </div>
         )}
       </div>
-
-      {/* Mobile Menu Toggle */}
-      <div className="navbar__toggle d-md-none">
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
-      </div>
-    </nav>
+    </>
   );
 }
 

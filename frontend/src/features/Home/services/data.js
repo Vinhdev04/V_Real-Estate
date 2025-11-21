@@ -64,6 +64,8 @@ export const data = [
     location: "Long Biên, Hà Nội",
     price: "65 triệu/m²",
     area: "120m²",
+     bedrooms: 2,
+    bathrooms: 1,
   },
   {
     id: 6,
