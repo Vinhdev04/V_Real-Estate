@@ -11,11 +11,13 @@ import {
   ChevronDown 
 } from 'lucide-react';
 import './Account.css';
-
+import axios from 'axios';
+import { API_URL_LOGOUT } from '../../../constant/api';
+import  { useNavigate } from "react-router-dom";
 const Account = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const navigate =  useNavigate();
   // Mock user data - replace with actual user data
   const currentUser = user || {
     name: 'Nguyễn Văn A',
@@ -35,10 +37,14 @@ const Account = ({ user }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    // Add logout logic here
-    console.log('Logging out...');
-    setIsOpen(false);
+  const handleLogout = async() => {
+    try {
+      const res = await axios.post(`${API_URL_LOGOUT}`);
+      localStorage.removeItem("user")
+      navigate("/")
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const menuItems = [

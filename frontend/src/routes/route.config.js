@@ -97,32 +97,35 @@ export const routes = [
     element: <Profile />, 
     name: 'Tổng quan',
     showInNav: false,
+    // children: [
+    //   {
+    //     path: '/profile/overview',
+    //     element: <Profile />, 
+    //     name: 'Tổng quan',
+    //     showInNav: false,
+    //   },
+    //   {
+    //     path: '/profile/favorites',
+    //     element: <Profile />, 
+    //     name: 'Bất động sản yêu thích',
+    //     showInNav: false,
+    //   },
+    //   {
+    //     path: '/profile/history',
+    //     element: <Profile />, 
+    //     name: 'Lịch sử xem',
+    //     showInNav: false,
+    //   },
+    //   {
+    //     path: '/profile/edit',
+    //     element: <Profile />, 
+    //     name: 'Chỉnh sửa hồ sơ',
+    //     showInNav: false,
+    //   }
+      
+    // ]
   },
-  {
-    path: '/profile/favorites',
-    element: <Profile />, 
-    name: 'Bất động sản yêu thích',
-    showInNav: false,
-  },
-  {
-    path: '/profile/history',
-    element: <Profile />, 
-    name: 'Lịch sử xem',
-    showInNav: false,
-  },
-  {
-    path: '/profile/edit',
-    element: <Profile />, 
-    name: 'Chỉnh sửa hồ sơ',
-    showInNav: false,
-  },
-  {
-    path: '/profile/settings',
-    element: <Profile />, 
-    name: 'Cài đặt',
-    showInNav: false,
-  },
-
+  
   {
     path: '/auth/login/google',
     element: <LoginGG />, 
