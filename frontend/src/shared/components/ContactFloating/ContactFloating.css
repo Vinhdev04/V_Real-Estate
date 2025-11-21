@@ -1,0 +1,263 @@
+/* ============================================
+   CONTACT FLOATING - MAIN CONTAINER
+   ============================================ */
+.contact-floating {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 9999;
+}
+
+/* ============================================
+   MAIN BUTTON
+   ============================================ */
+.contact-floating__main-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10001;
+}
+
+.contact-floating__main-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(8, 145, 178, 0.6);
+}
+
+.contact-floating__main-btn--active {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+  transform: rotate(90deg);
+}
+
+.contact-floating__icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+/* ============================================
+   CONTACT MENU
+   ============================================ */
+.contact-floating__menu {
+  position: absolute;
+  left: 0;
+  bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.contact-floating__menu--open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+/* ============================================
+   CONTACT BUTTONS
+   ============================================ */
+.contact-floating__btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.contact-floating__menu--open .contact-floating__btn {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.contact-floating__btn:hover {
+  transform: translateX(-8px) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.contact-floating__btn-icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+/* Phone Button */
+.contact-floating__btn--phone {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.contact-floating__btn--phone:hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+/* Zalo Button */
+.contact-floating__btn--zalo {
+  background: linear-gradient(135deg, #0068ff 0%, #0084ff 100%);
+}
+
+.contact-floating__btn--zalo:hover {
+  box-shadow: 0 6px 20px rgba(0, 104, 255, 0.5);
+}
+
+/* Facebook Button */
+.contact-floating__btn--facebook {
+  background: linear-gradient(135deg, #1877f2 0%, #0c63d4 100%);
+}
+
+.contact-floating__btn--facebook:hover {
+  box-shadow: 0 6px 20px rgba(24, 119, 242, 0.5);
+}
+
+/* Email Button */
+.contact-floating__btn--email {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.contact-floating__btn--email:hover {
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+}
+
+/* ============================================
+   TOOLTIP
+   ============================================ */
+.contact-floating__tooltip {
+  position: absolute;
+  left: 60px;
+  white-space: nowrap;
+  background-color: #1f2937;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.contact-floating__tooltip::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right-color: #1f2937;
+}
+
+.contact-floating__btn:hover .contact-floating__tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ============================================
+   BACKDROP
+   ============================================ */
+.contact-floating__backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: transparent;
+  z-index: 10000;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.contact-floating__main-btn::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+  opacity: 0.3;
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.contact-floating__main-btn--active::before {
+  display: none;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .contact-floating {
+    left: 16px;
+    bottom: 16px;
+  }
+
+  .contact-floating__main-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .contact-floating__btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .contact-floating__icon,
+  .contact-floating__btn-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .contact-floating__tooltip {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-floating {
+    left: 12px;
+    bottom: 12px;
+  }
+
+  .contact-floating__main-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .contact-floating__btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .contact-floating__menu {
+    bottom: 60px;
+    gap: 10px;
+  }
+}

@@ -10,7 +10,7 @@ import { routes } from './routes/route.config';
 // Components
 import Navbar from './shared/components/Navbar/Navbar';
 import Footer from './shared/components/Footer/Footer';
-
+import ContactFloating from './shared/components/ContactFloating/ContactFloating';
 // Styles
 import './assets/css/layout.css';
 import './assets/css/responsive.css';
@@ -36,6 +36,7 @@ const Layout = () => (
         ))}
       </Routes>
     </main>
+    <ContactFloating/>
     <Footer />
   </div>
 );

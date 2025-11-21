@@ -22,7 +22,7 @@ export const routes = [
   {
     path: '/properties',
     element: <Properties />,
-    name: 'Dự án',
+    name: 'Bất Động Sản',
     showInNav: true, 
   },
   {
@@ -85,7 +85,7 @@ export const routes = [
     name: 'Đăng ký',
     showInNav: false, 
   },
-  // Profile Routes - Tất cả sử dụng component Profile chính
+
   {
     path: '/profile',
     element: <Profile />, 
@@ -122,14 +122,14 @@ export const routes = [
     name: 'Cài đặt',
     showInNav: false,
   },
-  // Auth Routes
+
   {
     path: '/auth/login/google',
     element: <LoginGG />, 
     name: 'Đăng nhập Google',
     showInNav: false,
   },
-  // 404 - Phải để cuối cùng
+
   {
     path: '*',
     element: <NotFound />,
