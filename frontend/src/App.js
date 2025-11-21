@@ -1,27 +1,18 @@
-// Đường dẫn: src/App.js
-
+// src/App.js
 import React from 'react';
-// Chỉ cần import BrowserRouter, Routes, Route
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import { routes } from './routes/route.config'; 
-// GoogleAuthProvider đã được import nhưng không dùng, nên xóa 
-// import {GoogleAuthProvider} from '@react-oauth/google'; 
-
-// Components
 import Navbar from './shared/components/Navbar/Navbar';
 import Footer from './shared/components/Footer/Footer';
-import ContactFloating from './shared/components/ContactFloating/ContactFloating';
-// Styles
+
+
 import './assets/css/layout.css';
 import './assets/css/responsive.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import { GoogleOAuthProvider } from '@react-oauth/google';
+// Lưu ý: ĐÃ XÓA GoogleOAuthProvider vì đã có bên index.js
 
-const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-
-// Tạo một component Layout để bọc Navbar, Footer và phần nội dung động
 const Layout = () => (
   <div className="d-flex flex-column min-vh-100">
     <Navbar />
@@ -36,19 +27,16 @@ const Layout = () => (
         ))}
       </Routes>
     </main>
-    <ContactFloating/>
+   
     <Footer />
   </div>
 );
 
-
 function App() {
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <BrowserRouter> 
-        <Layout />
-      </BrowserRouter>
-    </GoogleOAuthProvider>
+    <BrowserRouter> 
+      <Layout />
+    </BrowserRouter>
   );
 }
 

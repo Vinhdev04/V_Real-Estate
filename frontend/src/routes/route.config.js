@@ -15,7 +15,7 @@ import TeamGroup from '../pages/Teams';
 export const routes = [
   {
     path: '/',
-    element: <Home />,
+    element: <Home/>,
     name: 'Trang Chủ',
     showInNav: true,
   },

@@ -233,7 +233,7 @@ export default function TeamPage() {
     <div className="team-page">
       <TeamHeader />
       <StatsSection />
-        <ExpertiseSection />
+      <ExpertiseSection />
       <PropertyTypesSection />
       <FeaturesSection />
       <TeamGrid />
