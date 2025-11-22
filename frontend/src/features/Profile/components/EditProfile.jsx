@@ -36,7 +36,23 @@ function EditProfile() {
       [name]: value,
     }));
   };
+const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Kiểm tra kích thước file (ví dụ: giới hạn 2MB để tránh tràn LocalStorage)
+      if (file.size > 2 * 1024 * 1024) {
+        alert("File ảnh quá lớn! Vui lòng chọn ảnh dưới 2MB.");
+        return;
+      }
 
+      // Chuyển ảnh sang dạng Base64 để hiển thị và lưu trữ
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, avt: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   // 4. Handle Save Action
   const handleSave = () => {
     // Save back to local storage
@@ -49,10 +65,29 @@ function EditProfile() {
       <h4 className="profile-section__title">Chỉnh sửa hồ sơ</h4>
 
       <div className="profile-avatar-upload">
-        <div className="profile-avatar-upload__circle">{formData.avt || "NV"}</div>
-        <button className="profile-avatar-upload__btn">
+       
+        <div className="profile-avatar-upload__circle">
+          {formData.avt ? (
+            <img 
+              src={formData.avt} 
+              alt="Avatar" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} 
+            />
+          ) : (
+            "NV"
+          )}
+        </div>
+
+        {/* Nút upload kích hoạt input file ẩn */}
+        <label className="profile-avatar-upload__btn" style={{cursor: "pointer"}}>
           <span>Tải ảnh lên</span>
-        </button>
+          <input 
+            type="file" 
+            accept="image/*" 
+            onChange={handleImageChange} 
+            style={{ display: "none" }} 
+          />
+        </label>
       </div>
 
       <div className="row g-4">

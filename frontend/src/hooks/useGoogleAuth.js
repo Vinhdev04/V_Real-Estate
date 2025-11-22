@@ -17,7 +17,7 @@ export const useGoogleAuth = () => {
 
       // Decode JWT từ Google để lấy thông tin user
       const decoded = jwtDecode(credentialResponse.credential);
-      console.log('Google User Info:', decoded);
+      // console.log('Google User Info:', decoded);
 
       // Gửi thông tin lên backend để lưu vào database
       const response = await googleLoginService({
@@ -28,7 +28,7 @@ export const useGoogleAuth = () => {
         emailVerified: decoded.email_verified,
       });
 
-      console.log('Backend Response:', response);
+      // console.log('Backend Response:', response);
 
       // Lưu token vào localStorage (nếu backend trả về)
       if (response.token) {

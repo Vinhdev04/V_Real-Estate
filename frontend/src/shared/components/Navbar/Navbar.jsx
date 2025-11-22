@@ -1,5 +1,3 @@
-// src/shared/components/Navbar/Navbar.jsx
-
 import "./Navbar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
@@ -10,26 +8,24 @@ import "../../../assets/css/responsive.css";
 import logoHomePage from "../../../assets/images/logoW.png";
 
 function Navbar(props) {
-  // Lọc ra các link cần hiển thị từ file config
   const navLinks = routes.filter(route => route.showInNav);
   
-  // State để quản lý trạng thái đăng nhập
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-
-  // ========== THÊM MỚI: Mobile menu ==========
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Kiểm tra trạng thái đăng nhập khi component mount
+  // Kiểm tra đăng nhập khi load trang
   useEffect(() => {
     const user = localStorage.getItem('user');
     if (user) {
       setIsLoggedIn(true);
       setCurrentUser(JSON.parse(user));
+    } else {
+      setIsLoggedIn(false);
+      setCurrentUser(null);
     }
   }, []);
 
-  // ========== THÊM MỚI: Xử lý mobile menu ==========
   const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
@@ -47,7 +43,7 @@ function Navbar(props) {
   return (
     <>
       <nav className="navbar">
-        {/* PHẦN 1: Logo Section (Trái) */}
+        {/* PHẦN 1: Logo */}
         <div className="navbar__logo-section">
           <NavLink to="/" className="navbar__link navbar__link--logo text-decoration-none">
             <img className="navbar__logo" src={logoHomePage} alt="logo" />
@@ -55,7 +51,7 @@ function Navbar(props) {
           </NavLink>
         </div>
 
-        {/* PHẦN 2: Navigation Links (Giữa) */}
+        {/* PHẦN 2: Navigation Links */}
         <div className="navbar__center d-none d-md-flex">
           {navLinks.map((link, index) => (
             <NavLink
@@ -68,20 +64,19 @@ function Navbar(props) {
           ))}
         </div>
 
-       
-  <div className="navbar__right d-none d-md-flex">
-
-    <>
-      <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none">
-        Đăng nhập
-      </NavLink>
-  
-  
-      <Account user={currentUser} style={{ display: 'none' }} />
-
-   </>
-
-</div>
+        {/* PHẦN 3: Login / Account (Đã sửa logic tại đây) */}
+        <div className="navbar__right d-none d-md-flex align-items-center gap-3">
+          {!isLoggedIn ? (
+            // Nếu CHƯA đăng nhập -> Hiện nút Đăng nhập
+            <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none">
+              Đăng nhập
+            </NavLink>
+          ) : (
+            // Nếu ĐÃ đăng nhập -> Hiện Account (Avatar + Tên)
+            // Component Account sẽ chứa nút Đăng xuất bên trong dropdown của nó
+            <Account user={currentUser} />
+          )}
+        </div>
 
         {/* Mobile Menu Toggle */}
         <div className="navbar__toggle d-md-none" onClick={toggleMobileMenu}>
@@ -91,7 +86,7 @@ function Navbar(props) {
         </div>
       </nav>
 
-      {/* ========== THÊM MỚI: Mobile Menu (đầy đủ menu + login) ========== */}
+      {/* Mobile Menu */}
       <div className={`navbar__menu ${isMobileMenuOpen ? 'active' : ''}`}>
         {navLinks.map((link, index) => (
           <NavLink
@@ -104,6 +99,7 @@ function Navbar(props) {
           </NavLink>
         ))}
 
+        {/* Logic Mobile cũng tương tự */}
         {!isLoggedIn ? (
           <>
             <NavLink to="/auth/login" className="sign-in" onClick={closeMobileMenu}>

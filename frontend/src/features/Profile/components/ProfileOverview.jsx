@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import "../styles/profile.css";
 
 export default function ProfileOverview() {
@@ -56,12 +57,12 @@ export default function ProfileOverview() {
           </div>
 
           <div className="profile-header__actions">
-            <button className="profile-header__btn profile-header__btn--primary">
+            <NavLink to="/profile/edit" className="text-decoration-none profile-header__btn profile-header__btn--primary">
               ✏️ Chỉnh sửa
-            </button>
-            <button className="profile-header__btn profile-header__btn--outline">
+            </NavLink>
+            <NavLink to="/profile/settings" className="text-decoration-none profile-header__btn profile-header__btn--outline">
               ⚙️ Cài đặt
-            </button>
+            </NavLink>
           </div>
         </div>
       </div>
