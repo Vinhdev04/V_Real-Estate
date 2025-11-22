@@ -12,6 +12,7 @@ import Profile from '../pages/Profile';
 import LoginGG from '../pages/LoginGG';
 import Services from '../pages/Services';
 import TeamGroup from '../pages/Teams';
+
 export const routes = [
   {
     path: '/',
@@ -85,7 +86,16 @@ export const routes = [
     name: 'Đăng ký',
     showInNav: false, 
   },
+  {
+    path: '/auth/login/google',
+    element: <LoginGG />, 
+    name: 'Đăng nhập Google',
+    showInNav: false,
+  },
 
+  // ============================================
+  // PROFILE ROUTES - Updated with sub-routes
+  // ============================================
   {
     path: '/profile',
     element: <Profile />, 
@@ -93,43 +103,27 @@ export const routes = [
     showInNav: false,
   },
   {
-    path: '/profile/overview',
+    path: '/profile/edit',
     element: <Profile />, 
-    name: 'Tổng quan',
+    name: 'Chỉnh sửa hồ sơ',
     showInNav: false,
-    // children: [
-    //   {
-    //     path: '/profile/overview',
-    //     element: <Profile />, 
-    //     name: 'Tổng quan',
-    //     showInNav: false,
-    //   },
-    //   {
-    //     path: '/profile/favorites',
-    //     element: <Profile />, 
-    //     name: 'Bất động sản yêu thích',
-    //     showInNav: false,
-    //   },
-    //   {
-    //     path: '/profile/history',
-    //     element: <Profile />, 
-    //     name: 'Lịch sử xem',
-    //     showInNav: false,
-    //   },
-    //   {
-    //     path: '/profile/edit',
-    //     element: <Profile />, 
-    //     name: 'Chỉnh sửa hồ sơ',
-    //     showInNav: false,
-    //   }
-      
-    // ]
   },
-  
   {
-    path: '/auth/login/google',
-    element: <LoginGG />, 
-    name: 'Đăng nhập Google',
+    path: '/profile/favorites',
+    element: <Profile />, 
+    name: 'Bất động sản yêu thích',
+    showInNav: false,
+  },
+  {
+    path: '/profile/history',
+    element: <Profile />, 
+    name: 'Lịch sử xem',
+    showInNav: false,
+  },
+  {
+    path: '/profile/settings',
+    element: <Profile />, 
+    name: 'Cài đặt',
     showInNav: false,
   },
 

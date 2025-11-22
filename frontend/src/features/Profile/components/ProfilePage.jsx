@@ -1,61 +1,80 @@
-import React, { useState, useEffect } from 'react';
+// src/pages/Profile.jsx
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { menuItems, renderContent } from "../services/handlePage";
+import "../styles/profile.css";
+
+export default function Profile() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState("overview");
 
 
-const ProfilePage = () => {
-  // 1. Khởi tạo state với giá trị mặc định rỗng
-  const [userData, setUserData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    birthDate: '',
-    location: '',
-    bio: '',
-    avatar: ''
-  });
-
-  // 2. Dùng useEffect để lấy dữ liệu từ localStorage khi component được mount
+  // Sync activeTab với URL
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      
-      // 3. Map dữ liệu từ localStorage vào state của form
-      // Lưu ý: Cần kiểm tra kỹ tên trường (key) trả về từ Backend (ví dụ: username vs name, telephone vs phone)
-      setUserData({
-        name: parsedUser.username || parsedUser.name || '', // Ưu tiên username nếu có
-        email: parsedUser.email || '',
-        phone: parsedUser.telephone || parsedUser.phone || '', // Backend thường trả về telephone
-        birthDate: parsedUser.birthDate || '',
-        location: parsedUser.address || parsedUser.location || '',
-        bio: parsedUser.bio || '',
-        avatar: parsedUser.avatar || 'https://via.placeholder.com/150' // Avatar mặc định nếu không có
-      });
-    }
-  }, []);
+    const path = location.pathname;
+    if (path.includes("/edit")) setActiveTab("edit");
+    else if (path.includes("/favorites")) setActiveTab("favorites");
+    else if (path.includes("/history")) setActiveTab("history");
+    else if (path.includes("/settings")) setActiveTab("settings");
+    else setActiveTab("overview");
+  }, [location]);
 
-  // Hàm xử lý lưu (gọi API update profile)
-  const handleSave = async () => {
-    console.log("Dữ liệu chuẩn bị gửi lên server:", userData);
-    // Tại đây bạn sẽ gọi API update profile (cần viết thêm service)
+
+
+ const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    const routes = {
+      overview: "/profile",
+      edit: "/profile/edit",
+      favorites: "/profile/favorites",
+      history: "/profile/history",
+      settings: "/profile/settings",
+    };
+    navigate(routes[tab]);
   };
 
-  const handleCancel = () => {
-    console.log("Hủy bỏ chỉnh sửa");
-    // Logic reset lại form hoặc quay lại trang trước
+  // Logout handler
+ const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
   };
+
 
   return (
-    <div className="profile-page-container">
-      {/* Truyền state và hàm set xuống component con */}
-      <EditProfileTab 
-        userData={userData} 
-        setUserData={setUserData} 
-        onSave={handleSave}
-        onCancel={handleCancel}
-      />
+    <div className="profile-page">
+      <div className="profile-page__container container">
+        {/* Mobile & Desktop Tabs */}
+        <div className="profile-mobile-tabs">
+          <div className="profile-mobile-tabs__scroll">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleTabChange(item.id)}
+                className={`profile-mobile-tabs__item ${
+                  activeTab === item.id ? "profile-mobile-tabs__item--active" : ""
+                }`}
+              >
+                <span className="profile-mobile-tabs__icon">{item.icon}</span>
+                <span className="profile-mobile-tabs__label">{item.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="profile-content">
+          {  renderContent(activeTab)}
+        </div>
+      </div>
+
+      {/* Mobile Logout Button */}
+      <div className="d-lg-none profile-mobile-logout">
+        <button onClick={handleLogout} className="profile-mobile-logout__btn">
+          <span>🚪</span>
+          <span>Đăng xuất</span>
+        </button>
+      </div>
     </div>
   );
-};
-
-export default ProfilePage;
+}

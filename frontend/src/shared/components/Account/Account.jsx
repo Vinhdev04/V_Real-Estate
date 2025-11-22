@@ -14,18 +14,20 @@ import './Account.css';
 import axios from 'axios';
 import { API_URL_LOGOUT } from '../../../constant/api';
 import  { useNavigate } from "react-router-dom";
-const Account = ({ user }) => {
+const Account = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate =  useNavigate();
-  // Mock user data - replace with actual user data
-  const currentUser = user || {
-    name: 'Nguyễn Văn A',
-    email: 'nguyenvana@email.com',
-    avatar: 'https://i.pravatar.cc/150?img=12'
+  const info = JSON.parse(localStorage.getItem('user'));
+
+const currentUser = "" || {
+    name:  info.username,
+    email: info.email,
+    avatar: info.avatar
   };
 
-  // Close dropdown when clicking outside
+
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
