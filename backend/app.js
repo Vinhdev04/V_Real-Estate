@@ -3,7 +3,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import testRouter  from "./routes/auth.route.js";
+import testRouter  from "./routes/test.route.js";
 
 // Import các thư viện
 import express from 'express';

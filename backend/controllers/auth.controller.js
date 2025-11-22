@@ -5,7 +5,6 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 // ------ HANDLE REGISTER USER ------
-// auth.controller.js
 
 export const register = async (req, res) => {
   const { username, password, passwordConfirm, email, telephone } = req.body;
@@ -110,7 +109,7 @@ export const login = async (req, res) => {
     const timeExpire = 24 * 60 * 60 * 1000;
 
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
+      { userId: user.id, email: user.email,isAdmin:false },
       process.env.JWT_SECRET_KEY,
       { expiresIn: timeExpire }
     );
@@ -124,7 +123,7 @@ export const login = async (req, res) => {
     console.log("LOGIN SUCCESS User logged in:", email);
     console.log("Token:", token);
 
-    // ✅ SỬA LẠI: Trả về đúng cấu trúc như Google Login
+    //  Trả về đúng cấu trúc như Google Login
     res.status(200).json({
       message: 'Đăng nhập thành công',
       token,
@@ -187,7 +186,7 @@ export const googleLogin = async (req, res) => {
           telephone: null,
         },
       });
-      console.log('✅ New Google user created:', email);
+      console.log(' New Google user created:', email);
     } else {
       // Nếu user đã tồn tại, cập nhật thông tin
       user = await prisma.user.update({
@@ -226,8 +225,8 @@ export const googleLogin = async (req, res) => {
       // secure: true, // Bật trong production với HTTPS
     });
 
-    console.log('🔐 Google LOGIN SUCCESS:', email);
-    console.log('🎫 Token:', token);
+    console.log('Google LOGIN SUCCESS:', email);
+    console.log('Token:', token);
 
     // Trả về thông tin user và token
     res.status(200).json({
@@ -237,7 +236,7 @@ export const googleLogin = async (req, res) => {
     });
 
   } catch (err) {
-    console.error('❌ Google Login Error:', err);
+    console.error('Google Login Error:', err);
     res.status(500).json({ 
       message: 'Đăng nhập Google thất bại',
       error: err.message 
