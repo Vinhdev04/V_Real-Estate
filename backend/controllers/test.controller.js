@@ -1,14 +1,7 @@
 
 import jwt from "jsonwebtoken";
 export const requireLogin = async(req,res) => {
-    const token = req.cookies.token;
-    console.log(token);
-
-    if(!token) return res.status(401).json({message: "Not Authenticated!"})
-        
-    jwt.verify(token,process.env.JWT_SECRET_KEY,async(err,payload)=>{
-        if(err) return res.status(403).json({message: 'Token is invalid!'})
-    })
+   console.log("Res req.id",req.userId);
     res.status(200).json({message: "You are Authenticated!"})
 }
 export const requireLogout = async(req,res) => {}

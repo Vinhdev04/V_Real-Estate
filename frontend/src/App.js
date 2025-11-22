@@ -10,6 +10,7 @@ import './assets/css/layout.css';
 import './assets/css/responsive.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { AuthContext, AuthContextProvider } from './context/AuthContext';
 
 // Lưu ý: ĐÃ XÓA GoogleOAuthProvider vì đã có bên index.js
 
@@ -34,9 +35,11 @@ const Layout = () => (
 
 function App() {
   return (
-    <BrowserRouter> 
-      <Layout />
-    </BrowserRouter>
+    <AuthContextProvider>
+      <BrowserRouter> 
+        <Layout />
+      </BrowserRouter>
+    </AuthContextProvider>
   );
 }
 
