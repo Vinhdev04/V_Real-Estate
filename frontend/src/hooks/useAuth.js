@@ -114,50 +114,73 @@ export const useAuth = () => {
     }
   };
 
-  const login = async (e)=> {
-    e.preventDefault();
-    setLoading(true);
-    setErrors({});
-    const formData = new FormData(e.target);
-    const data = {
-      email: formData.get('email'),
-      password: formData.get('password'),
-    };
-    const newErrors = {};
-    if (!data.email) newErrors.email = "Vui lòng nhập email.";
-    if (!data.password) newErrors.password = "Vui lòng nhập mật khẩu.";
+ const login = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setErrors({});
+  
+  const formData = new FormData(e.target);
+  const data = {
+    email: formData.get('email'),
+    password: formData.get('password'),
+  };
+  
+  const newErrors = {};
+  if (!data.email) newErrors.email = "Vui lòng nhập email.";
+  if (!data.password) newErrors.password = "Vui lòng nhập mật khẩu.";
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      setLoading(false);
-      return;
-    }
-     try {
-          const res = await axios.post(API_URL_LOGIN,{
-            email: data.email,
-            password: data.password,
-      },{
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          })
-          localStorage.setItem("user",JSON.stringify(res.data));
-          navigate("/");
-
-     }catch(err){
-       console.log(err);
-      const backendError = err.response?.data?.message || "Đã có lỗi xảy ra!";
-      
-      
-      if (backendError.includes("Credentials") || backendError.includes("Missing")) {
-        setErrors({ general: "Email hoặc mật khẩu không chính xác." });
-      } else {
-        setErrors({ general: backendError });
-      }
-     }finally{
-        setLoading(false);
-     }
-
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    setLoading(false);
+    return;
   }
+  
+  try {
+    const res = await axios.post(API_URL_LOGIN, {
+      email: data.email,
+      password: data.password,
+    }, {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
+    
+    // ✅ XỬ LÝ CẢ 2 TRƯỜNG HỢP
+    let userData;
+    
+    // Nếu backend trả về có userInfo (giống Google)
+    if (res.data.userInfo) {
+      userData = res.data.userInfo;
+    } 
+    // Nếu backend trả trực tiếp user data (cũ)
+    else {
+      userData = res.data;
+    }
+    
+    // Lưu vào localStorage
+    localStorage.setItem("user", JSON.stringify(userData));
+    
+    // Lưu token nếu có
+    if (res.data.token) {
+      localStorage.setItem("token", res.data.token);
+    }
+    
+    console.log("✅ Đã lưu user data:", userData);
+    
+    navigate("/");
+
+  } catch(err) {
+    console.log(err);
+    const backendError = err.response?.data?.message || "Đã có lỗi xảy ra!";
+    
+    if (backendError.includes("Credentials") || backendError.includes("Missing")) {
+      setErrors({ general: "Email hoặc mật khẩu không chính xác." });
+    } else {
+      setErrors({ general: backendError });
+    }
+  } finally {
+    setLoading(false);
+  }
+}
   // return data and functions
   return { handleSubmit,login,clearError, loading, errors, setErrors };
 };

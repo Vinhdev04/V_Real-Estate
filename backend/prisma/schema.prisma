@@ -15,7 +15,10 @@ model User {
   avatar        String?
   telephone     String?
   createdAt     DateTime @default(now())
-  googleId      String?  @unique
+  googleId      String? // Bỏ @unique ở đây
   emailVerified Boolean  @default(false)
-  loginType     String   @default("email") // "email" hoặc "google"
+  loginType     String   @default("email")
+
+  // Thêm index riêng cho googleId (không unique)
+  @@index([googleId])
 }

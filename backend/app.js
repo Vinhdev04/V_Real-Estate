@@ -3,6 +3,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import testRouter  from "./routes/auth.route.js";
+
 // Import các thư viện
 import express from 'express';
 import morgan from 'morgan';
@@ -34,6 +36,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use("/api/auth", authRoute);
+app.use("/api/test",testRouter);
 
 // Start server
 app.listen(port, host, () => {
