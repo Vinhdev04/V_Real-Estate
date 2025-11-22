@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { API_URL_REGISTER,API_URL_LOGIN } from '../constant/api.js';
+import {dispatchAuthChange} from "../utils/authEvents.js";
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
  
@@ -114,73 +115,68 @@ export const useAuth = () => {
     }
   };
 
- const login = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setErrors({});
-  
-  const formData = new FormData(e.target);
-  const data = {
-    email: formData.get('email'),
-    password: formData.get('password'),
-  };
-  
-  const newErrors = {};
-  if (!data.email) newErrors.email = "Vui lòng nhập email.";
-  if (!data.password) newErrors.password = "Vui lòng nhập mật khẩu.";
+  const login = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrors({});
+    
+    const formData = new FormData(e.target);
+    const data = {
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
+    
+    const newErrors = {};
+    if (!data.email) newErrors.email = "Vui lòng nhập email.";
+    if (!data.password) newErrors.password = "Vui lòng nhập mật khẩu.";
 
-  if (Object.keys(newErrors).length > 0) {
-    setErrors(newErrors);
-    setLoading(false);
-    return;
-  }
-  
-  try {
-    const res = await axios.post(API_URL_LOGIN, {
-      email: data.email,
-      password: data.password,
-    }, {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
-    
-    // ✅ XỬ LÝ CẢ 2 TRƯỜNG HỢP
-    let userData;
-    
-    // Nếu backend trả về có userInfo (giống Google)
-    if (res.data.userInfo) {
-      userData = res.data.userInfo;
-    } 
-    // Nếu backend trả trực tiếp user data (cũ)
-    else {
-      userData = res.data;
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setLoading(false);
+      return;
     }
     
-    // Lưu vào localStorage
-    localStorage.setItem("user", JSON.stringify(userData));
-    
-    // Lưu token nếu có
-    if (res.data.token) {
-      localStorage.setItem("token", res.data.token);
-    }
-    
-    console.log("✅ Đã lưu user data:", userData);
-    
-    navigate("/");
+    try {
+      const res = await axios.post(API_URL_LOGIN, {
+        email: data.email,
+        password: data.password,
+      }, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      
+      // Xử lý cả 2 trường hợp response
+      let userData;
+      if (res.data.userInfo) {
+        userData = res.data.userInfo;
+      } else {
+        userData = res.data;
+      }
+      
+      localStorage.setItem("user", JSON.stringify(userData));
+      
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
+      
+      // ✅ THÊM: Dispatch event để Navbar cập nhật
+      dispatchAuthChange();
+      
+      navigate("/");
 
-  } catch(err) {
-    console.log(err);
-    const backendError = err.response?.data?.message || "Đã có lỗi xảy ra!";
-    
-    if (backendError.includes("Credentials") || backendError.includes("Missing")) {
-      setErrors({ general: "Email hoặc mật khẩu không chính xác." });
-    } else {
-      setErrors({ general: backendError });
+    } catch(err) {
+      console.log(err);
+      const backendError = err.response?.data?.message || "Đã có lỗi xảy ra!";
+      
+      if (backendError.includes("Credentials") || backendError.includes("Missing")) {
+        setErrors({ general: "Email hoặc mật khẩu không chính xác." });
+      } else {
+        setErrors({ general: backendError });
+      }
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
-  }
-}
+    }
   // return data and functions
   return { handleSubmit,login,clearError, loading, errors, setErrors };
 };

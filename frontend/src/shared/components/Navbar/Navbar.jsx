@@ -6,6 +6,7 @@ import Account from "../Account/Account";
 import "../../../assets/css/layout.css";
 import "../../../assets/css/responsive.css";
 import logoHomePage from "../../../assets/images/logoW.png";
+import { onAuthChange } from "../../../utils/authEvents.js"; // ← Thêm import
 
 function Navbar(props) {
   const navLinks = routes.filter(route => route.showInNav);
@@ -14,16 +15,40 @@ function Navbar(props) {
   const [currentUser, setCurrentUser] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Kiểm tra đăng nhập khi load trang
-  useEffect(() => {
+  // ✅ HÀM KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP
+  const checkAuthStatus = () => {
     const user = localStorage.getItem('user');
     if (user) {
-      setIsLoggedIn(true);
-      setCurrentUser(JSON.parse(user));
+      try {
+        const parsedUser = JSON.parse(user);
+        setIsLoggedIn(true);
+        setCurrentUser(parsedUser);
+        console.log('✅ User đã đăng nhập:', parsedUser);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+      }
     } else {
       setIsLoggedIn(false);
       setCurrentUser(null);
+      console.log('❌ Chưa đăng nhập');
     }
+  };
+
+  // ✅ KIỂM TRA KHI COMPONENT MOUNT
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  // ✅ LẮNG NGHE SỰ THAY ĐỔI AUTH STATE
+  useEffect(() => {
+    const cleanup = onAuthChange(() => {
+      console.log('🔄 Auth state changed, updating Navbar...');
+      checkAuthStatus();
+    });
+
+    return cleanup; // Cleanup listener khi unmount
   }, []);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
@@ -64,16 +89,13 @@ function Navbar(props) {
           ))}
         </div>
 
-        {/* PHẦN 3: Login / Account (Đã sửa logic tại đây) */}
+        {/* PHẦN 3: Login / Account */}
         <div className="navbar__right d-none d-md-flex align-items-center gap-3">
           {!isLoggedIn ? (
-            // Nếu CHƯA đăng nhập -> Hiện nút Đăng nhập
             <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none">
               Đăng nhập
             </NavLink>
           ) : (
-            // Nếu ĐÃ đăng nhập -> Hiện Account (Avatar + Tên)
-            // Component Account sẽ chứa nút Đăng xuất bên trong dropdown của nó
             <Account user={currentUser} />
           )}
         </div>
@@ -99,7 +121,6 @@ function Navbar(props) {
           </NavLink>
         ))}
 
-        {/* Logic Mobile cũng tương tự */}
         {!isLoggedIn ? (
           <>
             <NavLink to="/auth/login" className="sign-in" onClick={closeMobileMenu}>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { googleLogout } from '@react-oauth/google';
 import { googleLoginService } from '../features/Auth/services/googleLoginService.js';
-
+import {dispatchAuthChange} from "../utils/authEvents.js";
 export const useGoogleAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -39,7 +39,8 @@ export const useGoogleAuth = () => {
       if (response.userInfo) {
         localStorage.setItem('user', JSON.stringify(response.userInfo));
       }
-
+      // ✅ THÊM: Dispatch event để Navbar cập nhật
+      dispatchAuthChange();
       // Chuyển hướng về trang chủ
       navigate('/');
       
