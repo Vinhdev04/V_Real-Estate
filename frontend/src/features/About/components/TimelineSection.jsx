@@ -5,21 +5,31 @@ const TimelineSection = ({ title, milestones }) => {
   const colors = ['#41516C', '#FBCA3E', '#E24A68', '#1B5F8C', '#4CADAD'];
   
   return (
-    <div className="timeline-wrapper">
-      {/* Animated background */}
-      <div className="timeline-bg-pattern"></div>
+    <div className="timeline">
+      <div className="timeline__bg-pattern" />
       
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 20px', position: 'relative', zIndex: 1 }}>
-        <h1 className="timeline-title">
-          <span className="title-icon">🏢</span>
+      <div className="timeline__container">
+        <h1 className="timeline__title">
+          <span className="timeline__title-icon">🏢</span>
           {title}
         </h1>
-        <ul className="timeline-list">
+        
+        <ul className="timeline__list">
           {milestones.map((milestone, index) => (
-            <li key={index} style={{ '--accent-color': colors[index % colors.length] }}>
-              <div className="date">{milestone.year}</div>
-              <div className="title">{milestone.title || `Cột mốc ${milestone.year}`}</div>
-              <div className="descr">{milestone.event}</div>
+            <li 
+              key={index} 
+              className="timeline__item"
+              style={{ '--accent-color': colors[index % colors.length] }}
+            >
+              <div className="timeline__date">
+                {milestone.year}
+              </div>
+              <div className="timeline__card-title">
+                {milestone.title || `Cột mốc ${milestone.year}`}
+              </div>
+              <div className="timeline__card-description">
+                {milestone.event}
+              </div>
             </li>
           ))}
         </ul>

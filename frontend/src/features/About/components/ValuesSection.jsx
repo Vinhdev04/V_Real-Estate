@@ -2,14 +2,16 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import ValueCard from './ValueCard';
 import "../styles/about.css"
+
+
 const ValuesSection = ({ title, subtitle, values }) => {
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto 80px', padding: '0 20px' }}>
-      <div className="fade-in-up" style={{ textAlign: 'center', marginBottom: 60 }}>
-        <h2 style={{ fontSize: 36, color: '#333', marginBottom: 16 }}>
+    <div className="values-section">
+      <div className="values-section__header">
+        <h2 className="values-section__title">
           {title}
         </h2>
-        <p style={{ fontSize: 18, color: '#666' }}>
+        <p className="values-section__subtitle">
           {subtitle}
         </p>
       </div>

@@ -4,38 +4,31 @@ import "../styles/about.css"
 const ServiceCard = ({ service, index }) => {
   return (
     <Card 
-      className={`service-card scale-in ${service.highlighted ? 'highlighted' : ''}`}
-      style={{ 
-        animationDelay: `${index * 0.2}s`,
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-        borderRadius: 16
-      }}
+      className={`service-card ${service.highlighted ? 'service-card--highlighted' : ''}`}
+      style={{ animationDelay: `${index * 0.2}s` }}
     >
-      <div style={{ textAlign: 'center', marginBottom: 20 }} className="float-animation">
+      <div className="service-card__icon">
         {service.icon}
       </div>
-      <h3 style={{ fontSize: 22, textAlign: 'center', color: '#333', marginBottom: 16 }}>
+      
+      <h3 className="service-card__title">
         {service.title}
       </h3>
-      <p style={{ fontSize: 15, color: '#666', textAlign: 'center', marginBottom: 24, lineHeight: 1.6 }}>
+      
+      <p className="service-card__description">
         {service.description}
       </p>
-      <div style={{ borderTop: '1px solid #eee', paddingTop: 20 }}>
+      
+      <div className="service-card__features">
         {service.features.map((feature, idx) => (
-          <div key={idx} className="feature-item">{feature}</div>
+          <div key={idx} className="service-card__feature">
+            {feature}
+          </div>
         ))}
       </div>
+      
       {service.highlighted && (
-        <div style={{
-          marginTop: 20,
-          padding: '8px 16px',
-          background: '#4A90E2',
-          color: 'white',
-          borderRadius: 20,
-          textAlign: 'center',
-          fontSize: 14,
-          fontWeight: 'bold'
-        }}>
+        <div className="service-card__badge">
           Dịch vụ nổi bật
         </div>
       )}
