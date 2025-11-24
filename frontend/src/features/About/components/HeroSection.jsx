@@ -14,7 +14,7 @@ const HeroSection = ({ title, subtitle }) => {
 
   return (
     <div className="hero-section">
-      {/* Animated background circles */}
+
       <div 
         className="hero-section__bg-circle hero-section__bg-circle--top-left"
         style={{ transform: `translateY(${scrollY * 0.3}px)` }}
@@ -25,7 +25,7 @@ const HeroSection = ({ title, subtitle }) => {
         style={{ transform: `translateY(${scrollY * -0.2}px)` }}
       />
 
-      {/* Floating property icons */}
+  
       <div className="hero-section__floating-icon hero-section__floating-icon--home">
         🏠
       </div>
@@ -38,7 +38,7 @@ const HeroSection = ({ title, subtitle }) => {
         🗝️
       </div>
 
-      {/* Main content */}
+
       <div className="hero-section__content">
         <div className="hero-section__icon-wrapper">
           <span className="hero-section__main-icon">
@@ -57,7 +57,7 @@ const HeroSection = ({ title, subtitle }) => {
         <div className="hero-section__divider" />
       </div>
 
-      {/* Bottom wave decoration */}
+   
       <svg 
         className="hero-section__wave"
         xmlns="http://www.w3.org/2000/svg" 

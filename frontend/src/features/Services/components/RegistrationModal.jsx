@@ -4,105 +4,189 @@ import { X } from 'lucide-react';
 import '../styles/RegistrationModal.css';
 
 const RegistrationModal = ({ isOpen, onClose, service }) => {
-  
+  // const [formData, setFormData] = useState({
+  //   name: '',
+  //   phone: '',
+  //   email: '',
+  //   message: ''
+  // });
 
-  // return (
-  //   <div className="modal-overlay" >
-  //     <div className="modal-content" >
-  //       <button className="modal-close" >
-  //         <X size={24} />
-  //       </button>
+  // const [errors, setErrors] = useState({});
 
-  //       <div className="modal-header">
-  //         <h2 className="modal-title">Đăng ký dịch vụ</h2>
-  //         <p className="modal-subtitle">
-  //           Vui lòng điền thông tin để đăng ký dịch vụ <strong>{service?.title}</strong>
-  //         </p>
-  //       </div>
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData(prev => ({
+  //     ...prev,
+  //     [name]: value
+  //   }));
+  //   // Clear error when user starts typing
+  //   if (errors[name]) {
+  //     setErrors(prev => ({
+  //       ...prev,
+  //       [name]: ''
+  //     }));
+  //   }
+  // };
 
-  //       <form className="modal-form">
-  //         <div className="form-group">
-  //           <label className="form-label">
-  //             Họ và tên <span className="required">*</span>
-  //           </label>
-  //           <input
-  //             type="text"
-  //             name="name"
-             
-  //             className="form-input "
-  //             placeholder="Nguyễn Văn A"
-  //           />
-         
-  //         </div>
+  // const validateForm = () => {
+  //   const newErrors = {};
 
-  //         <div className="form-group">
-  //           <label className="form-label">
-  //             Số điện thoại <span className="required">*</span>
-  //           </label>
-  //           <input
-  //             type="tel"
-  //             name="phone"
-             
-  //             className="form-input "
-  //             placeholder="0123 456 789"
-  //           />
-          
-  //         </div>
+  //   if (!formData.name.trim()) {
+  //     newErrors.name = 'Vui lòng nhập họ và tên';
+  //   }
 
-  //         <div className="form-group">
-  //           <label className="form-label">
-  //             Email <span className="required">*</span>
-  //           </label>
-  //           <input
-  //             type="email"
-  //             name="email"
-           
-  //             className="form-input "
-  //             placeholder="example@email.com"
-  //           />
-          
-  //         </div>
+  //   if (!formData.phone.trim()) {
+  //     newErrors.phone = 'Vui lòng nhập số điện thoại';
+  //   } else if (!/^[0-9]{10,11}$/.test(formData.phone.replace(/\s/g, ''))) {
+  //     newErrors.phone = 'Số điện thoại không hợp lệ';
+  //   }
 
-  //         <div className="form-group">
-  //           <label className="form-label">Dịch vụ</label>
-  //           <input
-  //             type="text"
-  //             value={service?.title || ''}
-  //             className="form-input"
-  //             disabled
-  //           />
-  //         </div>
+  //   if (!formData.email.trim()) {
+  //     newErrors.email = 'Vui lòng nhập email';
+  //   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+  //     newErrors.email = 'Email không hợp lệ';
+  //   }
 
-  //         <div className="form-group">
-  //           <label className="form-label">Tin nhắn (tùy chọn)</label>
-  //           <textarea
-  //             name="message"
-             
-  //             className="form-textarea"
-  //             placeholder="Nhập yêu cầu chi tiết của bạn..."
-  //             rows="4"
-  //           />
-  //         </div>
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
 
-  //         <div className="modal-actions">
-  //           <button 
-  //             type="button" 
-  //             className="btn-cancel"
-            
-  //           >
-  //             Hủy
-  //           </button>
-  //           <button 
-  //             type="submit" 
-  //             className="btn-submit"
-  //           >
-  //             Đăng ký
-  //           </button>
-  //         </div>
-  //       </form>
-  //     </div>
-  //   </div>
-  // );
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+    
+  //   if (validateForm()) {
+  //     // Handle form submission
+  //     console.log('Form submitted:', {
+  //       ...formData,
+  //       service: service?.title || 'Tư vấn chung'
+  //     });
+      
+  //     // Show success message or redirect
+  //     alert('Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.');
+      
+  //     // Reset form and close modal
+  //     setFormData({ name: '', phone: '', email: '', message: '' });
+  //     onClose();
+  //   }
+  // };
+
+  // if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button 
+          className="modal-content__close"
+          onClick={onClose}
+          aria-label="Đóng"
+        >
+          <X size={24} />
+        </button>
+
+        <div className="modal-header">
+          <h2 className="modal-header__title">Đăng ký dịch vụ</h2>
+          <p className="modal-header__subtitle">
+            Vui lòng điền thông tin để đăng ký dịch vụ{' '}
+            <strong>{service?.title || 'tư vấn bất động sản'}</strong>
+          </p>
+        </div>
+
+        <form className="modal-form" onSubmit={""}>
+          <div className="modal-form__group">
+            <label className="modal-form__label">
+              Họ và tên
+              <span className="modal-form__label-required">*</span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={""}
+              onChange={""}
+              className={`modal-form__input `}
+              placeholder="Nguyễn Văn A"
+            />
+            {/* {errors.name && (
+              <span className="modal-form__error-message">{errors.name}</span>
+            )} */}
+          </div>
+
+          <div className="modal-form__group">
+            <label className="modal-form__label">
+              Số điện thoại
+              <span className="modal-form__label-required">*</span>
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              value={"formData.phone"}
+              onChange={"handleChange"}
+              className={`modal-form__input `}
+              placeholder="0123 456 789"
+            />
+            {/* {errors.phone && (
+              <span className="modal-form__error-message">{errors.phone}</span>
+            )} */}
+          </div>
+
+          <div className="modal-form__group">
+            <label className="modal-form__label">
+              Email
+              <span className="modal-form__label-required">*</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={"formData.email"}
+              onChange={"handleChange"}
+              className={`modal-form__input `}
+              placeholder="example@email.com"
+            />
+            {/* {errors.email && (
+              <span className="modal-form__error-message">{errors.email}</span>
+            )} */}
+          </div>
+
+          <div className="modal-form__group">
+            <label className="modal-form__label">Dịch vụ</label>
+            <input
+              type="text"
+              value={service?.title || 'Tư vấn chung'}
+              className="modal-form__input"
+              disabled
+            />
+          </div>
+
+          <div className="modal-form__group">
+            <label className="modal-form__label">Tin nhắn (tùy chọn)</label>
+            <textarea
+              name="message"
+              value={"formData.message"}
+              onChange={"handleChange"}
+              className="modal-form__textarea"
+              placeholder="Nhập yêu cầu chi tiết của bạn..."
+              rows="4"
+            />
+          </div>
+
+          <div className="modal-actions">
+            <button 
+              type="button" 
+              className="modal-actions__btn modal-actions__btn--cancel"
+              onClick={onClose}
+            >
+              Hủy
+            </button>
+            <button 
+              type="submit" 
+              className="modal-actions__btn modal-actions__btn--submit"
+            >
+              Đăng ký
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default RegistrationModal;

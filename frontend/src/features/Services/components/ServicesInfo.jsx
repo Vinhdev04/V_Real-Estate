@@ -7,20 +7,38 @@ import CTASection from './CTASection';
 import RegistrationModal from './RegistrationModal';
 import { services, processSteps } from '../services/data';
 import '../styles/ServicesInfo.css';
-
 const ServicesInfo = () => {
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
+
+  const handleConsultClick = () => {
+    setIsModalOpen(true);
+    setSelectedService(null);
+  };
+
+  const handleRegisterClick = (service) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedService(null);
+  };
 
   return (
     <>
-      <HeroSection  />
+      <HeroSection onConsultClick={handleConsultClick} />
 
       {/* Services Grid Section */}
       <section className="services-container">
-        <div className="section-header">
-          <h2 className="section-title">Dịch Vụ Của Chúng Tôi</h2>
-          <p className="section-subtitle">
-            Từ tư vấn mua bán đến quản lý tài sản, chúng tôi cung cấp dịch vụ chuyên nghiệp và uy tín
+        <div className="services-container__header">
+          <h2 className="services-container__title">
+            Dịch Vụ Của Chúng Tôi
+          </h2>
+          <p className="services-container__subtitle">
+            Từ tư vấn mua bán đến quản lý tài sản, chúng tôi cung cấp dịch vụ 
+            chuyên nghiệp và uy tín với đội ngũ chuyên gia giàu kinh nghiệm
           </p>
         </div>
 
@@ -30,7 +48,7 @@ const ServicesInfo = () => {
               key={service.id}
               service={service}
               index={index}
-             
+              onRegisterClick={handleRegisterClick}
             />
           ))}
         </div>
@@ -38,13 +56,15 @@ const ServicesInfo = () => {
 
       <ProcessTimeline steps={processSteps} />
 
-      <CTASection 
-      
-      />
+      <CTASection onContactClick={handleConsultClick} />
 
-      <RegistrationModal
-      
-      />
+      {isModalOpen && (
+        <RegistrationModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          service={selectedService}
+        />
+      )}
     </>
   );
 };

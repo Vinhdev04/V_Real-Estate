@@ -5,12 +5,15 @@ import { ArrowRight } from 'lucide-react';
 const HeroSection = ({ onConsultClick }) => {
   return (
     <section className="services-hero">
-      <div className="hero-content">
-        <h1 className="hero-title">Dịch Vụ Bất Động Sản</h1>
-        <p className="hero-subtitle">
-          Cung cấp giải pháp toàn diện cho mọi nhu cầu bất động sản của bạn
+      <div className="services-hero__content">
+        <h1 className="services-hero__title">
+          Dịch Vụ Bất Động Sản
+        </h1>
+        <p className="services-hero__subtitle">
+          Cung cấp giải pháp toàn diện cho mọi nhu cầu bất động sản của bạn. 
+          Từ tư vấn mua bán, cho thuê đến quản lý và đầu tư bất động sản chuyên nghiệp.
         </p>
-        <button className="hero-btn" onClick={onConsultClick}>
+        <button className="services-hero__btn" onClick={onConsultClick}>
           Tư vấn miễn phí
           <ArrowRight size={20} />
         </button>
