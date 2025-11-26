@@ -156,6 +156,8 @@ export const useAuth = () => {
         userData = res.data;
       }
       
+      localStorage.setItem("user", JSON.stringify(userData));
+      
       // UPDATE USER INFO
       updateUser(userData);
       

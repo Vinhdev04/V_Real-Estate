@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({children})=>{
     const [currentUser,setCurrentUser] = useState(
-        JSON.parse(localStorage.getItem("user") || null)
+        JSON.parse(localStorage.getItem("user") || 'null')
     )
 
     // update userInfo
@@ -23,7 +23,7 @@ export const AuthContextProvider = ({children})=>{
     // eventlistener for google 
     useEffect(()=>{
         const handleAuthChange = ()=>{
-            const userFromStorage = JSON.parse(localStorage.getItem("user") || null);
+            const userFromStorage = JSON.parse(localStorage.getItem("user") || 'null');
             setCurrentUser(userFromStorage);
         }
 

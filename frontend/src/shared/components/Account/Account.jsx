@@ -22,7 +22,7 @@ const Account = () => {
   const navigate =  useNavigate();
 
 
-  const {currentUser,setCurrentUser }= useContext(AuthContext);
+  const {currentUser,setCurrentUser ,updateUser}= useContext(AuthContext);
 
  
   useEffect(() => {
@@ -40,9 +40,8 @@ const Account = () => {
 
   const handleLogout = async() => {
     try {
-      const res = await axios.post(`${API_URL_LOGOUT}`);
-      localStorage.removeItem("user")
-      setCurrentUser(null);
+      await axios.post(`${API_URL_LOGOUT}`);
+      updateUser(null);
       navigate("/")
     } catch (error) {
       console.log(error);

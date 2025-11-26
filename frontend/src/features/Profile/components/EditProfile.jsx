@@ -1,63 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext} from "react";
 import "../styles/profile.css";
-
+import {AuthContext} from "../../../context/AuthContext";
+import Swal from 'sweetalert2'
+import imgDefault from '../../../assets/images/default-user.png';
 function EditProfile() {
-  // 1. Initialize state to hold form data
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    telephone: "",
-    createAt: "",
-    gender: "Nam",
-    address: "",
-    bio: "",
-    avt:""
-  });
+  const {currentUser,updateUser} = useContext(AuthContext)
 
+  // 1. Initialize state to hold form data
+ 
   // 2. Load data from LocalStorage once when component mounts
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        // Merge stored data into state
-        setFormData((prev) => ({ ...prev, ...parsedUser }));
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedUser = localStorage.getItem("user");
+  
+  // }, []);
 
   // 3. Handle input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // Kiểm tra kích thước file (ví dụ: giới hạn 2MB để tránh tràn LocalStorage)
-      if (file.size > 2 * 1024 * 1024) {
-        alert("File ảnh quá lớn! Vui lòng chọn ảnh dưới 2MB.");
-        return;
-      }
-
-      // Chuyển ảnh sang dạng Base64 để hiển thị và lưu trữ
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prev) => ({ ...prev, avt: reader.result }));
-      };
-      reader.readAsDataURL(file);
+  }
+  
+  const handleImageChange = (e) => {
+  
     }
-  };
+  
+  
   // 4. Handle Save Action
   const handleSave = () => {
-    // Save back to local storage
-    localStorage.setItem("user", JSON.stringify(formData));
-    alert("Đã lưu thay đổi thành công!");
+    Swal.fire({
+      title: "Bạn có muốn lưu thay đổi?",
+      text: "Thay đổi sẽ được lưu và hiển thị trên trang cá nhân của bạn.",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Lưu thay đổi",
+      denyButtonText: `Không lưu thay đổi`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Lưu thành công!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Thao tác lưu chưa thành công", "", "warning");
+      }
+    });
+
   };
 
   return (
@@ -67,9 +49,9 @@ const handleImageChange = (e) => {
       <div className="profile-avatar-upload">
        
         <div className="profile-avatar-upload__circle">
-          {formData.avt ? (
+          {currentUser.avatar ? (
             <img 
-              src={formData.avt} 
+              src={currentUser.avatar || imgDefault}
               alt="Avatar" 
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} 
             />
@@ -96,7 +78,7 @@ const handleImageChange = (e) => {
             type="text"
             name="username" 
             className="profile-form__input"
-            value={formData.username || ""} 
+            value={currentUser.username || ""} 
             onChange={handleChange} 
             placeholder="Họ và tên"
           />
@@ -106,7 +88,7 @@ const handleImageChange = (e) => {
             type="email"
             name="email"
             className="profile-form__input"
-            value={formData.email || ""}
+            value={currentUser.email || ""}
             onChange={handleChange}
             placeholder="Email"
             readOnly 
@@ -117,7 +99,7 @@ const handleImageChange = (e) => {
             type="text"
             name="telephone"
             className="profile-form__input"
-            value={formData.telephone || ""}
+            value={currentUser.telephone || "Hãy nhập số điện thoại của bạn!"}
             onChange={handleChange}
             placeholder="Số điện thoại"
           />
@@ -127,7 +109,7 @@ const handleImageChange = (e) => {
             type="date"
             name="createAt"
             className="profile-form__input"
-            value={formData.createAt || ""}
+            value={currentUser.createdAt || ""}
             onChange={handleChange}
           />
         </div>
@@ -135,7 +117,7 @@ const handleImageChange = (e) => {
           <select 
             className="profile-form__select"
             name="gender"
-            value={formData.gender}
+            value={currentUser.gender}
             onChange={handleChange}
           >
             <option value="Nam">Nam</option>
@@ -147,7 +129,7 @@ const handleImageChange = (e) => {
             type="text"
             name="address"
             className="profile-form__input"
-            value={formData.address || ""}
+            value={currentUser.address || "Hãy nhập địa chỉ của bạn!"}
             onChange={handleChange}
             placeholder="Địa chỉ"
           />
@@ -158,7 +140,7 @@ const handleImageChange = (e) => {
             name="bio"
             rows="4"
             placeholder="Giới thiệu bản thân"
-            value={formData.bio || ""}
+            value={currentUser.bio || "Hãy nhập giới thiệu bản thân của bạn!"}
             onChange={handleChange}
           />
         </div>
