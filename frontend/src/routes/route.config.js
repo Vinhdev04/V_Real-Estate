@@ -102,17 +102,17 @@ export const routes = [
                 name: 'Trang cá nhân',
                 showInNav: false,
                 children: [
-                    // Route mặc định khi chỉ truy cập /profile
+                   
                     { index: true, element: <ProfileOverview /> }, 
                     
-                    // Các Route con (path tương đối)
+                 
                     { path: 'edit', element: <EditProfile /> },      
                     { path: 'favorites', element: <Favorites /> },  
                     { path: 'history', element: <ViewHistory /> },       
                     { path: 'settings', element: <Settings /> },     
                 ]
             },
-            // ... các route private khác
+         
         ]
     },
   

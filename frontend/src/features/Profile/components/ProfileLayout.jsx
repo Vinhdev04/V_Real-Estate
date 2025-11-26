@@ -38,9 +38,6 @@ export default function Profile() {
   return (
     <div className="profile-page">
       <div className="container profile-page__container">
-     
-       
-    
         <div className="profile-content">
           <Outlet /> 
         </div>

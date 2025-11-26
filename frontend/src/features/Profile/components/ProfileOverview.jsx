@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 import "../styles/profile.css";
-
+import useFormatTime from "../../../utils/helpers";
 export default function ProfileOverview() {
   const rawUser = localStorage.getItem("user");
   const user = rawUser ? JSON.parse(rawUser) : null;
+  const formattedCreateAt = useFormatTime();
 
   if (!user) {
     return (
@@ -29,8 +30,8 @@ export default function ProfileOverview() {
     <div className="profile">
       {/* Header */}
       <div className="profile-header">
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-start gap-4">
-          <div className="d-flex gap-3 gap-md-4 flex-grow-1 align-items-center flex-column flex-sm-row text-center text-sm-start">
+        <div className="gap-4 d-flex flex-column flex-md-row justify-content-between align-items-start">
+          <div className="gap-3 text-center d-flex gap-md-4 flex-grow-1 align-items-center flex-column flex-sm-row text-sm-start">
             <div className="profile-header__avatar">
               {user.avatar ? (
                 <img src={user.avatar} alt={user.username} />
@@ -48,7 +49,7 @@ export default function ProfileOverview() {
                 {user.telephone && ` • ${user.telephone}`}
               </p>
               <small className="profile-header__joined">
-                📅 Tham gia từ {user.createdAt || "Chưa rõ"}
+                📅 Tham gia từ {formattedCreateAt || "Chưa rõ"}
               </small>
               {user.emailVerified && (
                 <span className="profile-header__badge">✓ Đã xác minh email</span>

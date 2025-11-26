@@ -3,9 +3,10 @@ import "../styles/profile.css";
 import {AuthContext} from "../../../context/AuthContext";
 import Swal from 'sweetalert2'
 import imgDefault from '../../../assets/images/default-user.png';
+import useFormatTime from "../../../utils/helpers";
 function EditProfile() {
   const {currentUser,updateUser} = useContext(AuthContext)
-
+  const formattedCreateAt = useFormatTime();
   
 
   // 3. Handle input changes
@@ -45,12 +46,16 @@ function EditProfile() {
         <div className="profile-avatar-upload__circle">
           {currentUser.avatar ? (
             <img 
-              src={currentUser.avatar || imgDefault}
+              src={currentUser.avatar }
               alt="Avatar" className="profile__avt-thumb"
             
             />
           ) : (
-            "NV"
+            <img 
+              src={ imgDefault}
+              alt="Avatar" className="profile__avt-thumb"
+            
+            />
           )}
         </div>
 
@@ -62,80 +67,95 @@ function EditProfile() {
             accept="image/*" 
             onChange={handleImageChange} 
             style={{ display: "none" }} 
-          />
+            defaultValue={""}
+          /> 
         </label>
       </div>
 
       <div className="row g-4">
         <div className="col-md-6">
+          <label htmlFor="username">Username</label>
           <input
             type="text"
             name="username" 
             className="profile-form__input"
-            value={currentUser.username || ""} 
+            defaultValue={currentUser.username || ""} 
             onChange={handleChange} 
             placeholder="Họ và tên"
+            id="username"
           />
         </div>
         <div className="col-md-6">
+            <label htmlFor="email">Email</label>
           <input
             type="email"
             name="email"
             className="profile-form__input"
-            value={currentUser.email || ""}
+            defaultValue={currentUser.email || ""}
             onChange={handleChange}
             placeholder="Email"
-            readOnly 
+           
+            id="email"
           />
         </div>
         <div className="col-md-6">
+           <label htmlFor="telephone">Telephone</label>
           <input
             type="text"
             name="telephone"
             className="profile-form__input"
-            value={currentUser.telephone || "Hãy nhập số điện thoại của bạn!"}
+            defaultValue={currentUser.telephone || ""}
             onChange={handleChange}
+            id="telephone"
             placeholder="Số điện thoại"
           />
         </div>
         <div className="col-md-6">
+          <label htmlFor="createAt">Created At</label>
           <input
-            type="date"
+            type="text"
             name="createAt"
             className="profile-form__input"
-            value={currentUser.createdAt || ""}
-            onChange={handleChange}
+            value={formattedCreateAt}
+            onChange={handleChange} readOnly
+            id="createAt"
           />
         </div>
         <div className="col-md-6">
+          <label htmlFor="gender">Gender</label>
           <select 
             className="profile-form__select"
             name="gender"
-            value={currentUser.gender}
+            defaultValue={currentUser.gender}
             onChange={handleChange}
+            id="gender"
           >
             <option value="Nam">Nam</option>
             <option value="Nữ">Nữ</option>
           </select>
         </div>
         <div className="col-md-6">
+          <label htmlFor="address">Address</label>
           <input
             type="text"
             name="address"
             className="profile-form__input"
-            value={currentUser.address || "Hãy nhập địa chỉ của bạn!"}
+            defaultValue={currentUser.address || ""}
             onChange={handleChange}
+            id="address"
             placeholder="Địa chỉ"
           />
         </div>
         <div className="col-12">
+          <label htmlFor="bio">Bio</label>
           <textarea
             className="profile-form__textarea"
             name="bio"
             rows="4"
             placeholder="Giới thiệu bản thân"
-            value={currentUser.bio || "Hãy nhập giới thiệu bản thân của bạn!"}
+            defaultValue={currentUser.bio || ""}
             onChange={handleChange}
+            id="bio"
           />
         </div>
       </div>

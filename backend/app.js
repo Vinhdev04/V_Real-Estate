@@ -13,6 +13,7 @@ import cookieParser from 'cookie-parser';
 
 // Import routes
 import authRoute from './routes/auth.route.js';
+import userRouter from './routes/user.route.js';
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use("/api/auth", authRoute);
+app.use("/api/users",userRouter);
 app.use("/api/test",testRouter);
 
 // Start server
