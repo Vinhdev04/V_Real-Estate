@@ -1,4 +1,6 @@
-
+/* ==============================
+    SERVER: APP
+ ============================== */
 // Import dotenv trước tiên
 import dotenv from 'dotenv';
 dotenv.config();

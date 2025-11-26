@@ -1,3 +1,6 @@
+/* ==============================
+     CONTROLLER: AUTH
+ ============================== */
 import bcrypt from 'bcrypt';
 import prisma from '../library/prisma.lib.js';
 import jwt from 'jsonwebtoken';

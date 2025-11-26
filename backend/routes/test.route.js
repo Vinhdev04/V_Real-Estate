@@ -1,3 +1,6 @@
+/* ==============================
+     ROUTE: TEST
+ ============================== */
 import express from "express"
 const router = express.Router();
 import { requireLogin,requireLogout,requireAdmin } from "../controllers/test.controller.js";

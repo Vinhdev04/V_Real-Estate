@@ -1,3 +1,6 @@
+/* ==============================
+     CONTROLLER: USER
+ ============================== */
 import prisma from "../library/prisma.lib.js";
 
 const getUsers = async (req, res) => {
@@ -12,8 +15,12 @@ const getUsers = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
+    const id = req.params.id;
     try {
-        
+        const user = await prisma.user.findUnique({
+            where: {id}
+        })
+        res.status(200).json(user);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Failed to get user" });
@@ -22,8 +29,17 @@ const getUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+    const id = req.params.id;
+    const userTokenId = req.userId; 
+    const body = res.body
+    if(id !== userTokenId)   
+        return res.status(403).json({message: "You are not authorized to update this user!"})
     try {
-        
+        const updatedUser = await prisma.user.update({
+            where: {id},
+            data: body
+        })
+        res.status(200).json(updatedUser);
     } catch (error) {
          console.log(error);
          res.status(500).json({ message: "Failed to update user" });

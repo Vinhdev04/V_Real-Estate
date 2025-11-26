@@ -1,3 +1,6 @@
+/* ==============================
+     FUNCTION:  CLEANUP USERS
+ ============================== */
 import prisma from '../library/prisma.lib.js';
 
 async function cleanupDuplicateGoogleId() {
@@ -30,16 +33,16 @@ async function cleanupDuplicateGoogleId() {
         await prisma.user.delete({
           where: { id: user.id }
         });
-        console.log(`✓ Deleted user: ${user.email}`);
+        console.log(` Deleted user: ${user.email}`);
       }
       
-      console.log('\n✅ Cleanup completed!');
+      console.log('\n Cleanup completed!');
     } else {
       console.log('\nOnly 1 user found, no cleanup needed');
     }
     
   } catch (error) {
-    console.error('❌ Error during cleanup:', error);
+    console.error(' Error during cleanup:', error);
   } finally {
     await prisma.$disconnect();
   }

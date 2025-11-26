@@ -1,3 +1,7 @@
+
+/* ==============================
+     ROUTE: AUTH
+ ============================== */
 import express from 'express';
 import { register, login, logout , googleLogin } from '../controllers/auth.controller.js';
 
