@@ -36,7 +36,11 @@ const Account = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  if (!currentUser) return null; 
+  // if(!currentUser) return null;
+  useEffect(()=>{
+    if (!currentUser)
+       navigate("/register"); 
+  },[currentUser,navigate])
 
   const handleLogout = async() => {
     try {

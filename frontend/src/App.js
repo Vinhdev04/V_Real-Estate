@@ -11,36 +11,38 @@ import './assets/css/responsive.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { AuthContext, AuthContextProvider } from './context/AuthContext';
+import { Layout,RequireAuth } from './layout/layout';
 
-// Lưu ý: ĐÃ XÓA GoogleOAuthProvider vì đã có bên index.js
-
-const Layout = () => (
-  <div className="d-flex flex-column min-vh-100">
-    <Navbar />
-    <main className="flex-grow-1">
-      <Routes>
-        {routes.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            element={route.element}
-          />
-        ))}
-      </Routes>
-    </main>
-   
-    <Footer />
-  </div>
-);
-
+import NotFound from './pages/NotFound';
 function App() {
   return (
     <AuthContextProvider>
       <BrowserRouter> 
-        <Layout />
+        <Routes> 
+     
+          {routes.map((parentRoute, index) => (
+            <Route 
+              key={index} 
+              path={parentRoute.path} 
+              element={parentRoute.element} 
+            >
+              {/*  Lặp qua các Route con (Public và Private) */}
+              {parentRoute.children && parentRoute.children.map((childRoute, childIndex) => (
+                <Route 
+                  key={childIndex}
+                  // Sử dụng index prop cho Trang Chủ (path: '/')
+                  index={childRoute.index || false} 
+                  path={childRoute.path} 
+                  element={childRoute.element}
+                />
+              ))}
+            </Route>
+          ))}
+         
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
     </AuthContextProvider>
   );
 }
-
 export default App;

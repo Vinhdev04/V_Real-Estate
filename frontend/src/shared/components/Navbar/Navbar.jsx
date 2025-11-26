@@ -12,11 +12,22 @@ import { onAuthChange } from "../../../utils/authEvents.js";
 import { AuthContext } from '../../../context/AuthContext'; 
 
 function Navbar(props) {
-  const navLinks = routes.filter(route => route.showInNav);
+const publicLayoutRoute = routes.find(route => route.element.type.name === 'Layout');
+  
 
-  // Lấy currentUser từ Context. Đây là nguồn dữ liệu DUY NHẤT cho trạng thái đăng nhập.
+  const navLinks = publicLayoutRoute && publicLayoutRoute.children
+    ? publicLayoutRoute.children
+        .filter(route => route.showInNav)
+        .map(link => ({
+            ...link,
+            // router Home "/" con nguoc lai la (/about,/properties,/team-group,...)
+            path: link.index ? '/' : `/${link.path}`,
+        }))
+    : [];
+
+  
   const { currentUser } = useContext(AuthContext); 
-  // const [isLoggedIn, setIsLoggedIn] = useState(false); // ❌ BỎ DÒNG NÀY
+
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -63,12 +74,17 @@ function Navbar(props) {
           ))}
         </div>
 
-        {/* PHẦN 3: Login / Account - Dùng isAuthenticated */}
+ 
         <div className="gap-3 navbar__right d-none d-md-flex align-items-center">
-          {!isAuthenticated ? ( // Dùng biến isAuthenticated
-            <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none">
+          {!isAuthenticated ? ( 
+            <>
+              <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none">
               Đăng nhập
-            </NavLink>
+              </NavLink>
+              <NavLink to="/auth/register" className="border-0 sign-in text-decoration-none">
+                Đăng ký
+              </NavLink>
+            </>
           ) : (
         
             <Account /> 

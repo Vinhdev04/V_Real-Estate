@@ -6,13 +6,7 @@ import imgDefault from '../../../assets/images/default-user.png';
 function EditProfile() {
   const {currentUser,updateUser} = useContext(AuthContext)
 
-  // 1. Initialize state to hold form data
- 
-  // 2. Load data from LocalStorage once when component mounts
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem("user");
   
-  // }, []);
 
   // 3. Handle input changes
   const handleChange = (e) => {
@@ -52,15 +46,15 @@ function EditProfile() {
           {currentUser.avatar ? (
             <img 
               src={currentUser.avatar || imgDefault}
-              alt="Avatar" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} 
+              alt="Avatar" className="profile__avt-thumb"
+            
             />
           ) : (
             "NV"
           )}
         </div>
 
-        {/* Nút upload kích hoạt input file ẩn */}
+      
         <label className="profile-avatar-upload__btn" style={{cursor: "pointer"}}>
           <span>Tải ảnh lên</span>
           <input 

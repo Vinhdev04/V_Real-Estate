@@ -22,7 +22,7 @@ src/features/Profile/components/
 src/features/Profile/styles/
 ```
 - [ ] `profileBase.css` - Base styles, buttons, animations
-- [ ] `profileHeader.css` - Styles cho header và avatar
+- [x] `profileHeader.css` - Styles cho header và avatar
 - [ ] `profileNav.css` - Styles cho navigation tabs
 - [ ] `statsCards.css` - Styles cho stats cards
 - [ ] `propertyCard.css` - Styles cho property cards
