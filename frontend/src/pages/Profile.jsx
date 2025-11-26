@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 
-import ProfilePage from "../features/Profile/components/ProfilePage";
+import ProfileLayout from "../features/Profile/components/ProfileLayout";
 
 export default function Profile() {
  
 
   return (
-     <ProfilePage />
+     <ProfileLayout />
   );
 }

@@ -12,6 +12,12 @@ import Profile from '../pages/Profile';
 import LoginGG from '../pages/LoginGG';
 import Services from '../pages/Services';
 import TeamGroup from '../pages/Teams';
+import ProfileOverview from '../features/Profile/components/ProfileOverview';
+import EditProfile from '../features/Profile/components/EditProfile';
+import Favorites from '../features/Profile/components/Favorites';
+import ViewHistory from '../features/Profile/components/ViewHistory';
+import Settings from '../features/Profile/components/Settings';
+
 import { Layout, RequireAuth } from '../layout/layout';
 
 export const routes = [
@@ -86,19 +92,29 @@ export const routes = [
   // ===============================================
   // 2. Route Layout YÊU CẦU ĐĂNG NHẬP (Private Routes)
   // ===============================================
-  {
-    // Bỏ path ở Route cha, chỉ dùng để bọc bảo vệ
-    element: <RequireAuth/>,
-    children: [
-      
-      //  Dùng đường dẫn TUYỆT ĐỐI cho routes private
-      { path: '/profile', element: <Profile />, name: 'Trang cá nhân', showInNav: false },
-      { path: '/profile/edit', element: <Profile />, name: 'Chỉnh sửa hồ sơ', showInNav: false },
-      { path: '/profile/favorites', element: <Profile />, name: 'Yêu thích', showInNav: false },
-      { path: '/profile/history', element: <Profile />, name: 'Lịch sử xem', showInNav: false },
-      { path: '/profile/settings', element: <Profile />, name: 'Cài đặt', showInNav: false },
-    ]
-  },
+ {
+        element: <RequireAuth/>,
+        children: [
+
+            {
+                path: '/profile',        
+                element: <Profile />,    
+                name: 'Trang cá nhân',
+                showInNav: false,
+                children: [
+                    // Route mặc định khi chỉ truy cập /profile
+                    { index: true, element: <ProfileOverview /> }, 
+                    
+                    // Các Route con (path tương đối)
+                    { path: 'edit', element: <EditProfile /> },      
+                    { path: 'favorites', element: <Favorites /> },  
+                    { path: 'history', element: <ViewHistory /> },       
+                    { path: 'settings', element: <Settings /> },     
+                ]
+            },
+            // ... các route private khác
+        ]
+    },
   
   // ===============================================
   // 3. Route 404 (Không Tìm Thấy Trang) - Bắt buộc phải là top-level
