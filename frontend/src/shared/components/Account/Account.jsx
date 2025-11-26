@@ -1,5 +1,5 @@
 // src/shared/components/AccountDropdown/AccountDropdown.jsx
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect,useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
   User, 
@@ -14,17 +14,15 @@ import './Account.css';
 import axios from 'axios';
 import { API_URL_LOGOUT } from '../../../constant/api';
 import  { useNavigate } from "react-router-dom";
+import {AuthContext} from '../../../context/AuthContext';
+import imgDefault from '../../../assets/images/default-user.png';
 const Account = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate =  useNavigate();
-  const info = JSON.parse(localStorage.getItem('user'));
 
-const currentUser = "" || {
-    name:  info.username,
-    email: info.email,
-    avatar: info.avatar
-  };
+
+const {currentUser }= useContext(AuthContext);
 
 
 
@@ -90,7 +88,7 @@ const currentUser = "" || {
         aria-expanded={isOpen}
       >
         <img 
-          src={currentUser.avatar} 
+          src={currentUser.avatar || imgDefault} 
           alt={currentUser.name}
           className="account-dropdown__avatar"
         />
@@ -107,12 +105,12 @@ const currentUser = "" || {
         <div className="account-dropdown__menu">
           <div className="account-dropdown__header">
             <img 
-              src={currentUser.avatar} 
+              src={currentUser.avatar || imgDefault}
               alt={currentUser.name}
               className="account-dropdown__header-avatar"
             />
             <div className="account-dropdown__header-info">
-              <p className="account-dropdown__header-name">{currentUser.name}</p>
+              <p className="account-dropdown__header-name">{currentUser.username}</p>
               <p className="account-dropdown__header-email">{currentUser.email}</p>
             </div>
           </div>

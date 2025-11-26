@@ -6,16 +6,17 @@ import Account from "../Account/Account";
 import "../../../assets/css/layout.css";
 import "../../../assets/css/responsive.css";
 import logoHomePage from "../../../assets/images/logoW.png";
-import { onAuthChange } from "../../../utils/authEvents.js"; // ← Thêm import
-
+import { onAuthChange } from "../../../utils/authEvents.js"; 
+import {AuthContext} from '../../../context/AuthContext';
+import {useContext} from 'react';
 function Navbar(props) {
   const navLinks = routes.filter(route => route.showInNav);
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const {currentUser,setCurrentUser} = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // ✅ HÀM KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP
+  //  HÀM KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP
   const checkAuthStatus = () => {
     const user = localStorage.getItem('user');
     if (user) {
@@ -23,7 +24,7 @@ function Navbar(props) {
         const parsedUser = JSON.parse(user);
         setIsLoggedIn(true);
         setCurrentUser(parsedUser);
-        console.log('✅ User đã đăng nhập:', parsedUser);
+        console.log(' User đã đăng nhập:', parsedUser);
       } catch (error) {
         console.error('Error parsing user data:', error);
         setIsLoggedIn(false);
@@ -32,16 +33,16 @@ function Navbar(props) {
     } else {
       setIsLoggedIn(false);
       setCurrentUser(null);
-      console.log('❌ Chưa đăng nhập');
+      console.log(' Chưa đăng nhập');
     }
   };
 
-  // ✅ KIỂM TRA KHI COMPONENT MOUNT
+  //  KIỂM TRA KHI COMPONENT MOUNT
   useEffect(() => {
     checkAuthStatus();
   }, []);
 
-  // ✅ LẮNG NGHE SỰ THAY ĐỔI AUTH STATE
+  //  LẮNG NGHE SỰ THAY ĐỔI AUTH STATE
   useEffect(() => {
     const cleanup = onAuthChange(() => {
       console.log('🔄 Auth state changed, updating Navbar...');
@@ -68,7 +69,7 @@ function Navbar(props) {
   return (
     <>
       <nav className="navbar">
-        {/* PHẦN 1: Logo */}
+    
         <div className="navbar__logo-section">
           <NavLink to="/" className="navbar__link navbar__link--logo text-decoration-none">
             <img className="navbar__logo" src={logoHomePage} alt="logo" />
@@ -76,7 +77,7 @@ function Navbar(props) {
           </NavLink>
         </div>
 
-        {/* PHẦN 2: Navigation Links */}
+      
         <div className="navbar__center d-none d-md-flex">
           {navLinks.map((link, index) => (
             <NavLink
@@ -90,7 +91,7 @@ function Navbar(props) {
         </div>
 
         {/* PHẦN 3: Login / Account */}
-        <div className="navbar__right d-none d-md-flex align-items-center gap-3">
+        <div className="gap-3 navbar__right d-none d-md-flex align-items-center">
           {!isLoggedIn ? (
             <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none">
               Đăng nhập
@@ -108,7 +109,7 @@ function Navbar(props) {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+
       <div className={`navbar__menu ${isMobileMenuOpen ? 'active' : ''}`}>
         {navLinks.map((link, index) => (
           <NavLink

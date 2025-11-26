@@ -1,17 +1,19 @@
 // src/hooks/useAuth.js
 
-import { useState } from 'react';
+import { useState ,useContext} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { API_URL_REGISTER,API_URL_LOGIN } from '../constant/api.js';
 import {dispatchAuthChange} from "../utils/authEvents.js";
+import {AuthContext} from "../context/AuthContext";
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
  
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
-
+  const {updateUser} = useContext(AuthContext);
+  
+  // CLEAR ERROR
   const clearError = (fieldName) => {
   
     if (errors[fieldName]) {
@@ -24,6 +26,7 @@ export const useAuth = () => {
     }
   };
 
+  // SUBMIT FORM
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     setErrors({});     
@@ -38,10 +41,10 @@ export const useAuth = () => {
       telephone: formData.get('telephone'),
     };
 
-    // === 3. KHỐI VALIDATION FRONTEND ===
+    // ===  KHỐI VALIDATION FRONTEND ===
     const newErrors = {};
     
-    // Validate input
+    
     if (!data.username) newErrors.username = "Vui lòng nhập họ và tên.";
     if (!data.telephone) newErrors.telephone = "Vui lòng nhập số điện thoại.";
    
@@ -70,7 +73,7 @@ export const useAuth = () => {
       newErrors.passwordConfirm = "Mật khẩu xác nhận không khớp.";
     }
 
-    // Check errors
+    // CHECK ERROR
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors); 
       setLoading(false);    
@@ -79,7 +82,7 @@ export const useAuth = () => {
     
     
     try {
-      // call API when no errors
+      // CALL API WHEN NO ERROR
       await axios.post(API_URL_REGISTER, {
         username: data.username,
         email: data.email,
@@ -94,11 +97,11 @@ export const useAuth = () => {
       navigate("/auth/login"); 
 
     } catch (err) {
-      //  handle errors from BE
+      //  HANDLE ERROR FROM BE
       const backendError = err.response?.data?.message || 'Đã có lỗi xảy ra';
       const backendErrors = {};
 
-      // Map backend error messages to specific fields
+      
       if (backendError.includes("Email")) {
         backendErrors.email = backendError;
       } else if (backendError.includes("Username")) {
@@ -145,7 +148,7 @@ export const useAuth = () => {
         withCredentials: true,
       });
       
-      // Xử lý cả 2 trường hợp response
+      // HANDLE RESPONSE
       let userData;
       if (res.data.userInfo) {
         userData = res.data.userInfo;
@@ -153,13 +156,14 @@ export const useAuth = () => {
         userData = res.data;
       }
       
-      localStorage.setItem("user", JSON.stringify(userData));
+      // UPDATE USER INFO
+      updateUser(userData);
       
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
       
-      // ✅ THÊM: Dispatch event để Navbar cập nhật
+      // DISPATCH UPDATE NAVBAR
       dispatchAuthChange();
       
       navigate("/");
@@ -177,6 +181,7 @@ export const useAuth = () => {
       setLoading(false);
     }
     }
-  // return data and functions
+
+  // RETURN DATA AND FUNCTIONS
   return { handleSubmit,login,clearError, loading, errors, setErrors };
 };

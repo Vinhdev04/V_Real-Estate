@@ -14,7 +14,7 @@ import { AuthContext } from '../context/AuthContext';
  */
 function HomePage() {
   const {currentUser} = useContext(AuthContext);
-  console.log("currentUser",currentUser);
+
   return (
     <div className="container-fluid">
         <div className="">
