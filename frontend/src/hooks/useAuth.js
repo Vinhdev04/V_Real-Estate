@@ -163,7 +163,7 @@ export const useAuth = () => {
         localStorage.setItem("token", res.data.token);
       }
       
-      // DISPATCH UPDATE NAVBAR
+      // DISPATCH UPDATE NAVBAR WHEN LOGIN WITH GG
       dispatchAuthChange();
       
       navigate("/");
