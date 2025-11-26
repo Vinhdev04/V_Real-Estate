@@ -22,10 +22,9 @@ const Account = () => {
   const navigate =  useNavigate();
 
 
-const {currentUser }= useContext(AuthContext);
+  const {currentUser,setCurrentUser }= useContext(AuthContext);
 
-
-
+ 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -37,10 +36,13 @@ const {currentUser }= useContext(AuthContext);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  if (!currentUser) return null; 
+
   const handleLogout = async() => {
     try {
       const res = await axios.post(`${API_URL_LOGOUT}`);
       localStorage.removeItem("user")
+      setCurrentUser(null);
       navigate("/")
     } catch (error) {
       console.log(error);
@@ -88,7 +90,7 @@ const {currentUser }= useContext(AuthContext);
         aria-expanded={isOpen}
       >
         <img 
-          src={currentUser.avatar || imgDefault} 
+          src={currentUser.avatar || imgDefault } 
           alt={currentUser.name}
           className="account-dropdown__avatar"
         />

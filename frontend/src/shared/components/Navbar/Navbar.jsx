@@ -1,56 +1,29 @@
+// src/shared/components/Navbar/Navbar.jsx
+
 import "./Navbar.css";
-import React, { useState, useEffect } from "react";
+import "../Account/Account.css";
+import React, { useState, useEffect, useContext } from "react"; // Thêm useContext
 import { NavLink } from "react-router-dom";
 import { routes } from "../../../routes/route.config";
 import Account from "../Account/Account";
-import "../../../assets/css/layout.css";
-import "../../../assets/css/responsive.css";
+// ... (các imports css khác)
 import logoHomePage from "../../../assets/images/logoW.png";
 import { onAuthChange } from "../../../utils/authEvents.js"; 
-import {AuthContext} from '../../../context/AuthContext';
-import {useContext} from 'react';
+import { AuthContext } from '../../../context/AuthContext'; 
+
 function Navbar(props) {
   const navLinks = routes.filter(route => route.showInNav);
-  
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const {currentUser,setCurrentUser} = useContext(AuthContext);
+
+  // Lấy currentUser từ Context. Đây là nguồn dữ liệu DUY NHẤT cho trạng thái đăng nhập.
+  const { currentUser } = useContext(AuthContext); 
+  // const [isLoggedIn, setIsLoggedIn] = useState(false); // ❌ BỎ DÒNG NÀY
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  //  HÀM KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP
-  const checkAuthStatus = () => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      try {
-        const parsedUser = JSON.parse(user);
-        setIsLoggedIn(true);
-        setCurrentUser(parsedUser);
-        console.log(' User đã đăng nhập:', parsedUser);
-      } catch (error) {
-        console.error('Error parsing user data:', error);
-        setIsLoggedIn(false);
-        setCurrentUser(null);
-      }
-    } else {
-      setIsLoggedIn(false);
-      setCurrentUser(null);
-      console.log(' Chưa đăng nhập');
-    }
-  };
+  // Dùng currentUser để xác định trạng thái đăng nhập
+  const isAuthenticated = !!currentUser; 
 
-  //  KIỂM TRA KHI COMPONENT MOUNT
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  //  LẮNG NGHE SỰ THAY ĐỔI AUTH STATE
-  useEffect(() => {
-    const cleanup = onAuthChange(() => {
-      console.log('🔄 Auth state changed, updating Navbar...');
-      checkAuthStatus();
-    });
-
-    return cleanup; // Cleanup listener khi unmount
-  }, []);
+ 
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -69,7 +42,7 @@ function Navbar(props) {
   return (
     <>
       <nav className="navbar">
-    
+   
         <div className="navbar__logo-section">
           <NavLink to="/" className="navbar__link navbar__link--logo text-decoration-none">
             <img className="navbar__logo" src={logoHomePage} alt="logo" />
@@ -77,7 +50,7 @@ function Navbar(props) {
           </NavLink>
         </div>
 
-      
+     
         <div className="navbar__center d-none d-md-flex">
           {navLinks.map((link, index) => (
             <NavLink
@@ -90,14 +63,15 @@ function Navbar(props) {
           ))}
         </div>
 
-        {/* PHẦN 3: Login / Account */}
+        {/* PHẦN 3: Login / Account - Dùng isAuthenticated */}
         <div className="gap-3 navbar__right d-none d-md-flex align-items-center">
-          {!isLoggedIn ? (
+          {!isAuthenticated ? ( // Dùng biến isAuthenticated
             <NavLink to="/auth/login" className="border-0 sign-in text-decoration-none">
               Đăng nhập
             </NavLink>
           ) : (
-            <Account user={currentUser} />
+        
+            <Account /> 
           )}
         </div>
 
@@ -122,7 +96,7 @@ function Navbar(props) {
           </NavLink>
         ))}
 
-        {!isLoggedIn ? (
+        {!isAuthenticated ? ( 
           <>
             <NavLink to="/auth/login" className="sign-in" onClick={closeMobileMenu}>
               Đăng nhập
@@ -133,7 +107,7 @@ function Navbar(props) {
           </>
         ) : (
           <div style={{ padding: "14px 30px", borderTop: "1px solid #eee" }}>
-            <Account user={currentUser} isMobile={true} />
+            <Account isMobile={true} /> 
           </div>
         )}
       </div>
