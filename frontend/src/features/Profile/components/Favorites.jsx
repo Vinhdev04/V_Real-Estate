@@ -1,4 +1,6 @@
  import "../styles/profile.css"
+ import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
  function Favorites() {
   const properties = [1, 2, 3, 4, 5];
   
@@ -21,7 +23,7 @@
           <div key={i} className="col-md-6 col-lg-4">
             <div className="property-card">
               <div className="property-card__image">
-                <img 
+                <LazyLoadImage  
                   src={`https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400`} 
                   alt="Property"
                 />

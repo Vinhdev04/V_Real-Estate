@@ -1,12 +1,13 @@
 // src/components/BranchCard.jsx
 import '../styles/BranchCard.css';
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 function BranchCard({ district, address, phone, email, image }) {
   return (
     <div className="branch-card">
      <div className="branch-image">
         {image ? (
-          <img src={image} alt={`Chi nhánh ${district}`} className="branch-img" />
+          <LazyLoadImage src={image} alt={`Chi nhánh ${district}`} className="branch-img" />
         ) : (
           <div className="image-placeholder" />
         )}

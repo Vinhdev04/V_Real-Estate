@@ -1,5 +1,7 @@
 // components/profile/ViewHistory.jsx
 import "../styles/profile.css"
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 function ViewHistory() {
   const history = [1, 2, 3];
 
@@ -25,7 +27,7 @@ function ViewHistory() {
         <div key={i} className="profile-history__item">
           <div className="row align-items-center">
             <div className="col-md-3">
-              <img 
+              <LazyLoadImage 
                 src="https://images.unsplash.com/photo-1568605114967-8130f3a36994" 
                 className="profile-history__image" 
                 alt="Property" 

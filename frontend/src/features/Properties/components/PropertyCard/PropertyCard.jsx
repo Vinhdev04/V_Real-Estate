@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, Row, Col, Flex, Tag, Button, Space, Typography } from "antd";
 import { PhoneOutlined, HeartOutlined, EyeOutlined, HomeOutlined, EnvironmentOutlined } from "@ant-design/icons";
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import "../../styles/properties.css";
 import { data } from "../../services/data";
 
@@ -23,7 +24,7 @@ function PropertyCard() {
             <Card hoverable className="fp-card" style={{ animationDelay: `${index * 0.1}s` }}>
               {/* Image */}
               <div className="fp-image-wrapper">
-                <img alt={property.title} src={property.image} className="fp-image" />
+                <LazyLoadImage alt={property.title} src={property.image} className="fp-image" />
                 <div className="fp-overlay-tags">
                   <Tag className="fp-tag-type">{property.type}</Tag>
                   {property.isHot && <Tag className="fp-tag-hot">HOT</Tag>}

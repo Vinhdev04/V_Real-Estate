@@ -1,7 +1,8 @@
 // src/features/Services/components/ServiceCard.jsx
 import React from 'react';
 import { Check, ChevronRight } from 'lucide-react';
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 const ServiceCard = ({ service, index, onRegisterClick }) => {
   const Icon = service.icon;
 
@@ -11,7 +12,7 @@ const ServiceCard = ({ service, index, onRegisterClick }) => {
       style={{ animationDelay: `${index * 0.15}s` }}
     >
       <div className="service-card__image">
-        <img src={service.image} alt={service.title} />
+        <LazyLoadImage  src={service.image} alt={service.title} />
         <div className="service-card__icon">
           <Icon size={36} />
         </div>

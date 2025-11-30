@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import "../styles/profile.css";
 import useFormatTime from "../../../utils/helpers";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 export default function ProfileOverview() {
   const rawUser = localStorage.getItem("user");
   const user = rawUser ? JSON.parse(rawUser) : null;
@@ -34,7 +36,7 @@ export default function ProfileOverview() {
           <div className="gap-3 text-center d-flex gap-md-4 flex-grow-1 align-items-center flex-column flex-sm-row text-sm-start">
             <div className="profile-header__avatar">
               {user.avatar ? (
-                <img src={user.avatar} alt={user.username} />
+                <LazyLoadImage src={user.avatar} alt={user.username} />
               ) : (
                 user.username?.charAt(0).toUpperCase() || "U"
               )}
@@ -90,7 +92,7 @@ export default function ProfileOverview() {
           <h5 className="profile-section__title">Bất động sản đã lưu gần đây</h5>
           <div className="property-card">
             <div className="property-card__image">
-              <img
+              <LazyLoadImage
                 src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800"
                 alt="Vinhomes Central Park"
               />

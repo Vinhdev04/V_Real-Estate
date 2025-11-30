@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 import '../styles/Team.css';
 import { teamMembers, features, stats ,propertyTypes} from '../services/mockData';
 import BackToTop from '../../../shared/components/BackToTop/BackToTop';
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const TeamHeader = () => (
   <header className="team-page-header">
@@ -135,7 +136,7 @@ const TeamMemberCard = ({ member, index }) => {
   return (
     <div className={`team-member ${isVisible ? 'team-member--visible' : ''}`}>
       <div className="team-member-image-wrapper">
-        <img
+        <LazyLoadImage effect="blur"
           src={member.image}
           alt={member.name}
           className="team-member-image"
@@ -189,7 +190,7 @@ const PropertyTypesSection = () => {
           {propertyTypes.map((type, index) => (
             <NavLink to="/properties" key={index} className="property-type-card">
               <div className="property-type-image-wrapper">
-                <img 
+                <LazyLoadImage 
                   src={type.image} 
                   alt={type.name}
                   className="property-type-image"

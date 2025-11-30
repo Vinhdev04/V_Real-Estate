@@ -4,6 +4,8 @@ import {AuthContext} from "../../../context/AuthContext";
 import Swal from 'sweetalert2'
 import imgDefault from '../../../assets/images/default-user.png';
 import useFormatTime from "../../../utils/helpers";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 function EditProfile() {
   const {currentUser,updateUser} = useContext(AuthContext)
   const formattedCreateAt = useFormatTime();
@@ -45,7 +47,7 @@ function EditProfile() {
        
         <div className="profile-avatar-upload__circle">
           {currentUser.avatar ? (
-            <img 
+            <LazyLoadImage 
               src={currentUser.avatar }
               alt="Avatar" className="profile__avt-thumb"
             
