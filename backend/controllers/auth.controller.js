@@ -8,16 +8,21 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 // ------ HANDLE REGISTER USER ------
-
 export const register = async (req, res) => {
   const { username, password, passwordConfirm, email, telephone } = req.body;
 
+  // Validation đầu vào
   if (!username || !email || !password || !telephone) {
     return res.status(400).json({ message: "Vui lòng điền đầy đủ thông tin." });
   }
 
   if (password !== passwordConfirm) {
     return res.status(400).json({ message: 'Mật khẩu xác nhận không khớp!' });
+  }
+
+  // Kiểm tra độ mạnh mật khẩu
+  if (password.length < 6) {
+    return res.status(400).json({ message: 'Mật khẩu phải có ít nhất 6 ký tự!' });
   }
 
   try {
@@ -39,7 +44,9 @@ export const register = async (req, res) => {
           }
         });
         
-        return res.status(200).json({ message: 'Đã cập nhật mật khẩu cho tài khoản Google của bạn. Hãy đăng nhập lại.' });
+        return res.status(200).json({ 
+          message: 'Đã cập nhật mật khẩu cho tài khoản Google của bạn. Hãy đăng nhập lại.' 
+        });
       }
       
       // TRƯỜNG HỢP: User đã đăng ký bình thường
@@ -49,35 +56,38 @@ export const register = async (req, res) => {
     // 2. Kiểm tra username (nếu là user mới hoàn toàn)
     const existingUsername = await prisma.user.findUnique({ where: { username } });
     if (existingUsername) {
-      return res.status(400).json({ message: "Username này đã tồn tại." });
+      return res.status(400).json({ message: "Tên đăng nhập này đã tồn tại." });
     }
 
     // 3. Tạo user mới
     const hashedPassword = await bcrypt.hash(password, 10);
     
-    await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: {
         username,
         email,
         password: hashedPassword,
         telephone,
         loginType: 'email',
-        // Không set googleId ở đây để tránh lỗi null unique (nếu index chưa fix sparse)
       },
     });
 
-    res.status(201).json({ message: 'Đăng ký thành công' });
+    console.log('✅ Đăng ký thành công:', email);
+    res.status(201).json({ message: 'Đăng ký thành công!' });
 
   } catch (err) {
-    console.error(err); // Xem log để biết chính xác lỗi gì
-    // Bắt lỗi Unique constraint của Prisma để trả về message rõ ràng
+    console.error('❌ Lỗi đăng ký:', err);
+    
+    // Bắt lỗi Unique constraint của Prisma
     if (err.code === 'P2002') {
-       return res.status(400).json({ message: 'Thông tin (email/username) bị trùng lặp hệ thống.' });
+      return res.status(400).json({ 
+        message: 'Thông tin (email hoặc tên đăng nhập) bị trùng lặp trong hệ thống.' 
+      });
     }
-    res.status(500).json({ message: 'Lỗi hệ thống khi đăng ký' });
+    
+    res.status(500).json({ message: 'Lỗi hệ thống khi đăng ký. Vui lòng thử lại sau!' });
   }
 }
-
 
 
 //  ------ HANDLE LOGIN USER ------
@@ -85,60 +95,72 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if(!email || !password)
-      return res.status(400).json({message: "Missing email or password!"})
+    // Validation
+    if (!email || !password) {
+      return res.status(400).json({ message: "Vui lòng nhập email và mật khẩu!" });
+    }
     
+    // Tìm user theo email
     const user = await prisma.user.findFirst({
       where: { email },
     });
 
-    if (!user) 
-      return res.status(404).json({ message: 'Invalid Credentials!' });
+    if (!user) {
+      return res.status(404).json({ message: 'Email hoặc mật khẩu không đúng!' });
+    }
 
+    // Kiểm tra nếu tài khoản Google chưa có mật khẩu
     if (!user.password) {
       return res.status(400).json({ 
         message: 'Tài khoản Google chưa thiết lập mật khẩu. Vui lòng đăng nhập bằng Google.' 
       });
     }
 
+    // So sánh mật khẩu
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-       console.log("LOGIN FAILED User not found:", email);
-       return res.status(401).json({ message: 'Invalid Credentials' });
+      console.log("❌ Đăng nhập thất bại:", email);
+      return res.status(401).json({ message: 'Email hoặc mật khẩu không đúng!' });
     }
 
-    const {password: userPassword, ...userInfo} = user;
+    // Loại bỏ password khỏi response
+    const { password: userPassword, ...userInfo } = user;
 
-    const timeExpire = 24 * 60 * 60 * 1000;
+    // Tạo JWT token
+    const timeExpire = 24 * 60 * 60 * 1000; // 24 giờ
 
     const token = jwt.sign(
-      { userId: user.id, email: user.email,isAdmin:false },
+      { 
+        userId: user.id, 
+        email: user.email,
+        isAdmin: false 
+      },
       process.env.JWT_SECRET_KEY,
       { expiresIn: timeExpire }
     );
 
+    // Set cookie
     res.cookie('token', token, {
       httpOnly: true,
       maxAge: timeExpire,
       sameSite: 'strict',
+      // secure: true, // Bật trong production với HTTPS
     });
     
-    console.log("LOGIN SUCCESS User logged in:", email);
-    console.log("Token:", token);
+    console.log("✅ Đăng nhập thành công:", email);
 
-    //  Trả về đúng cấu trúc như Google Login
+    // Trả về response
     res.status(200).json({
-      message: 'Đăng nhập thành công',
+      message: 'Đăng nhập thành công!',
       token,
-      userInfo  // Giữ nguyên structure
+      userInfo
     });
 
   } catch (err) {
-    console.error("LOGIN Error", err);
-    res.status(500).json({ message: 'Failed to login user' });
+    console.error("❌ Lỗi đăng nhập:", err);
+    res.status(500).json({ message: 'Lỗi hệ thống khi đăng nhập. Vui lòng thử lại sau!' });
   }
 };
-
 
 
 // ------ HANDLE GOOGLE LOGIN ------
@@ -146,12 +168,12 @@ export const googleLogin = async (req, res) => {
   try {
     const { email, username, googleId, avatar, emailVerified } = req.body;
 
-    console.log('📥 Google Login Request:', { email, username, googleId });
+    console.log('📥 Yêu cầu đăng nhập Google:', { email, username, googleId });
 
     // Validation
     if (!email || !googleId) {
       return res.status(400).json({ 
-        message: "Thiếu thông tin email hoặc Google ID" 
+        message: "Thiếu thông tin email hoặc Google ID!" 
       });
     }
 
@@ -184,12 +206,11 @@ export const googleLogin = async (req, res) => {
           avatar,
           emailVerified: emailVerified || false,
           loginType: 'google',
-          // Không cần password cho Google login
           password: null,
           telephone: null,
         },
       });
-      console.log(' New Google user created:', email);
+      console.log('✅ Tạo tài khoản Google mới:', email);
     } else {
       // Nếu user đã tồn tại, cập nhật thông tin
       user = await prisma.user.update({
@@ -198,10 +219,10 @@ export const googleLogin = async (req, res) => {
           googleId: googleId,
           avatar: avatar,
           emailVerified: emailVerified || user.emailVerified,
-          loginType: 'google',
+          loginType: user.password ? 'email_google' : 'google', // Nếu có password thì là cả 2
         },
       });
-      console.log('✅ Existing Google user updated:', email);
+      console.log('✅ Cập nhật thông tin tài khoản Google:', email);
     }
 
     // Loại bỏ password khỏi response
@@ -214,7 +235,7 @@ export const googleLogin = async (req, res) => {
       { 
         userId: user.id,
         email: user.email,
-        loginType: 'google' 
+        isAdmin: false
       },
       process.env.JWT_SECRET_KEY,
       { expiresIn: timeExpire }
@@ -228,30 +249,27 @@ export const googleLogin = async (req, res) => {
       // secure: true, // Bật trong production với HTTPS
     });
 
-    console.log('Google LOGIN SUCCESS:', email);
-    console.log('Token:', token);
+    console.log('✅ Đăng nhập Google thành công:', email);
 
     // Trả về thông tin user và token
     res.status(200).json({
-      message: 'Đăng nhập Google thành công',
+      message: 'Đăng nhập Google thành công!',
       token,
       userInfo,
     });
 
   } catch (err) {
-    console.error('Google Login Error:', err);
+    console.error('❌ Lỗi đăng nhập Google:', err);
     res.status(500).json({ 
-      message: 'Đăng nhập Google thất bại',
+      message: 'Đăng nhập Google thất bại. Vui lòng thử lại sau!',
       error: err.message 
     });
   }
 };
 
 
-
 // ------ HANDLE LOGOUT USER ------
-export const logout = async(req,res) => {
-    res.clearCookie('token');
-    res.status(200).json({message: 'Logout successful'});
-
+export const logout = async (req, res) => {
+  res.clearCookie('token');
+  res.status(200).json({ message: 'Đăng xuất thành công!' });
 }
