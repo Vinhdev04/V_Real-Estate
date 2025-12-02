@@ -42,7 +42,7 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
     const id = req.params.id;
     const userTokenId = req.userId;
-    const { password, ...inputs } = req.body; //  Tách password ra khỏi inputs
+    const { password,avatar, ...inputs } = req.body; //  Tách password ra khỏi inputs
 
     // Kiểm tra authorization
     if (id !== userTokenId) {

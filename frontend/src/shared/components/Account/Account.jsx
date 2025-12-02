@@ -16,6 +16,8 @@ import { API_URL_LOGOUT } from '../../../constant/api';
 import  { useNavigate } from "react-router-dom";
 import {AuthContext} from '../../../context/AuthContext';
 import imgDefault from '../../../assets/images/default-user.png';
+
+
 const Account = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);

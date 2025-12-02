@@ -72,11 +72,11 @@ export const register = async (req, res) => {
       },
     });
 
-    console.log('✅ Đăng ký thành công:', email);
+    console.log(' Đăng ký thành công:', email);
     res.status(201).json({ message: 'Đăng ký thành công!' });
 
   } catch (err) {
-    console.error('❌ Lỗi đăng ký:', err);
+    console.error('Lỗi đăng ký:', err);
     
     // Bắt lỗi Unique constraint của Prisma
     if (err.code === 'P2002') {
@@ -119,7 +119,7 @@ export const login = async (req, res) => {
     // So sánh mật khẩu
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-      console.log("❌ Đăng nhập thất bại:", email);
+      console.log(" Đăng nhập thất bại:", email);
       return res.status(401).json({ message: 'Email hoặc mật khẩu không đúng!' });
     }
 
@@ -147,7 +147,7 @@ export const login = async (req, res) => {
       // secure: true, // Bật trong production với HTTPS
     });
     
-    console.log("✅ Đăng nhập thành công:", email);
+    console.log(" Đăng nhập thành công:", email);
 
     // Trả về response
     res.status(200).json({
@@ -157,7 +157,7 @@ export const login = async (req, res) => {
     });
 
   } catch (err) {
-    console.error("❌ Lỗi đăng nhập:", err);
+    console.error(" Lỗi đăng nhập:", err);
     res.status(500).json({ message: 'Lỗi hệ thống khi đăng nhập. Vui lòng thử lại sau!' });
   }
 };
@@ -210,7 +210,7 @@ export const googleLogin = async (req, res) => {
           telephone: null,
         },
       });
-      console.log('✅ Tạo tài khoản Google mới:', email);
+      console.log(' Tạo tài khoản Google mới:', email);
     } else {
       // Nếu user đã tồn tại, cập nhật thông tin
       user = await prisma.user.update({
@@ -222,7 +222,7 @@ export const googleLogin = async (req, res) => {
           loginType: user.password ? 'email_google' : 'google', // Nếu có password thì là cả 2
         },
       });
-      console.log('✅ Cập nhật thông tin tài khoản Google:', email);
+      console.log(' Cập nhật thông tin tài khoản Google:', email);
     }
 
     // Loại bỏ password khỏi response
@@ -249,7 +249,7 @@ export const googleLogin = async (req, res) => {
       // secure: true, // Bật trong production với HTTPS
     });
 
-    console.log('✅ Đăng nhập Google thành công:', email);
+    console.log(' Đăng nhập Google thành công:', email);
 
     // Trả về thông tin user và token
     res.status(200).json({
@@ -259,7 +259,7 @@ export const googleLogin = async (req, res) => {
     });
 
   } catch (err) {
-    console.error('❌ Lỗi đăng nhập Google:', err);
+    console.error('Lỗi đăng nhập Google:', err);
     res.status(500).json({ 
       message: 'Đăng nhập Google thất bại. Vui lòng thử lại sau!',
       error: err.message 
