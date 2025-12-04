@@ -2,47 +2,50 @@
     SERVER: APP
  ============================== */
 // Import dotenv trước tiên
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
-import testRouter  from "./routes/test.route.js";
+import path from "path";
+import testRouter from "./routes/test.route.js";
 
 // Import các thư viện
-import express from 'express';
-import morgan from 'morgan';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 // Import routes
-import authRoute from './routes/auth.route.js';
-import userRouter from './routes/user.route.js';
+import authRoute from "./routes/auth.route.js";
+import userRouter from "./routes/user.route.js";
 
 const app = express();
 
 // Config host & port
 const port = process.env.PORT || 8080;
-const host = process.env.HOST || 'localhost';
+const host = process.env.HOST || "localhost";
 
 // Middleware
-app.use(morgan('dev'));
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
-  credentials: true
-}));
+app.use(morgan("dev"));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // Route test
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
 // Routes
 app.use("/api/auth", authRoute);
-app.use("/api/users",userRouter);
-app.use("/api/test",testRouter);
-
+app.use("/api/users", userRouter);
+app.use("/api/test", testRouter);
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 // Start server
 app.listen(port, host, () => {
   console.log(`🚀 Server is running at http://${host}:${port}`);

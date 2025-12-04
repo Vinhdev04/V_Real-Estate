@@ -4,7 +4,7 @@ import Favorites from "../components/Favorites";
 import ViewHistory from "../components/ViewHistory";
 import Settings from "../components/Settings";
 import AccountActions from "../components/AccountActions";
-import { useState, useEffect } from "react";
+
 
   // Menu items
   export const menuItems = [

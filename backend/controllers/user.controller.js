@@ -1,8 +1,10 @@
 /* ==============================
-     CONTROLLER: USER
+     CONTROLLER: USER (WITH DEBUG)
  ============================== */
 import prisma from "../library/prisma.lib.js";
 import bcrypt from "bcrypt";
+import fs from 'fs';
+import path from 'path';
 
 // GET ALL USERS
 const getUsers = async (req, res) => {
@@ -28,9 +30,7 @@ const getUser = async (req, res) => {
             return res.status(404).json({ message: "Không tìm thấy người dùng!" });
         }
         
-        // Loại bỏ password khỏi response
         const { password, ...userInfo } = user;
-        
         res.status(200).json(userInfo);
     } catch (error) {
         console.log(error);
@@ -38,22 +38,25 @@ const getUser = async (req, res) => {
     }
 }
 
-// UPDATE USER
+// UPDATE USER (WITH DETAILED LOGS)
 const updateUser = async (req, res) => {
     const id = req.params.id;
     const userTokenId = req.userId;
-    const { password,avatar, ...inputs } = req.body; //  Tách password ra khỏi inputs
+    const { password, ...inputs } = req.body;
+
+    console.log('\n========== UPDATE USER REQUEST ==========');
+    console.log('📋 User ID:', id);
+    console.log('🔑 Token User ID:', userTokenId);
+    console.log('📝 Request Body:', req.body);
+    console.log('📎 File:', req.file);
+    console.log('=========================================\n');
 
     // Kiểm tra authorization
     if (id !== userTokenId) {
+        console.log(' Authorization failed: ID mismatch');
         return res.status(403).json({ 
             message: "Bạn không có quyền cập nhật thông tin người dùng khác!"
         });
-    }
-
-    // Kiểm tra có dữ liệu để cập nhật không
-    if (Object.keys(inputs).length === 0 && !password) {
-        return res.status(400).json({ message: "Không có dữ liệu để cập nhật!" });
     }
 
     try {
@@ -62,36 +65,87 @@ const updateUser = async (req, res) => {
             where: { id }
         });
 
+        console.log('👤 Existing User:', existingUser);
+
         if (!existingUser) {
             return res.status(404).json({ message: "Không tìm thấy người dùng!" });
         }
 
         // Chuẩn bị data để cập nhật
-        let updateData = { ...inputs };
+        let updateData = {};
 
-        // Nếu có password mới, mã hóa nó
+        // Chỉ thêm các field có giá trị
+        if (inputs.username !== undefined && inputs.username !== '') {
+            updateData.username = inputs.username;
+        }
+        if (inputs.email !== undefined && inputs.email !== '') {
+            updateData.email = inputs.email;
+        }
+        if (inputs.telephone !== undefined && inputs.telephone !== '') {
+            updateData.telephone = inputs.telephone;
+        }
+        if (inputs.gender !== undefined && inputs.gender !== '') {
+            updateData.gender = inputs.gender;
+        }
+        if (inputs.address !== undefined) {
+            updateData.address = inputs.address;
+        }
+        if (inputs.bio !== undefined) {
+            updateData.bio = inputs.bio;
+        }
+
+        //  Xử lý avatar upload
+        if (req.file) {
+            console.log(' Processing avatar upload...');
+            
+            // Xóa avatar cũ nếu có
+            if (existingUser.avatar && !existingUser.avatar.includes('default')) {
+                const oldAvatarPath = path.join(process.cwd(), existingUser.avatar);
+                console.log('  Old avatar path:', oldAvatarPath);
+                
+                if (fs.existsSync(oldAvatarPath)) {
+                    try {
+                        fs.unlinkSync(oldAvatarPath);
+                        console.log(' Deleted old avatar');
+                    } catch (err) {
+                        console.log('  Could not delete old avatar:', err.message);
+                    }
+                }
+            }
+
+            // Lưu đường dẫn avatar mới
+            updateData.avatar = `uploads/avatars/${req.file.filename}`;
+            console.log(' New avatar path:', updateData.avatar);
+        }
+
+        // Xử lý password nếu có
         if (password) {
-            // Kiểm tra password có đủ mạnh không (tùy chọn)
             if (password.length < 6) {
                 return res.status(400).json({ 
                     message: "Mật khẩu phải có ít nhất 6 ký tự!" 
                 });
             }
-            
             const hashedPassword = await bcrypt.hash(password, 10);
             updateData.password = hashedPassword;
+            console.log(' Password updated');
         }
 
-        // Không cho phép cập nhật các trường nhạy cảm qua API này
-        delete updateData.googleId;
-        delete updateData.loginType;
-        delete updateData.emailVerified;
+        console.log(' Final Update Data:', updateData);
+
+        // Kiểm tra có dữ liệu để update không
+        if (Object.keys(updateData).length === 0) {
+            console.log('  No data to update');
+            return res.status(400).json({ message: "Không có dữ liệu để cập nhật!" });
+        }
 
         // Cập nhật user
+        console.log(' Updating user in database...');
         const updatedUser = await prisma.user.update({
             where: { id },
             data: updateData
         });
+
+        console.log(' User updated successfully:', updatedUser);
 
         // Loại bỏ password khỏi response
         const { password: userPassword, ...userInfo } = updatedUser;
@@ -100,8 +154,23 @@ const updateUser = async (req, res) => {
             message: "Cập nhật thông tin người dùng thành công!",
             user: userInfo
         });
+
     } catch (error) {
-        console.log(error);
+        console.error('\n ========== UPDATE ERROR ==========');
+        console.error('Error Name:', error.name);
+        console.error('Error Message:', error.message);
+        console.error('Error Code:', error.code);
+        console.error('Error Stack:', error.stack);
+        console.error('====================================\n');
+        
+        // Xóa file đã upload nếu có lỗi
+        if (req.file) {
+            const uploadedFilePath = path.join(process.cwd(), 'uploads/avatars', req.file.filename);
+            if (fs.existsSync(uploadedFilePath)) {
+                fs.unlinkSync(uploadedFilePath);
+                console.log('🗑️  Cleaned up uploaded file');
+            }
+        }
         
         // Xử lý lỗi unique constraint
         if (error.code === 'P2002') {
@@ -110,7 +179,11 @@ const updateUser = async (req, res) => {
             });
         }
         
-        res.status(500).json({ message: "Thất bại, Không thể cập nhật dữ liệu người dùng!" });
+        res.status(500).json({ 
+            message: "Thất bại, Không thể cập nhật dữ liệu người dùng!",
+            error: error.message,
+            errorCode: error.code
+        });
     }
 }
 
@@ -119,7 +192,6 @@ const deleteUser = async (req, res) => {
     const id = req.params.id;
     const userTokenId = req.userId;
 
-    // Kiểm tra authorization
     if (id !== userTokenId) {
         return res.status(403).json({ 
             message: "Bạn không có quyền xóa tài khoản người dùng khác!"
@@ -127,7 +199,6 @@ const deleteUser = async (req, res) => {
     }
 
     try {
-        // Kiểm tra user có tồn tại không
         const existingUser = await prisma.user.findUnique({
             where: { id }
         });
@@ -136,12 +207,18 @@ const deleteUser = async (req, res) => {
             return res.status(404).json({ message: "Không tìm thấy người dùng!" });
         }
 
-        // Xóa user
+        // Xóa avatar nếu có
+        if (existingUser.avatar && !existingUser.avatar.includes('default')) {
+            const avatarPath = path.join(process.cwd(), existingUser.avatar);
+            if (fs.existsSync(avatarPath)) {
+                fs.unlinkSync(avatarPath);
+            }
+        }
+
         await prisma.user.delete({
             where: { id }
         });
 
-        // Xóa cookie token
         res.clearCookie('token');
 
         res.status(200).json({ 
@@ -150,7 +227,6 @@ const deleteUser = async (req, res) => {
     } catch (error) {
         console.log(error);
         
-        // Xử lý lỗi foreign key constraint
         if (error.code === 'P2003') {
             return res.status(400).json({ 
                 message: "Không thể xóa người dùng vì có dữ liệu liên quan!" 

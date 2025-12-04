@@ -14,11 +14,13 @@ model User {
   password      String?
   avatar        String?
   telephone     String?
+  gender        String?  @default("Nam") // ✅ Thêm field này
+  address       String? // ✅ Thêm field này
+  bio           String? // ✅ Thêm field này
   createdAt     DateTime @default(now())
-  googleId      String? // Bỏ @unique ở đây
+  googleId      String?
   emailVerified Boolean  @default(false)
   loginType     String   @default("email")
 
-  // Thêm index riêng cho googleId (không unique)
   @@index([googleId])
 }
