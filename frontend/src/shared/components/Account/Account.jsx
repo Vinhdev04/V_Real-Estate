@@ -23,8 +23,8 @@ const Account = () => {
   const navigate = useNavigate();
   const { currentUser, updateUser } = useContext(AuthContext);
 
-  // ✅ Debug log
-  console.log("🖼️ Account avatar:", currentUser?.avatar);
+  // Debug log
+  console.log("Avartar người dùng:", currentUser?.avatar);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

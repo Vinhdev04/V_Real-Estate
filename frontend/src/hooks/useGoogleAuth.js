@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-import { googleLogout } from '@react-oauth/google';
-import { googleLoginService } from '../features/Auth/services/googleLoginService.js';
-import {dispatchAuthChange} from "../utils/authEvents.js";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { googleLogout } from "@react-oauth/google";
+import { googleLoginService } from "../features/Auth/services/googleLoginService.js";
+import { dispatchAuthChange } from "../utils/authEvents.js";
 export const useGoogleAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -32,22 +32,22 @@ export const useGoogleAuth = () => {
 
       // Lưu token vào localStorage (nếu backend trả về)
       if (response.token) {
-        localStorage.setItem('token', response.token);
+        localStorage.setItem("token", response.token);
       }
 
       // Lưu thông tin user vào localStorage
       if (response.userInfo) {
-        localStorage.setItem('user', JSON.stringify(response.userInfo));
+        localStorage.setItem("user", JSON.stringify(response.userInfo));
       }
-      // ✅ THÊM: Dispatch event để Navbar cập nhật
+      // THÊM: Dispatch event để Navbar cập nhật
       dispatchAuthChange();
       // Chuyển hướng về trang chủ
-      navigate('/');
-      
+      navigate("/");
+
       return response;
     } catch (err) {
-      console.error('Google Login Error:', err);
-      setError(err.response?.data?.message || 'Đăng nhập Google thất bại');
+      console.error("Google Login Error:", err);
+      setError(err.response?.data?.message || "Đăng nhập Google thất bại");
       throw err;
     } finally {
       setLoading(false);
@@ -56,8 +56,8 @@ export const useGoogleAuth = () => {
 
   // Xử lý khi đăng nhập Google thất bại
   const handleGoogleLoginError = () => {
-    setError('Đăng nhập Google thất bại. Vui lòng thử lại.');
-    console.error('Google Login Failed');
+    setError("Đăng nhập Google thất bại. Vui lòng thử lại.");
+    console.error("Google Login Failed");
   };
 
   // Xử lý đăng xuất
@@ -65,18 +65,18 @@ export const useGoogleAuth = () => {
     try {
       // Đăng xuất khỏi Google
       googleLogout();
-      
+
       // Xóa token và user info khỏi localStorage
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      
-      console.log('User logged out');
-      
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      console.log("User logged out");
+
       // Chuyển về trang login
-      navigate('/auth/login');
+      navigate("/");
     } catch (err) {
-      console.error('Logout Error:', err);
-      setError('Đăng xuất thất bại');
+      console.error("Logout Error:", err);
+      setError("Đăng xuất thất bại");
     }
   };
 

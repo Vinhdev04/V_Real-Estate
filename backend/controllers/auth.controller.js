@@ -181,7 +181,7 @@ export const googleLogin = async (req, res) => {
   try {
     const { email, username, googleId, avatar, emailVerified } = req.body;
 
-    console.log("📥 Yêu cầu đăng nhập Google:", { email, username, googleId });
+    console.log(" Yêu cầu đăng nhập Google:", { email, username, googleId });
 
     // Validation
     if (!email || !googleId) {

@@ -1,8 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const UploadWidget = ({ uwConfig, setPublicId, setAvatar }) => {
+const UploadWidget = ({ uwConfig, setAvatar }) => {
   const uploadWidgetRef = useRef(null);
   const uploadButtonRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const initializeUploadWidget = () => {
@@ -11,16 +12,29 @@ const UploadWidget = ({ uwConfig, setPublicId, setAvatar }) => {
         uploadWidgetRef.current = window.cloudinary.createUploadWidget(
           uwConfig,
           (error, result) => {
-            if (!error && result && result.event === "success") {
-              console.log("Upload successful:", result.info);
+            if (error) {
+              console.error("❌ Upload error:", error);
+              setIsLoading(false);
+              return;
+            }
+
+            if (result && result.event === "success") {
+              console.log("✅ Upload successful:", result.info);
               setAvatar(result.info.secure_url);
+              setIsLoading(false);
+            }
+
+            if (result && result.event === "close") {
+              setIsLoading(false);
             }
           }
         );
 
         // Add click event to open widget
-        const handleUploadClick = () => {
+        const handleUploadClick = (e) => {
+          e.preventDefault(); // Ngăn submit form
           if (uploadWidgetRef.current) {
+            setIsLoading(true);
             uploadWidgetRef.current.open();
           }
         };
@@ -36,16 +50,16 @@ const UploadWidget = ({ uwConfig, setPublicId, setAvatar }) => {
     };
 
     initializeUploadWidget();
-  }, [uwConfig, setPublicId]);
+  }, [uwConfig, setAvatar]);
 
   return (
     <button
       ref={uploadButtonRef}
-      id="upload_widget"
-      className="mt-3 btn btn-primary me-3"
       type="button"
+      className="cloudinary-button"
+      disabled={isLoading}
     >
-      Upload
+      {isLoading ? "Đang tải..." : "Upload"}
     </button>
   );
 };

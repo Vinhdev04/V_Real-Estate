@@ -10,14 +10,14 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user") || "null")
   );
 
-  // ✅ Update userInfo và force re-render
+  //  Update userInfo và force re-render
   const updateUser = (userInfo) => {
-    console.log("🔄 Updating user:", userInfo);
+    console.log("Đang cập nhật người dùng:", userInfo);
 
     // Cập nhật state
     setCurrentUser(userInfo);
 
-    // ✅ Cập nhật localStorage ngay lập tức
+    //  Cập nhật localStorage ngay lập tức
     if (userInfo) {
       localStorage.setItem("user", JSON.stringify(userInfo));
     } else {
@@ -25,9 +25,9 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  // ✅ Sync với localStorage khi currentUser thay đổi
+  //  Sync với localStorage khi currentUser thay đổi
   useEffect(() => {
-    console.log("👤 Current user changed:", currentUser);
+    console.log("Người dùng hiện tại đã thay đổi:", currentUser);
   }, [currentUser]);
 
   // eventlistener for google
@@ -36,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
       const userFromStorage = JSON.parse(
         localStorage.getItem("user") || "null"
       );
-      console.log("🔄 Auth changed from storage:", userFromStorage);
+      console.log("Xác thực thay đổi từ localStorage:", userFromStorage);
       setCurrentUser(userFromStorage);
     };
 
