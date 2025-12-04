@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRouter);
 app.use("/api/test", testRouter);
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+// app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 // Start server
 app.listen(port, host, () => {
   console.log(`🚀 Server is running at http://${host}:${port}`);

@@ -1,3 +1,4 @@
+// AuthContext.jsx
 import React, { useState, useEffect } from "react";
 import { createContext } from "react";
 import { onAuthChange } from "../utils/authEvents.js";
@@ -9,14 +10,24 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user") || "null")
   );
 
-  // update userInfo
+  // ✅ Update userInfo và force re-render
   const updateUser = (userInfo) => {
+    console.log("🔄 Updating user:", userInfo);
+
+    // Cập nhật state
     setCurrentUser(userInfo);
+
+    // ✅ Cập nhật localStorage ngay lập tức
+    if (userInfo) {
+      localStorage.setItem("user", JSON.stringify(userInfo));
+    } else {
+      localStorage.removeItem("user");
+    }
   };
 
-  // update data in localStorage
+  // ✅ Sync với localStorage khi currentUser thay đổi
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(currentUser));
+    console.log("👤 Current user changed:", currentUser);
   }, [currentUser]);
 
   // eventlistener for google
@@ -25,14 +36,14 @@ export const AuthContextProvider = ({ children }) => {
       const userFromStorage = JSON.parse(
         localStorage.getItem("user") || "null"
       );
+      console.log("🔄 Auth changed from storage:", userFromStorage);
       setCurrentUser(userFromStorage);
     };
 
-    // eventlistener
     const cleanup = onAuthChange(handleAuthChange);
-    // clearn when unmount
     return cleanup;
   }, []);
+
   return (
     <AuthContext.Provider value={{ currentUser, setCurrentUser, updateUser }}>
       {children}

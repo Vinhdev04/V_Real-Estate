@@ -21,9 +21,10 @@ const Account = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const { currentUser, updateUser } = useContext(AuthContext);
 
-  const { currentUser, setCurrentUser, updateUser } = useContext(AuthContext);
-  console.log(currentUser);
+  // ✅ Debug log
+  console.log("🖼️ Account avatar:", currentUser?.avatar);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -36,7 +37,6 @@ const Account = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // if(!currentUser) return null;
   useEffect(() => {
     if (!currentUser) navigate("/register");
   }, [currentUser, navigate]);
@@ -94,6 +94,7 @@ const Account = () => {
         <img
           src={currentUser.avatar || imgDefault}
           alt={currentUser.username}
+          key={currentUser?.avatar}
           className="account-dropdown__avatar"
         />
         <span className="account-dropdown__name d-none d-lg-inline">
@@ -111,6 +112,7 @@ const Account = () => {
             <img
               src={currentUser.avatar || imgDefault}
               alt={currentUser.username}
+              key={currentUser?.avatar}
               className="account-dropdown__header-avatar"
             />
             <div className="account-dropdown__header-info">
