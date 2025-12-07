@@ -66,7 +66,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRouter);
-app.use('/api/post', postRouter);
+app.use('/api/posts', postRouter);
 app.use('/api/test', testRouter);
 
 app.listen(port, host, () => {
