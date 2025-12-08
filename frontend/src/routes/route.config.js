@@ -17,114 +17,135 @@ import EditProfile from '../features/Profile/components/EditProfile';
 import Favorites from '../features/Profile/components/Favorites';
 import ViewHistory from '../features/Profile/components/ViewHistory';
 import Settings from '../features/Profile/components/Settings';
-
+// import AddPost from '../features/Properties/components/newProperty';
 import { Layout, RequireAuth } from '../layout/layout';
 
 export const routes = [
-  // ===============================================
-  // 1. Route Layout CHUNG (Public Routes)
-  // ===============================================
-  {
-    path: '/',
-    element: <Layout/>, 
-    name: 'Trang Chủ',
-    showInNav: true, 
-    children:[
-   
-      {
-        index: true, // index: true tương đương với path: '/' của route cha
-        element: <Home />,
+    // ===============================================
+    // 1. Route Layout CHUNG (Public Routes)
+    // ===============================================
+    {
+        path: '/',
+        element: <Layout />,
         name: 'Trang Chủ',
-        showInNav: true, 
-      },
-  
-      {
-        path: 'properties', 
-        element: <Properties />,
-        name: 'Bất Động Sản',
-        showInNav: true, 
-      },
-      {
-        path: 'properties/:id', 
-        element: <NotFound />,
-        name: 'Chi Tiết Bất Động Sản',
-        showInNav: false, 
-      },
-      {
-        path: 'about', 
-        element: <About />,
-        name: 'Về chúng tôi', 
-        showInNav: true, 
-      },
-      {
-        path: 'team-group', 
-        element: <TeamGroup />,
-        name: 'Đội ngũ sáng lập',
-        showInNav: true, 
-      },
-      {
-        path: 'contact', 
-        element: <Contact />,
-        name: 'Liên Hệ',
-        showInNav: true, 
-      },
-      {
-        path: 'services', 
-        element: <Services />, 
-        name: 'Dịch vụ',
-        showInNav: true, 
-      },
-      {
-        path: 'news', 
-        element: <NotFound />, 
-        name: 'Tin tức',
-        showInNav: true, 
-      },
-      // Routes Auth
-      { path: 'auth/login', element: <Login />, name: 'Đăng nhập', showInNav: false },
-      { path: 'login', element: <Login />, name: 'Đăng nhập', showInNav: false },
-      { path: 'auth/register', element: <Register />, name: 'Đăng ký', showInNav: false },
-      { path: 'register', element: <Register />, name: 'Đăng ký', showInNav: false },
-      { path: 'auth/login/google', element: <LoginGG />, name: 'Đăng nhập Google', showInNav: false},
-    ]
-  },
-  
-  // ===============================================
-  // 2. Route Layout YÊU CẦU ĐĂNG NHẬP (Private Routes)
-  // ===============================================
- {
-        element: <RequireAuth/>,
+        showInNav: true,
         children: [
+            {
+                index: true, // index: true tương đương với path: '/' của route cha
+                element: <Home />,
+                name: 'Trang Chủ',
+                showInNav: true
+            },
 
             {
-                path: '/profile',        
-                element: <Profile />,    
+                path: 'properties',
+                element: <Properties />,
+                name: 'Bất Động Sản',
+                showInNav: true
+            },
+            {
+                path: 'properties/:id',
+                element: <NotFound />,
+                name: 'Chi Tiết Bất Động Sản',
+                showInNav: false
+            },
+            {
+                path: 'about',
+                element: <About />,
+                name: 'Về chúng tôi',
+                showInNav: true
+            },
+            {
+                path: 'team-group',
+                element: <TeamGroup />,
+                name: 'Đội ngũ sáng lập',
+                showInNav: true
+            },
+            {
+                path: 'contact',
+                element: <Contact />,
+                name: 'Liên Hệ',
+                showInNav: true
+            },
+            {
+                path: 'services',
+                element: <Services />,
+                name: 'Dịch vụ',
+                showInNav: true
+            },
+            {
+                path: 'news',
+                element: <NotFound />,
+                name: 'Tin tức',
+                showInNav: true
+            },
+            // Routes Auth
+            {
+                path: 'auth/login',
+                element: <Login />,
+                name: 'Đăng nhập',
+                showInNav: false
+            },
+            {
+                path: 'login',
+                element: <Login />,
+                name: 'Đăng nhập',
+                showInNav: false
+            },
+            {
+                path: 'auth/register',
+                element: <Register />,
+                name: 'Đăng ký',
+                showInNav: false
+            },
+            {
+                path: 'register',
+                element: <Register />,
+                name: 'Đăng ký',
+                showInNav: false
+            },
+            {
+                path: 'auth/login/google',
+                element: <LoginGG />,
+                name: 'Đăng nhập Google',
+                showInNav: false
+            }
+        ]
+    },
+
+    // ===============================================
+    // 2. Route Layout YÊU CẦU ĐĂNG NHẬP (Private Routes)
+    // ===============================================
+    {
+        element: <RequireAuth />,
+        children: [
+            {
+                path: '/profile',
+                element: <Profile />,
                 name: 'Trang cá nhân',
                 showInNav: false,
                 children: [
-                   
-                    { index: true, element: <ProfileOverview /> }, 
-                    
-                 
-                    { path: 'edit', element: <EditProfile /> },      
-                    { path: 'favorites', element: <Favorites /> },  
-                    { path: 'history', element: <ViewHistory /> },       
-                    { path: 'settings', element: <Settings /> },     
+                    { index: true, element: <ProfileOverview /> },
+
+                    { path: 'edit', element: <EditProfile /> },
+                    { path: 'favorites', element: <Favorites /> },
+                    { path: 'history', element: <ViewHistory /> },
+                    // { path: 'addPost', element: <AddPost /> },
+                    { path: 'settings', element: <Settings /> }
                 ]
-            },
-         
+            }
         ]
     },
-  
-  // ===============================================
-  // 3. Route 404 (Không Tìm Thấy Trang) - Bắt buộc phải là top-level
-  // ===============================================
-  {
-    path: '*', 
-    element: <NotFound />,
-    name: 'Không Tìm Thấy',
-    showInNav: false, 
-  }
+
+    // ===============================================
+    // 3. Route 404 (Không Tìm Thấy Trang) - Bắt buộc phải là top-level
+    // ===============================================
+    {
+        path: '*',
+        element: <NotFound />,
+        name: 'Không Tìm Thấy',
+        showInNav: false
+    }
 ];
 
 export default routes;

@@ -1,0 +1,315 @@
+/* PropertySideBar.css - Enhanced Version with BEM Naming */
+
+.re-filter-sidebar {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+}
+
+/* Header */
+.re-filter-sidebar__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.75rem;
+    border-bottom: 2px solid #f1f5f9;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.re-filter-sidebar__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.re-filter-sidebar__title svg {
+    color: #667eea;
+}
+
+.re-filter-sidebar__reset-btn {
+    background: none;
+    border: none;
+    color: #667eea;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+    padding: 0.5rem 0.875rem;
+    border-radius: 8px;
+}
+
+.re-filter-sidebar__reset-btn:hover {
+    background: #f1f5f9;
+    color: #5568d3;
+}
+
+/* Body */
+.re-filter-sidebar__body {
+    padding: 1.75rem;
+}
+
+/* Section */
+.re-filter-sidebar__section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.re-filter-sidebar__section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.re-filter-sidebar__section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.re-filter-sidebar__section-title svg {
+    width: 18px;
+    height: 18px;
+    color: #667eea;
+}
+
+/* Property Type Buttons */
+.re-filter-sidebar__type-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+
+.re-filter-sidebar__type-btn {
+    padding: 0.875rem 1.125rem;
+    border: 2px solid #e2e8f0;
+    background: #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-align: left;
+    color: #64748b;
+    font-size: 0.9375rem;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.re-filter-sidebar__type-btn:hover {
+    border-color: #667eea;
+    background: #f8fafc;
+    color: #334155;
+}
+
+.re-filter-sidebar__type-btn--active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Price Range Inputs */
+.re-filter-sidebar__price-range {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+}
+
+.re-filter-sidebar__price-divider {
+    color: #cbd5e1;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.re-filter-sidebar__input {
+    flex: 1;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+    font-size: 0.9375rem;
+    color: #334155;
+    font-weight: 500;
+    background: #ffffff;
+}
+
+.re-filter-sidebar__input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    background: #ffffff;
+}
+
+.re-filter-sidebar__input::placeholder {
+    color: #cbd5e1;
+    font-weight: 400;
+}
+
+.re-filter-sidebar__input:hover {
+    border-color: #cbd5e1;
+}
+
+/* Locations List */
+.re-filter-sidebar__location-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.re-filter-sidebar__location-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    transition: all 0.2s ease;
+}
+
+.re-filter-sidebar__location-item:hover {
+    padding-left: 0.5rem;
+}
+
+.re-filter-sidebar__location-item:hover .re-filter-sidebar__location-label {
+    color: #334155;
+}
+
+.re-filter-sidebar__checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #667eea;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.re-filter-sidebar__location-label {
+    color: #64748b;
+    font-size: 0.9375rem;
+    transition: color 0.2s ease;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* Apply Button */
+.re-filter-sidebar__apply-btn {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.re-filter-sidebar__apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.re-filter-sidebar__apply-btn:active {
+    transform: translateY(0);
+}
+
+/* Custom Scrollbar */
+.re-filter-sidebar__location-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.re-filter-sidebar__location-list::-webkit-scrollbar-track {
+    background: #f8fafc;
+    border-radius: 3px;
+}
+
+.re-filter-sidebar__location-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.re-filter-sidebar__location-list::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .re-filter-sidebar {
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+    }
+
+    .re-filter-sidebar__header {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .re-filter-sidebar__body {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .re-filter-sidebar__header {
+        padding: 1rem 1.25rem;
+    }
+
+    .re-filter-sidebar__title {
+        font-size: 1.125rem;
+    }
+
+    .re-filter-sidebar__body {
+        padding: 1.25rem;
+    }
+
+    .re-filter-sidebar__section {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .re-filter-sidebar__section-title {
+        font-size: 0.9375rem;
+    }
+
+    .re-filter-sidebar__type-btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .re-filter-sidebar__input {
+        padding: 0.75rem 0.875rem;
+        font-size: 0.875rem;
+    }
+
+    .re-filter-sidebar__location-label {
+        font-size: 0.875rem;
+    }
+
+    .re-filter-sidebar__apply-btn {
+        padding: 0.875rem 1.25rem;
+        font-size: 0.9375rem;
+        margin-top: 1.5rem;
+    }
+}

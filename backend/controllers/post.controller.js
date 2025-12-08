@@ -27,6 +27,16 @@ const getPost = async (req, res) => {
         const post = await prisma.post.findUnique({
             where: {
                 id: postId
+            },
+            include: {
+                postDetail: true,
+                user: {
+                    select: {
+                        username: true,
+                        avatar: true,
+                        email: true
+                    }
+                }
             }
         });
 
@@ -53,19 +63,30 @@ const getPost = async (req, res) => {
 const addPost = async (req, res) => {
     const body = req.body;
     const tokenUserId = req.userId;
-    logger.info('Yêu cầu tạo bài đăng mới', { userId: req.userId });
+
     try {
         const newPost = await prisma.post.create({
             data: {
-                ...body,
-                userId: tokenUserId
+                ...body.postData,
+                userId: tokenUserId,
+                postDetail: {
+                    create: body.postDetail
+                }
+            },
+            include: {
+                postDetail: true
             }
         });
-        logger.debug('Đang xử lý tạo bài đăng mới', newPost);
+
+        res.status(201).json({
+            message: 'Tạo bài đăng thành công!',
+            post: newPost
+        });
     } catch (error) {
         logger.error('Lỗi khi tạo bài đăng mới', error);
+
         res.status(500).json({
-            message: 'Thất bại, Không thể lấy dữ liệu người dùng!'
+            message: 'Lỗi server, không thể tạo bài đăng!'
         });
     }
 };

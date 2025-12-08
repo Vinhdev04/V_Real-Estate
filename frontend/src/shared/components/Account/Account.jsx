@@ -75,6 +75,12 @@ const Account = () => {
             onClick: () => setIsOpen(false)
         },
         {
+            icon: <Heart size={18} />,
+            label: 'Them Bất động sản ',
+            path: '/profile/addPost',
+            onClick: () => setIsOpen(false)
+        },
+        {
             icon: <Clock size={18} />,
             label: 'Lịch sử xem',
             path: '/profile/history',

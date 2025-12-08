@@ -1,11 +1,11 @@
-import React from 'react'
-import PropertyCard from '../features/Properties/components/PropertyCard/PropertyCard'
+import React from 'react';
+import PropertyLayout from '../features/Properties/components/PropertyLayout';
 function Properties() {
-  return (
-    <div>
-      <PropertyCard/>
-    </div>
-  )
+    return (
+        <div>
+            <PropertyLayout />
+        </div>
+    );
 }
 
-export default Properties
+export default Properties;
