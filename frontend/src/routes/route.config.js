@@ -17,7 +17,7 @@ import EditProfile from '../features/Profile/components/EditProfile';
 import Favorites from '../features/Profile/components/Favorites';
 import ViewHistory from '../features/Profile/components/ViewHistory';
 import Settings from '../features/Profile/components/Settings';
-// import AddPost from '../features/Properties/components/newProperty';
+import AddProperty from '../features/Properties/components/AddProperty';
 import { Layout, RequireAuth } from '../layout/layout';
 
 export const routes = [
@@ -130,7 +130,7 @@ export const routes = [
                     { path: 'edit', element: <EditProfile /> },
                     { path: 'favorites', element: <Favorites /> },
                     { path: 'history', element: <ViewHistory /> },
-                    // { path: 'addPost', element: <AddPost /> },
+                    { path: 'addPost', element: <AddProperty /> },
                     { path: 'settings', element: <Settings /> }
                 ]
             }

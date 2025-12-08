@@ -1,7 +1,7 @@
 // Base URLs
 const AUTH_BASE_URL = 'http://localhost:8080/api/auth';
 const USER_BASE_URL = 'http://localhost:8080/api/users';
-const POST_BASE_URL = 'http://localhost:8080/api/post';
+const POST_BASE_URL = 'http://localhost:8080/api/posts';
 
 // Auth endpoints
 export const API_URL_REGISTER = `${AUTH_BASE_URL}/register`;
