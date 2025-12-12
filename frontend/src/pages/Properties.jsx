@@ -1,10 +1,11 @@
 import React from 'react';
-import PropertyLayout from '../features/Properties/components/PropertyLayout';
+import PropertyList from '../features/Properties/components/PropertyList/PropertyList';
+
 function Properties() {
     return (
-        <div>
-            <PropertyLayout />
-        </div>
+        <>
+            <PropertyList />
+        </>
     );
 }
 
