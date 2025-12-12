@@ -1,136 +1,33 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import { Search, SlidersHorizontal } from 'lucide-react';
 import { Pagination } from 'antd';
 import FilterSidebar from '../FilterSidebar/FilterSidebar.jsx';
 import PropertyCard from '../PropertyCard/PropertyCard.jsx';
 import { mockPropertiesData } from '../../services/data.js';
+import { usePropertyFilters } from '../../../../hooks/usePropertyFilters.js';
+import { useFavorites } from '../../../../hooks/useFavorites.js';
+import { useSidebar } from '../../../../hooks/useSidebar.js';
 import './PropertyList.css';
 import 'antd/dist/reset.css';
 
 const PropertyList = () => {
-    // const [filters, setFilters] = useState({
-    //     type: 'all',
-    //     location: '',
-    //     minPrice: '',
-    //     maxPrice: '',
-    //     bedrooms: '',
-    //     minArea: '',
-    //     maxArea: '',
-    //     search: ''
-    // });
+    const pageSize = 6;
 
-    // const [favorites, setFavorites] = useState([]);
-    // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    // const [sortBy, setSortBy] = useState('default');
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const pageSize = 6;
+    // Custom hooks để quản lý logic
+    const {
+        filters,
+        sortBy,
+        currentPage,
+        filteredProperties,
+        paginatedProperties,
+        handleFilterChange,
+        handlePageChange,
+        handleSortChange
+    } = usePropertyFilters(mockPropertiesData, pageSize);
 
-    // const handleFilterChange = (key, value) => {
-    //     if (key === 'reset') {
-    //         setFilters({
-    //             type: 'all',
-    //             location: '',
-    //             minPrice: '',
-    //             maxPrice: '',
-    //             bedrooms: '',
-    //             minArea: '',
-    //             maxArea: '',
-    //             search: ''
-    //         });
-    //         setCurrentPage(1);
-    //     } else {
-    //         setFilters((prev) => ({ ...prev, [key]: value }));
-    //         setCurrentPage(1);
-    //     }
-    // };
+    const { toggleFavorite, isFavorite } = useFavorites();
 
-    // const handleFavorite = (id) => {
-    //     setFavorites((prev) =>
-    //         prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]
-    //     );
-    // };
-
-    // const filteredProperties = useMemo(() => {
-    //     let result = [...mockPropertiesData];
-
-    //     if (filters.type !== 'all') {
-    //         result = result.filter((p) => p.type === filters.type);
-    //     }
-
-    //     if (filters.location) {
-    //         result = result.filter((p) =>
-    //             p.location.includes(filters.location)
-    //         );
-    //     }
-
-    //     if (filters.minPrice) {
-    //         result = result.filter(
-    //             (p) => p.priceValue >= parseFloat(filters.minPrice) * 1000000000
-    //         );
-    //     }
-    //     if (filters.maxPrice) {
-    //         result = result.filter(
-    //             (p) => p.priceValue <= parseFloat(filters.maxPrice) * 1000000000
-    //         );
-    //     }
-
-    //     if (filters.bedrooms) {
-    //         result = result.filter((p) => p.bedrooms >= filters.bedrooms);
-    //     }
-
-    //     if (filters.minArea) {
-    //         result = result.filter(
-    //             (p) => p.area >= parseFloat(filters.minArea)
-    //         );
-    //     }
-    //     if (filters.maxArea) {
-    //         result = result.filter(
-    //             (p) => p.area <= parseFloat(filters.maxArea)
-    //         );
-    //     }
-
-    //     if (filters.search) {
-    //         result = result.filter(
-    //             (p) =>
-    //                 p.title
-    //                     .toLowerCase()
-    //                     .includes(filters.search.toLowerCase()) ||
-    //                 p.location
-    //                     .toLowerCase()
-    //                     .includes(filters.search.toLowerCase())
-    //         );
-    //     }
-
-    //     switch (sortBy) {
-    //         case 'price-asc':
-    //             result.sort((a, b) => a.priceValue - b.priceValue);
-    //             break;
-    //         case 'price-desc':
-    //             result.sort((a, b) => b.priceValue - a.priceValue);
-    //             break;
-    //         case 'rating':
-    //             result.sort((a, b) => b.rating - a.rating);
-    //             break;
-    //         case 'area':
-    //             result.sort((a, b) => b.area - a.area);
-    //             break;
-    //         default:
-    //             break;
-    //     }
-
-    //     return result;
-    // }, [filters, sortBy]);
-
-    // const paginatedProperties = useMemo(() => {
-    //     const startIndex = (currentPage - 1) * pageSize;
-    //     const endIndex = startIndex + pageSize;
-    //     return filteredProperties.slice(startIndex, endIndex);
-    // }, [filteredProperties, currentPage]);
-
-    // const handlePageChange = (page) => {
-    //     setCurrentPage(page);
-    //     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // };
+    const { isOpen, openSidebar, closeSidebar } = useSidebar();
 
     return (
         <div className='properties'>
@@ -149,16 +46,16 @@ const PropertyList = () => {
                     <input
                         type='text'
                         placeholder='Tìm kiếm theo tên hoặc địa điểm...'
-                        // value={filters.search}
-                        // onChange={(e) =>
-                        //     handleFilterChange('search', e.target.value)
-                        // }
+                        value={filters.search}
+                        onChange={(e) =>
+                            handleFilterChange('search', e.target.value)
+                        }
                         className='properties__search-input'
                     />
                 </div>
                 <button
                     className='properties__filter-toggle'
-                    // onClick={() => setIsSidebarOpen(true)}
+                    onClick={openSidebar}
                 >
                     <SlidersHorizontal size={20} />
                     <span>Bộ lọc</span>
@@ -167,23 +64,23 @@ const PropertyList = () => {
 
             <div className='properties__container'>
                 <FilterSidebar
-                // filters={filters}
-                // onFilterChange={handleFilterChange}
-                // isOpen={isSidebarOpen}
-                // onClose={() => setIsSidebarOpen(false)}
+                    filters={filters}
+                    onFilterChange={handleFilterChange}
+                    isOpen={isOpen}
+                    onClose={closeSidebar}
                 />
 
                 <main className='properties__main'>
                     <div className='properties__toolbar'>
                         <p className='properties__results-count'>
                             Tìm thấy{' '}
-                            {/* <strong>{filteredProperties.length}</strong> bất */}
+                            <strong>{filteredProperties.length}</strong> bất
                             động sản
                         </p>
                         <select
                             className='properties__sort-select'
-                            // value={sortBy}
-                            // onChange={(e) => setSortBy(e.target.value)}
+                            value={sortBy}
+                            onChange={(e) => handleSortChange(e.target.value)}
                         >
                             <option value='default'>Mặc định</option>
                             <option value='price-asc'>Giá tăng dần</option>
@@ -194,13 +91,13 @@ const PropertyList = () => {
                     </div>
 
                     <div className='properties__grid'>
-                        {/* {paginatedProperties.length > 0 ? (
+                        {paginatedProperties.length > 0 ? (
                             paginatedProperties.map((property) => (
                                 <PropertyCard
                                     key={property.id}
                                     property={property}
-                                    onFavorite={handleFavorite}
-                                    isFavorite={favorites.includes(property.id)}
+                                    onFavorite={toggleFavorite}
+                                    isFavorite={isFavorite(property.id)}
                                 />
                             ))
                         ) : (
@@ -213,10 +110,10 @@ const PropertyList = () => {
                                     Đặt lại bộ lọc
                                 </button>
                             </div>
-                        )} */}
+                        )}
                     </div>
 
-                    {/* {filteredProperties.length > pageSize && (
+                    {filteredProperties.length > pageSize && (
                         <div className='properties__pagination'>
                             <Pagination
                                 current={currentPage}
@@ -229,7 +126,7 @@ const PropertyList = () => {
                                 }
                             />
                         </div>
-                    )} */}
+                    )}
                 </main>
             </div>
         </div>
